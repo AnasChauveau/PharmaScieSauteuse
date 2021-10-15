@@ -1,0 +1,27 @@
+Etapes:
+
+	Faire un diagramme d'utilisation       : X
+	Maquette des différentes pages         : X
+
+	Dossier public pour charte graphique   : X
+
+	Diagramme de classe pour bdd et objets : X
+
+
+Objectif: Gérer la liste des patients, ordonnances et médicament.
+
+
+Info:
+	Github : Lien, fichier README.md, En public.
+	Format JSON.
+	Base de données MySQL.
+
+
+Maquette des différentes pages:
+
+
+Base de données:
+	- Une table pour toutes les maladies existantes
+	- Si  au moins un patient à cette maladie
+	  Alors l'afficher
+
