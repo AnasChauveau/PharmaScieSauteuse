@@ -1,11 +1,12 @@
 Etapes:
 
-	Faire un diagramme d'utilisation       : X
-	Maquette des différentes pages         : X
+	Faire un diagramme d'utilisation     : OK
+	Maquette des différentes pages       : OK
 
-	Dossier public pour charte graphique   : X
+	Diagramme de classe pour bdd  	     : X
+	Diagramme de classe pour objet       : X
 
-	Diagramme de classe pour bdd et objets : X
+	Dossier public pour charte graphique : X
 
 
 Objectif: Gérer la liste des patients, ordonnances et médicament.
@@ -17,11 +18,4 @@ Info:
 	Base de données MySQL.
 
 
-Maquette des différentes pages:
-
-
-Base de données:
-	- Une table pour toutes les maladies existantes
-	- Si  au moins un patient à cette maladie
-	  Alors l'afficher
 
