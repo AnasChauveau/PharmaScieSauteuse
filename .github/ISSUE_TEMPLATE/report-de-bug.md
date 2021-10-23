@@ -1,6 +1,6 @@
 ---
-Type : Report de bug
-A propos: Un bug ? Aidez nous à améliorer l'outil
+Name : Report de bug
+About: Un bug ? Aidez nous à améliorer l'outil
 
 
 ---
