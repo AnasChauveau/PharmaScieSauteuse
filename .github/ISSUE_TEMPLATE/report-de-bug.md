@@ -1,9 +1,7 @@
 ---
-name: Report de bug
-about: Un bug ? Aidez nous à améliorer l'outil
-title: ''
-labels: ''
-assignees: ''
+Type : Report de bug
+A propos: Un bug ? Aidez nous à améliorer l'outil
+
 
 ---
 
