@@ -4,16 +4,16 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>170</x>
-      <y>110</y>
+      <x>0</x>
+      <y>340</y>
       <w>210</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>Patient
 --
-Num_Carte_Vitale    :int 
-Nom_Patient             :String
-Prénom_Patient        :String
+_Num_Carte_Vitale_
+Nom_Patient
+Prénom_Patient
 
 
 
@@ -23,32 +23,30 @@ Prénom_Patient        :String
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>590</x>
-      <y>110</y>
+      <x>420</x>
+      <y>340</y>
       <w>210</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>Ordonnance
 --
-Réf_Ordonance     :varchar
-Durée                    :varchar
-Pathologie            :varchar</panel_attributes>
+_idOrdonance_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>590</x>
-      <y>430</y>
+      <x>420</x>
+      <y>660</y>
       <w>210</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>Médicament
 --
-Réf_Médic                  :varchar
-Nom_Médic                :varchar
-Quantité_En_Stock     :int
-Quantité_Nécéssaire   :int
+_idMédic_
+Nom_Médic
+Quantité_En_Stock
+Quantité_Nécéssaire
 
 </panel_attributes>
     <additional_attributes/>
@@ -56,52 +54,51 @@ Quantité_Nécéssaire   :int
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>180</x>
-      <y>390</y>
+      <x>0</x>
+      <y>650</y>
       <w>210</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>Assurance
 --
-Num_Assurance     :int
-Nom_Assurance     :varchar
-Échéance               :datetime
+_Num_Assurance_
+Nom_Assurance
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1030</x>
-      <y>110</y>
+      <x>860</x>
+      <y>340</y>
       <w>210</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>Médecin
 --
-id_médecin                   :int 
-nom_médecin               :varchar
-prénom_médecin          :varchar</panel_attributes>
+_idMédecin_
+nom_médecin
+prénom_médecin</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>790</x>
-      <y>160</y>
+      <x>620</x>
+      <y>390</y>
       <w>260</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-
-m1=0..*
+m1=*
 m2=1</panel_attributes>
     <additional_attributes>10.0;10.0;240.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>190</y>
+      <x>510</x>
+      <y>420</y>
       <w>50</w>
       <h>260</h>
     </coordinates>
@@ -114,23 +111,23 @@ m2=1..*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
-      <y>200</y>
+      <x>80</x>
+      <y>430</y>
       <w>50</w>
-      <h>210</h>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=-
-m1=0..*
+m1=*
 m2=0..1
 
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>370</x>
-      <y>150</y>
+      <x>200</x>
+      <y>380</y>
       <w>240</w>
       <h>50</h>
     </coordinates>
@@ -143,26 +140,80 @@ m2=1..*
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>840</x>
-      <y>290</y>
+      <x>670</x>
+      <y>520</y>
       <w>210</w>
-      <h>50</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Traitement
 --
-nbBoite_Ordonnance    :int</panel_attributes>
+nbBoite_Ordonnance
+Durée</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>310</y>
+      <x>510</x>
+      <y>540</y>
       <w>180</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=.
 </panel_attributes>
     <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>130</y>
+      <w>220</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Pathologie
+--
+_idPath_
+Nom_Path</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>190</y>
+      <w>40</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=*
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>510</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Echeance
+--
+Date_Echeance</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>90</x>
+      <y>530</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=.
+</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
   </element>
 </diagram>
