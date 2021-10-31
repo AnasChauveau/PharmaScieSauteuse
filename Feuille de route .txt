@@ -3,8 +3,7 @@ Etapes:
 	Faire un diagramme d'utilisation     : OK
 	Maquette des différentes pages       : OK
 
-	Diagramme de classe pour bdd  	     : X
-	Diagramme de classe pour objet       : X
+	Diagramme de classe pour bdd  	     : OK
 
 	Dossier public pour charte graphique : X
 
