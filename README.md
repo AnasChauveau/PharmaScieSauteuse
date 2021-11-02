@@ -20,4 +20,25 @@
 	-> CSS
 	-> Fichier ini
 # Comment installer l'outil ? 
-	-> Prochainement disponnible.
+	Installer git 
+
+   ###### Récupérer le projet : 
+	-> Tapez la commande : "git clone https://github.com/AnasChauveau/PharmaScieSauteuse.git".
+	-> Ainsi que la commande : "git pull".
+
+   ###### Ajouter les dépendances :
+	-> Tapez la commande : "npm i express ejs iniparser mysql".
+
+   ###### Installer la base de données MySQL:
+	-> Copiez le contenu du fichier "Base_Pharmacie.sql".
+	-> Collez le contenu dans une base MySQL.
+	-> Modifiez les informations dans le fichier DB.ini. 
+
+   ###### Pour lancer l'outil :
+	-> Tapez la commande : "node index.js".
+
+   ###### Pour accéder à l'outil :
+	L'outil se lance par défaut à l'adresse suivante : "127.0.0.1:3000".
+
+
+
