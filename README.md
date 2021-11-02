@@ -11,7 +11,7 @@
 	-> Calcul de la quantité de médicament nécéssaire pour pouvoir servir les patitents.
 	Et beaucoup d'amélioration à venir. 
 
-# Quel technologie est utilisé pour la création ? 
+# Quel technologie est utilisé ? 
 	-> Node.JS
 	-> View.JS
 	-> Express.JS
