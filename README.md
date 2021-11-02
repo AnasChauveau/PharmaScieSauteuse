@@ -1,7 +1,7 @@
 # PharmaScieSauteuse
 
 # A quoi va servir l'outil ? 
-	C'est un outil de gestion Patient/Stock à destination des pharmacies.
+	C'est un outil de gestion Patients/Stocks à destination des pharmacies.
 
 # Que peut faire l'outil ? 
 	-> Gestion des patients et des pathologies.
