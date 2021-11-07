@@ -4,6 +4,8 @@ const ejs = require('ejs')
 const mysql = require('mysql')
 const iniparser = require('iniparser')
 
+// const Routeur = require('./routes/FonctionRoute') //
+
 
 // récupération des paramètres et préparation de connexion à la BDD
 let configDB = iniparser.parseSync('./DB.ini')
@@ -20,7 +22,7 @@ app.set('view engine', 'ejs')
 app.use(express.static('views'))
 app.use(express.static('public'))
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({extended: false}))
 
 // connexion à la base de données
 mysqlconnexion.connect((err) => {
@@ -29,3 +31,10 @@ mysqlconnexion.connect((err) => {
 })
 
 app.listen(3000, () => console.log('le serveur est prêt.'))
+
+// app.use('/PharmaScieSauteuse', Routeur); //
+
+// erreur 404
+app.use((req, res) => {
+    res.status(404).render('erreur')
+});
