@@ -28,8 +28,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 
+    //Execution de la fonction (Ajout des paramètres) :
     showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
-
+    
     /*===== Coloration des boutons =====*/
     const linkColor = document.querySelectorAll('.nav_link')
 

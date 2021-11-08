@@ -7,9 +7,7 @@ Ligne 198 : Liste des patients
 Ligne 258 : barre de recherche
 */
 
-/* ------------ Navbar ------------ */
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
-
+/* Déclaration de variable : */
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
@@ -20,6 +18,10 @@ Ligne 258 : barre de recherche
     --normal-font-size: 1rem;
     --z-fixed: 100
 }
+
+/* ------------ Navbar ------------ */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
 
 *,
 ::before,
@@ -61,18 +63,6 @@ a {
     cursor: pointer
 }
 
-.header_img {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    overflow: hidden
-}
-
-.header_img img {
-    width: 40px
-}
 
 .l-navbar {
     position: fixed;
@@ -166,15 +156,6 @@ a {
     .header {
         height: calc(var(--header-height) + 1rem);
         padding: 0 2rem 0 calc(var(--nav-width) + 0.5rem)
-    }
-
-    .header_img {
-        width: 40px;
-        height: 40px
-    }
-
-    .header_img img {
-        width: 45px
     }
 
     .l-navbar {
