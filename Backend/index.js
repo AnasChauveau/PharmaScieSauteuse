@@ -4,7 +4,7 @@ const ejs = require('ejs')
 const mysql = require('mysql')
 const iniparser = require('iniparser')
 
-// const Routeur = require('./routes/FonctionRoute') //
+const Routeur = require('./routes/pharmaRoute')
 
 
 // récupération des paramètres et préparation de connexion à la BDD
@@ -32,7 +32,7 @@ mysqlconnexion.connect((err) => {
 
 app.listen(3000, () => console.log('le serveur est prêt.'))
 
-// app.use('/PharmaScieSauteuse', Routeur); //
+app.use('/PharmaScieSauteuse', Routeur);
 
 // erreur 404
 app.use((req, res) => {
