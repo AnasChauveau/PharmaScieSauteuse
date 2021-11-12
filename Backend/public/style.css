@@ -1,5 +1,5 @@
 /* Auteur : DAVID Louis
-Dernière modification : 23/10/2021
+DerniÃ¨re modification : 23/10/2021
 Version : 0.5
 ======        Sommaire :       ====== 
 Ligne 10 : Navbar
@@ -8,7 +8,7 @@ Ligne 258 : barre de recherche
 */
 
 
-/* Déclaration de variable : */
+/* DÃ©claration de variable : */
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
@@ -213,21 +213,32 @@ table{
 th, td {
     font-weight: unset;
     padding-right: 10px;
+    text-align: center;
+    
 }
 th {
-    text-align: left;
+    text-align: center;
+
 }
 .column1 {
-    width: 15%;
-    padding-left: 40px;
+    width: 20%;
+    padding-left: 10px;
 }
 .column2{
-    width: 25%;
-    padding-left: 40px;
+    width: 20%;
+    padding-left: 10px;
 }
 .column3{
-    width: 30%;
-    padding-left: 40px;
+    width: 20%;
+    padding-left: 10px;
+}
+.column4{
+    width: 20%;
+    padding-left: 10px;
+}
+.column5{
+    width: 20%;
+    padding-left: 10px;
 }
 
 
