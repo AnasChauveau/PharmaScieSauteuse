@@ -69,15 +69,16 @@ Utilité : Affichage de la liste des patients
             <div class="table100-body">
             <table>
             <tbody>
-                
 
+                <% patients.forEach(function(patient){ %>
                 <tr class="row100 body">
-                    <td class="column1">Jon Snow</td>
-                    <td class="column2">2430450832145 17</td>
-                    <td class="column3">12/05/2014</td>
+                    <td class="column1"><%=patient.Nom_Patient%></td>
+                    <td class="column2"><%=patient.noSS%></td>
+                    <td class="column3"><%=moment(patient.Date_naissance).subtract(10, 'days').calendar()%></td>
                     <td class="column4"><button>fiche patient</button></td>
                     <td class="column5"><button>Ajouter ordonnance</button></td>
                 </tr>
+                <% })%>
 
                 <tr class="row101 body">
                     <td class="column1">Rick Grayms</td>
