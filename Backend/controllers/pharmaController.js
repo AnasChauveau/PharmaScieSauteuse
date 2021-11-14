@@ -3,10 +3,18 @@ const pharMenu = (req, res) => {
 }
 
 const pharmAffichagePatients = (req, res) => {
-    res.render('patient')
+    let requete = "SELECT CONCAT(Nom_Patient, ' ', Prenom_Patient) AS Nom_Patient FROM patient"
+    mysqlconnexion.query(requete, (err, lignes, champs) => {
+        if (!err) {
+            console.log(lignes)
+            res.render('patient', {patients : lignes})
+        }else{
+            res.redirect('erreur')
+        }
+    })
 }
 
-const pharmAffichageStocks = (req, res) => {
+function pharmAffichageStocks(req, res) {
     res.render('stock')
 }
 
