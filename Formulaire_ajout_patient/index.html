@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="style.css" media="all"/>
+      <title>Formulaire ajout de patient</title>
+   </head>
+   <body>
+      <div class="form-style-5">
+         <form>
+            <fieldset id="dynamic">
+               <legend><span class="number">1</span> Patient :</legend>
+               <input type="text" class="field2" placeholder="Nom *">
+               <input type="email" class="field2" placeholder="Prénom *">
+               <input type="text" class="field2" placeholder="Numéro de carte vitale *">
+               <input type="text" class="field2" placeholder="Pathologie *">
+               <input type="text" class="field1" placeholder="Traitement *"><button onclick="newline()">+</button>
+               <script>
+                  function newline(){
+                     document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' placeholder='Traitement *'>"
+                  }
+               </script>
+            </fieldset>
+            <fieldset>
+               <legend><span class="number">2</span> Médecin</legend>
+               <input type="text" class="field2" placeholder="Nom Médecin *">
+               <input type="text" class="field2" placeholder="Prénom Médecin *">
+            </fieldset>
+            <fieldset>
+                <legend><span class="number">3</span> Mutuelle</legend>
+                <input type="text" class="field2" placeholder="Nom Mutuelle">
+                <input type="text" class="field2" placeholder="Numéro de Mutuelle">
+             </fieldset>
+            <input type="submit" value="Envoyer" />
+         </form>
+      </div>
+   </body>
+</html>
