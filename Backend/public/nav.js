@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if (toggle && nav && bodypd && headerpd) {
             toggle.addEventListener('click', () => {
                 // Affiche la navbar
-                nav.classList.toggle('show')
+                nav.classList.toggle('show2')
                 // Affiche les icone
                 toggle.classList.toggle('bx-x')
                 // Ajoute le padding au body
