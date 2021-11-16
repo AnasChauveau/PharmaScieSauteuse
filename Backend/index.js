@@ -6,6 +6,9 @@ const iniparser = require('iniparser')
 
 const Routeur = require('./routes/pharmaRoute')
 
+// adresse ou port utilisé
+let adresse = 3000; // port : 3000 //
+
 // activation des dépendances 
 let app = express()
 app.set('view engine', 'ejs')
@@ -15,7 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 
-app.listen(3000, () => console.log('le serveur est prêt.'))
+app.listen(adresse, () => console.log('le serveur est prêt.'))
 
 app.use('/PharmaScieSauteuse', Routeur);
 
