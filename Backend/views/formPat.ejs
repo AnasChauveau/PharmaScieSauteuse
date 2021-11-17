@@ -57,8 +57,10 @@
                   <input type="date" class="field2" name="date_naissance" placeholder="Date de naissance : 23/09/2001*" required>
                   <!-- TRAITEMENT OBLIGATOIRE : -->
                   <div class="align">
-                     <select class="field1" name="traitement" placeholder="Traitement *" required>
-                        <option>Doliprane</option>
+                     <select class="field1" name="traitement" id="medic" placeholder="Traitement *" required>
+                        <option value="id">Doliprane</option>
+                        <option value="id">Canabis</option>
+                        <option value="id">Cocaïne</option>
                      </select>
                      <input type="text" class="field1" name="nbBoite" placeholder="Nombre total de boîtes *" required>
                      <input type="text" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
@@ -69,7 +71,7 @@
                   <script>
                      let a = 1;
                      function newline(){
-                        document.getElementById('dynamic').innerHTML += "<select class='field1' name='traitement"+a+"' required><option>Doliprane</option></select>" 
+                        document.getElementById('dynamic').innerHTML += "<select class='field1' id='medic"+a+"' name='traitement"+a+"' required><option value='1'>Doliprane2</option></select>" 
                         document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='nbBoite' placeholder='Nombre total de boîtes *' required>" 
                         document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='duree' placeholder='Durée traitement (mois)*' required>"  
                         a = a+1
@@ -82,7 +84,7 @@
                   <legend><span class="number">2</span> Médecin</legend>
                   <label for="mutuel">Nom du médecin :</label>
                   <select class="field2" name="medecin" required>
-                     <option>John DOE</option>
+                     <option value="id">John DOE</option>
                   </select>
                </fieldset>
                <fieldset>

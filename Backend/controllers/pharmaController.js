@@ -28,7 +28,7 @@ function pharmAjoutDePatient(req, res) {
     // Patient //
     let nomPatient = req.body.nom;
     let prenomPatient = req.body.prenom;
-    let dateNaissance = req.body.dateNaissance;
+    let dateNaissance = req.body.date_naissance;
     let noSS = req.body.noSS;
 
     // Ordonnance //
@@ -43,20 +43,32 @@ function pharmAjoutDePatient(req, res) {
     path == "" || medecin == "" || medic == "" || nbBoite == ""){
         console.log("Veuillez remplir tous les champs obligatoires !")
     }else{
+        // Requete Patient //
+        let requeteSQL_1 = "INSERT INTO patient (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
+        requeteSQL_1 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
         /*
-        let requeteSQL = "INSERT INTO patient (id, name, message, evaluation) VALUES";
-        requeteSQL = requeteSQL + ' (' + msgID + ',"' + msgName + '","' + msgMsg + '",' + msgNote + ')';
-        console.log("Requete : "+requeteSQL)
-        mysqlconnexion.query( requeteSQL, (err, lignes, champs) => {
-            if (!err) {
-                console.log("Insertion terminé");
-                res.redirect("confirm");
-            } else {
-                console.log("Erreur lors de l'enregistrment")
-                res.send("Erreur ajout : "+JSON.stringify(err))
-            }
-        })   
-        */
+        // Requete Ordonnance //
+        let idPath = "SELECT idPath FROM Pathologie WHERE Nom_Path = "+path;
+        let idMede = "SELECT idPath FROM Pathologie WHERE Nom_Path = "+medecin;
+        let requeteSQL_2 = "INSERT INTO ordonnance (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
+        requeteSQL_2 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
+
+        let requeteSQL_3 = "INSERT INTO patient (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
+        requeteSQL_3 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
+
+        let requetesSQL = [requeteSQL_1, requeteSQL_2, requeteSQL_3];
+
+        for (let t = 0;t < requetesSQL.length;t++) {
+            mysqlconnexion.query( requeteSQL_1, (err, lignes, champs) => {
+                if (!err) {
+                    console.log("Insertion du patient terminé");
+                    res.render("confirm");
+                } else {
+                    console.log("Erreur lors de l'enregistrment")
+                    res.send("Erreur ajout : "+JSON.stringify(err))
+                }
+            })
+        } */    
     }
 }
 
