@@ -25,9 +25,38 @@ function pharmulairePatient(req, res) {
     res.render('formPat')
 }
 
+function pharmAjoutDePatient(req, res) {
+    let msgID = req.body.id
+
+
+    let msgName = req.body.name
+    let msgMsg = req.body.msg
+    let msgNote = req.body.note
+       
+    console.log(`Ajout msg ID ${msgID} de ${msgName} contenant ${msgMsg} et noté ${msgNote}`)
+    let requeteSQL = "INSERT INTO patient (id, name, message, evaluation) VALUES";
+    requeteSQL = requeteSQL + ' (' + msgID + ',"' + msgName + '","' + msgMsg + '",' + msgNote + ')';
+    console.log("Requete : "+requeteSQL)
+    mysqlconnexion.query( requeteSQL, (err, lignes, champs) => {
+        if (!err) {
+            console.log("Insertion terminé");
+            res.redirect("/LivreOr");
+        } else {
+            console.log("Erreur lors de l'enregistrment")
+            res.send("Erreur ajout : "+JSON.stringify(err))
+        }
+    })     
+}
+
+function test(req, res) {
+    console.log(req);
+    res.render('formPat')
+}
+
 module.exports = {
     pharMenu,
     pharmAffichagePatients,
     pharmAffichageStocks,
-    pharmulairePatient
+    pharmulairePatient,
+    test
 }
