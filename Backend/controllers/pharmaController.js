@@ -32,6 +32,9 @@ function pharmAjoutDePatient(req, res) {
     let msgName = req.body.name
     let msgMsg = req.body.msg
     let msgNote = req.body.note
+
+    console.log(req.body);
+    res.render('formPat')
        
     console.log(`Ajout msg ID ${msgID} de ${msgName} contenant ${msgMsg} et noté ${msgNote}`)
     let requeteSQL = "INSERT INTO patient (id, name, message, evaluation) VALUES";
@@ -48,15 +51,10 @@ function pharmAjoutDePatient(req, res) {
     })     
 }
 
-function test(req, res) {
-    console.log(req);
-    res.render('formPat')
-}
-
 module.exports = {
     pharMenu,
     pharmAffichagePatients,
     pharmAffichageStocks,
     pharmulairePatient,
-    test
+    pharmAjoutDePatient
 }
