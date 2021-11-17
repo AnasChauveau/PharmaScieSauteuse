@@ -28,11 +28,11 @@
                   <span class="nav_logo-name">Pharmacie Sautheuz</span> 
                   </a>
                   <div class="nav_list"> 
-                     <a href="#" class="nav_link active"> 
+                     <a href="#" class="nav_link"> 
                      <i class='bx bx-grid-alt nav_icon'></i> 
                      <span class="nav_name">Gestion des patients</span> 
                      </a> 
-                     <a href="/PharmaScieSauteuse/Formulaire" class="nav_link"> 
+                     <a href="/PharmaScieSauteuse/Formulaire" class="nav_link active"> 
                        <i class='bx bx-user nav_icon'></i> 
                        <span class="nav_name">Ajouter un nouveau patient</span> 
                      </a> 
@@ -47,31 +47,33 @@
          <!-- ================= CONTENEUR POUR AFFICHAGE LISTE DES PATIENTS =================-->
          <div class="height-100 bg-light">
          <div class="form-style-5">
-            <form action="">
+            <form action="/PharmaScieSauteuse/Confirmation" method="post">
                <fieldset id="dynamic">
                   <legend><span class="number">1</span> Patient :</legend>
-                  <input type="text" class="field2" id="nom" placeholder="Nom *" required>
-                  <input type="text" class="field2" id="prenom" placeholder="Prénom *" required>
-                  <input type="text" class="field2" id="noSS" placeholder="Numéro de carte vitale *" required>
-                  <input type="text" class="field2" id="pathologie" placeholder="Pathologie *" required>
-                  <input type="text" class="field2" id="Date_naissance" placeholder="Date de naissance : 23/09/2001*" required>
-                  <input type="text" class="field2" id="Durée" placeholder="Durée traitement (mois)*" required>
+                  <input type="text" class="field2" name="nom" placeholder="Nom *" required>
+                  <input type="text" class="field2" name="prenom" placeholder="Prénom *" required>
+                  <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *" required>
+                  <input type="text" class="field2" name="pathologie" placeholder="Pathologie *" required>
+                  <input type="date" class="field2" name="date_naissance" placeholder="Date de naissance : 23/09/2001*" required>
                   <!-- TRAITEMENT OBLIGATOIRE : -->
                   <div class="align">
-                     <select class="field1" id="traitement" placeholder="Traitement *" required>
+                     <select class="field1" name="traitement" placeholder="Traitement *" required>
                         <option>Doliprane</option>
                      </select>
-                     <input type="text" class="field1" id="Durée" placeholder="Durée traitement (mois)*" required>
+                     <input type="text" class="field1" name="nbBoite" placeholder="Nombre total de boîtes *" required>
+                     <input type="text" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
                      <button onclick="newline()">+</button>
                   </div>
                   <!-- FIN TRAITEMENT OBLIGATOIRE -->
                   <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
                   <script>
-                     let a = 0;
+                     let a = 1;
                      function newline(){
                         document.getElementById('dynamic').innerHTML += "<select class='field1' name='traitement"+a+"' required><option>Doliprane</option></select>" 
-                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='Durée' placeholder='Durée traitement (mois)*' required>"  
+                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='nbBoite' placeholder='Nombre total de boîtes *' required>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='duree' placeholder='Durée traitement (mois)*' required>"  
                         a = a+1
+                        document.getElementById('nb').innerHTML = a;
                      }
                   </script>
 
@@ -79,7 +81,7 @@
                <fieldset>
                   <legend><span class="number">2</span> Médecin</legend>
                   <label for="mutuel">Nom du médecin :</label>
-                  <select class="field2" name="mutuel" required>
+                  <select class="field2" name="medecin" required>
                      <option>John DOE</option>
                   </select>
                </fieldset>
@@ -91,6 +93,7 @@
                   </select>
                </fieldset>
                <input type="submit" value="Envoyer" />
+               <p name="nbT" id="nb"></p>
             </form>
          </div>
       </body>

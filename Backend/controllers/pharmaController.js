@@ -23,24 +23,42 @@ function pharmulairePatient(req, res) {
 
 function pharmAjoutDePatient(req, res) {
 
-    res.render('confirm')
-}
+    console.log(req.body);
 
-/*
-    let requeteSQL = "INSERT INTO patient (id, name, message, evaluation) VALUES";
-    requeteSQL = requeteSQL + ' (' + msgID + ',"' + msgName + '","' + msgMsg + '",' + msgNote + ')';
-    console.log("Requete : "+requeteSQL)
-    mysqlconnexion.query( requeteSQL, (err, lignes, champs) => {
-        if (!err) {
-            console.log("Insertion terminé");
-            res.redirect("/LivreOr");
-        } else {
-            console.log("Erreur lors de l'enregistrment")
-            res.send("Erreur ajout : "+JSON.stringify(err))
-        }
-    })     
+    // Patient //
+    let nomPatient = req.body.nom;
+    let prenomPatient = req.body.prenom;
+    let dateNaissance = req.body.dateNaissance;
+    let noSS = req.body.noSS;
+
+    // Ordonnance //
+    let path = req.body.pathologie;
+    let medecin = req.body.medecin;
+
+    // Traitement //
+    let medic = req.body.traitement;
+    let nbBoite = req.body.nbBoite;
+
+    if (nomPatient == "" || prenomPatient == "" || dateNaissance == "" || noSS == "" ||
+    path == "" || medecin == "" || medic == "" || nbBoite == ""){
+        console.log("Veuillez remplir tous les champs obligatoires !")
+    }else{
+        /*
+        let requeteSQL = "INSERT INTO patient (id, name, message, evaluation) VALUES";
+        requeteSQL = requeteSQL + ' (' + msgID + ',"' + msgName + '","' + msgMsg + '",' + msgNote + ')';
+        console.log("Requete : "+requeteSQL)
+        mysqlconnexion.query( requeteSQL, (err, lignes, champs) => {
+            if (!err) {
+                console.log("Insertion terminé");
+                res.redirect("confirm");
+            } else {
+                console.log("Erreur lors de l'enregistrment")
+                res.send("Erreur ajout : "+JSON.stringify(err))
+            }
+        })   
+        */
+    }
 }
-*/
 
 module.exports = {
     pharMenu,
@@ -49,3 +67,5 @@ module.exports = {
     pharmulairePatient,
     pharmAjoutDePatient
 }
+
+
