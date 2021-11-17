@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- ================= NAVBAR DÉPENDENCE ================= -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+      <link rel="stylesheet" href="/style.css">
+      <link rel="icon" type="image/png" href="/logo.png">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="/nav.js"></script>
+      <!-- ================= FIN NAVBAR DÉPENDENCE ================= -->
+      <link rel="stylesheet" type="text/css" href="/formulaire.css" media="all"/>
+      <title>Formulaire ajout de patient</title>
+   </head>
+      <!-- ================= NAVBAR ================= -->
+      <body id="body-pd">
+         <header class="header" id="header">
+            <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+         </header>
+         <div class="l-navbar" id="nav-bar">
+            <nav class="nav">
+               <div>
+                  <a href="/PharmaScieSauteuse" class="nav_logo"> 
+                  <i class='bx bx-heart nav_logo-icon'></i> 
+                  <span class="nav_logo-name">Pharmacie Sautheuz</span> 
+                  </a>
+                  <div class="nav_list"> 
+                     <a href="#" class="nav_link active"> 
+                     <i class='bx bx-grid-alt nav_icon'></i> 
+                     <span class="nav_name">Gestion des patients</span> 
+                     </a> 
+                     <a href="/PharmaScieSauteuse/Formulaire" class="nav_link"> 
+                       <i class='bx bx-user nav_icon'></i> 
+                       <span class="nav_name">Ajouter un nouveau patient</span> 
+                     </a> 
+                      <a href="/PharmaScieSauteuse/Gestion-de-Stock" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> 
+                     <span class="nav_name">Gestion des stocks</span> 
+                   </a>
+                  </div>
+               </div>
+            </nav>
+         </div>
+         <!-- ================= FIN NAVBAR ================= -->
+         <!-- ================= CONTENEUR POUR AFFICHAGE LISTE DES PATIENTS =================-->
+         <div class="height-100 bg-light">
+         <div class="form-style-5">
+            <form action="">
+               <fieldset id="dynamic">
+                  <legend><span class="number">1</span> Patient :</legend>
+                  <input type="text" class="field2" id="nom" placeholder="Nom *" required>
+                  <input type="text" class="field2" id="prenom" placeholder="Prénom *" required>
+                  <input type="text" class="field2" id="noSS" placeholder="Numéro de carte vitale *" required>
+                  <input type="text" class="field2" id="pathologie" placeholder="Pathologie *" required>
+                  <input type="text" class="field2" id="Date_naissance" placeholder="Date de naissance : 23/09/2001*" required>
+                  <input type="text" class="field2" id="Durée" placeholder="Durée traitement (mois)*" required>
+                  <!-- TRAITEMENT OBLIGATOIRE : -->
+                  <div class="align">
+                     <select class="field1" id="traitement" placeholder="Traitement *" required>
+                        <option>Doliprane</option>
+                     </select>
+                     <input type="text" class="field1" id="Durée" placeholder="Durée traitement (mois)*" required>
+                     <button onclick="newline()">+</button>
+                  </div>
+                  <!-- FIN TRAITEMENT OBLIGATOIRE -->
+                  <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
+                  <script>
+                     let a = 0;
+                     function newline(){
+                        document.getElementById('dynamic').innerHTML += "<select class='field1' name='traitement"+a+"' required><option>Doliprane</option></select>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='Durée' placeholder='Durée traitement (mois)*' required>"  
+                        a = a+1
+                     }
+                  </script>
+
+               </fieldset>
+               <fieldset>
+                  <legend><span class="number">2</span> Médecin</legend>
+                  <label for="mutuel">Nom du médecin :</label>
+                  <select class="field2" name="mutuel" required>
+                     <option>John DOE</option>
+                  </select>
+               </fieldset>
+               <fieldset>
+                  <legend><span class="number">3</span> Mutuelle</legend>
+                  <label for="mutuel">Nom de la Mutuelle :</label>
+                  <select class="field2" name="mutuel">
+                     <option>La mutuel qui déchire</option>
+                  </select>
+               </fieldset>
+               <input type="submit" value="Envoyer" />
+            </form>
+         </div>
+      </body>
+   </html>

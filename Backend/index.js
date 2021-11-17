@@ -6,15 +6,8 @@ const iniparser = require('iniparser')
 
 const Routeur = require('./routes/pharmaRoute')
 
-
-// récupération des paramètres et préparation de connexion à la BDD
-let configDB = iniparser.parseSync('./DB.ini')
-let mysqlconnexion = mysql.createConnection({
-    host:configDB['dev']['host'],
-    user:configDB['dev']['user'],
-    password:configDB['dev']['password'],
-    database:configDB['dev']['database']
-})
+// adresse ou port utilisé
+let adresse = 3000; // port : 3000 //
 
 // activation des dépendances 
 let app = express()
@@ -24,13 +17,8 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-// connexion à la base de données
-mysqlconnexion.connect((err) => {
-    if (!err) console.log('BDD connectée.')
-    else console.log('BDD connexion échouée \n Erreur: '+JSON.stringify(err))
-})
 
-app.listen(3000, () => console.log('le serveur est prêt.'))
+app.listen(adresse, () => console.log('le serveur est prêt.'))
 
 app.use('/PharmaScieSauteuse', Routeur);
 
