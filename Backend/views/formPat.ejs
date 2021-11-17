@@ -9,14 +9,14 @@
    </head>
    <body>
       <div class="form-style-5">
-         <form>
+         <form action="">
             <fieldset id="dynamic">
                <legend><span class="number">1</span> Patient :</legend>
-               <input type="text" class="field2" placeholder="Nom *">
-               <input type="email" class="field2" placeholder="Prénom *">
-               <input type="text" class="field2" placeholder="Numéro de carte vitale *">
-               <input type="text" class="field2" placeholder="Pathologie *">
-               <input type="text" class="field1" placeholder="Traitement *"><button onclick="newline()">+</button>
+               <input type="text" class="field2" id="nom" placeholder="Nom *">
+               <input type="text" class="field2" id="prenom" placeholder="Prénom *">
+               <input type="text" class="field2" id="noSS" placeholder="Numéro de carte vitale *">
+               <input type="text" class="field2" id="pathologie" placeholder="Pathologie *">
+               <input type="text" class="field1" id="traitement" placeholder="Traitement *"><button onclick="newline()">+</button>
                <script>
                   function newline(){
                      document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' placeholder='Traitement *'>"
