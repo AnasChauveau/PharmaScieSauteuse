@@ -9,14 +9,15 @@
    </head>
    <body>
       <div class="form-style-5">
-         <form action="/PharmaScieSauteuse/Formulaire/Test" method="POST">
+         <form action="/PharmaScieSauteuse/Confirmation" method="POST">
             <fieldset id="dynamic">
                <legend><span class="number">1</span> Patient :</legend>
-               <input type="text" class="field2" name="nom" placeholder="Nom *">
-               <input type="text" class="field2" name="prenom" placeholder="Prénom *">
-               <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *">
-               <input type="text" class="field2" name="pathologie" placeholder="Pathologie *">
-               <input type="text" class="field1" name="traitement" placeholder="Traitement *"><button onclick="newline()">+</button>
+               <input type="text" class="field2" name="nom" placeholder="Nom *" required>
+               <input type="text" class="field2" name="prenom" placeholder="Prénom *" required>
+               <input type="date" class="field2" name="dateNaissance" placeholder="Date de naissance *" required>
+               <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *" required>
+               <input type="text" class="field2" name="pathologie" placeholder="Pathologie *" required>
+               <input type="text" class="field1" name="traitement" placeholder="Traitement *" required><button onclick="newline()">+</button>
                <script>
                   function newline(){
                      document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' placeholder='Traitement *'>"
@@ -25,8 +26,8 @@
             </fieldset>
             <fieldset>
                <legend><span class="number">2</span> Médecin</legend>
-               <input type="text" class="field2" name="nomMedecin" placeholder="Nom Médecin *">
-               <input type="text" class="field2" name="prenomMedecin" placeholder="Prénom Médecin *">
+               <input type="text" class="field2" name="nomMedecin" placeholder="Nom Médecin *" required>
+               <input type="text" class="field2" name="prenomMedecin" placeholder="Prénom Médecin *" required> 
             </fieldset>
             <fieldset>
                 <legend><span class="number">3</span> Mutuelle</legend>

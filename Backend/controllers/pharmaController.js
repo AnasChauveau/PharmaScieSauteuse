@@ -8,12 +8,8 @@ const pharMenu = (req, res) => {
 const pharmAffichagePatients = (req, res) => {
     let requete = "SELECT CONCAT(Nom_Patient, ' ', Prenom_Patient) AS Nom_Patient, noSS, Date_naissance FROM patient order by Nom_Patient, Prenom_Patient"
     mysqlconnexion.query(requete, (err, lignes, champs) => {
-        if (!err) {
-            console.log(lignes)
-            res.render('patient', {patients : lignes, moment : moment})
-        }else{
-            res.redirect('erreur')
-        }
+        console.log(lignes)
+        res.render('patient', {patients : lignes, moment : moment})
     })
 }
 
@@ -26,17 +22,11 @@ function pharmulairePatient(req, res) {
 }
 
 function pharmAjoutDePatient(req, res) {
-    let msgID = req.body.id
 
+    res.render('confirm')
+}
 
-    let msgName = req.body.name
-    let msgMsg = req.body.msg
-    let msgNote = req.body.note
-
-    console.log(req.body);
-    res.render('formPat')
-       
-    console.log(`Ajout msg ID ${msgID} de ${msgName} contenant ${msgMsg} et noté ${msgNote}`)
+/*
     let requeteSQL = "INSERT INTO patient (id, name, message, evaluation) VALUES";
     requeteSQL = requeteSQL + ' (' + msgID + ',"' + msgName + '","' + msgMsg + '",' + msgNote + ')';
     console.log("Requete : "+requeteSQL)
@@ -50,6 +40,7 @@ function pharmAjoutDePatient(req, res) {
         }
     })     
 }
+*/
 
 module.exports = {
     pharMenu,
