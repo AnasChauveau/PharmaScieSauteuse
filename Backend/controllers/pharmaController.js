@@ -21,8 +21,13 @@ function pharmAffichageStocks(req, res) {
     res.render('stock')
 }
 
+function pharmulairePatient(req, res) {
+    res.render('formPat')
+}
+
 module.exports = {
     pharMenu,
     pharmAffichagePatients,
-    pharmAffichageStocks
+    pharmAffichageStocks,
+    pharmulairePatient
 }

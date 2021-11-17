@@ -14,4 +14,6 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Gestion-de-Stock', PharmaControle.pharmAffichageStocks)
 
+    .get('/Formulaire', PharmaControle.pharmulairePatient)
+
 module.exports = routeur
