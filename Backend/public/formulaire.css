@@ -1,5 +1,5 @@
 .form-style-5{
-	max-width: 500px;
+	max-width: 700px;
 	padding: 10px 20px;
 	background: #f4f7f8;
 	margin: 10px auto;
@@ -46,12 +46,12 @@
 }
 
 .field1{
-	width: 70%;
+	width: 40%;
 	margin-right: 20px;
 }
 
 .form-style-5 .number {
-	background: #1abc9c;
+	background: #6c7ae0;
 	color: #fff;
 	height: 30px;
 	width: 30px;
@@ -72,17 +72,17 @@
 	padding: 19px 39px 18px 39px;
 	color: #FFF;
 	margin: 0 auto;
-	background: #1abc9c;
+	background: #6c7ae0;
 	font-size: 18px;
 	text-align: center;
 	font-style: normal;
 	width: 100%;
-	border: 1px solid #16a085;
+	border: 1px solid #515caf;
 	border-width: 1px 1px 3px;
 	margin-bottom: 10px;
 }
 .form-style-5 input[type="submit"]:hover,
 .form-style-5 input[type="button"]:hover
 {
-	background: #109177;
+	background: #6c7ae0;
 }
