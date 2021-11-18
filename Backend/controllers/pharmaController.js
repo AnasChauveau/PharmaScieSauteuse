@@ -32,17 +32,17 @@ function pharmulairePatient(req, res) {
     mysqlconnexion.query( requeteMedic, (err, lignes, champs) => {
         lesMedics = lignes;
         console.log(lesMedics);
+        mysqlconnexion.query( requeteMedec, (err, lignes, champs) => {
+            lesMedecins = lignes;
+            console.log(lesMedecins);
+            mysqlconnexion.query( requeteAssurance, (err, lignes, champs) => {
+                lesAssurances = lignes;
+                console.log(lesAssurances);
+                res.render('formPat', {medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances})
+            })
+        })
     })
-    mysqlconnexion.query( requeteMedec, (err, lignes, champs) => {
-        lesMedecins = lignes;
-        console.log(lesMedecins);
-    })
-    mysqlconnexion.query( requeteAssurance, (err, lignes, champs) => {
-        lesAssurances = lignes;
-        console.log(lesAssurances);
-    })
-    console.log(lesAssurances)
-    res.render('formPat', {medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances})
+    
 }
 
 function pharmAjoutDePatient(req, res) {
