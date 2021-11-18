@@ -18,7 +18,16 @@ function pharmAffichageStocks(req, res) {
 }
 
 function pharmulairePatient(req, res) {
-    res.render('formPat')
+    let requeteMedic = "SELECT * FROM medicament" ;
+    let requeteAssurance = "SELECT * FROM assurence" ;
+
+    mysqlconnexion.query( requeteMedic, (err, lesMedics, champs) => {
+        console.log(lesMedics);
+    })
+    mysqlconnexion.query( requeteAssurance, (err, lesAssurances, champs) => {
+        console.log(lesAssurances);
+    })
+    res.render('formPat', {})
 }
 
 function pharmAjoutDePatient(req, res) {
