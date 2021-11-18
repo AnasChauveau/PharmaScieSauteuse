@@ -18,16 +18,31 @@ function pharmAffichageStocks(req, res) {
 }
 
 function pharmulairePatient(req, res) {
-    let requeteMedic = "SELECT * FROM medicament" ;
-    let requeteAssurance = "SELECT * FROM assurence" ;
 
-    mysqlconnexion.query( requeteMedic, (err, lesMedics, champs) => {
+    // Requetes //
+    let requeteMedic = "SELECT * FROM medicament" ;
+    let requeteMedec = "SELECT * FROM medecin" ;
+    let requeteAssurance = "SELECT * FROM assurance" ;
+
+    // Conteneur de résultats des requetes //
+    let lesMedics = "";
+    let lesMedecins = "";
+    let lesAssurances = "";
+
+    mysqlconnexion.query( requeteMedic, (err, lignes, champs) => {
+        lesMedics = lignes;
         console.log(lesMedics);
     })
-    mysqlconnexion.query( requeteAssurance, (err, lesAssurances, champs) => {
+    mysqlconnexion.query( requeteMedec, (err, lignes, champs) => {
+        lesMedecins = lignes;
+        console.log(lesMedecins);
+    })
+    mysqlconnexion.query( requeteAssurance, (err, lignes, champs) => {
+        lesAssurances = lignes;
         console.log(lesAssurances);
     })
-    res.render('formPat', {})
+    console.log(lesAssurances)
+    res.render('formPat', {medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances})
 }
 
 function pharmAjoutDePatient(req, res) {
