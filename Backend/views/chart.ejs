@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js" 
+    integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>ChartJS</title>
+</head>
+<body>
+
+    <canvas id="myChart" width="5%"></canvas>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+                datasets: [{
+                    label: 'Nombre de Boîte de Doliprane',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgb(255, 0, 0)',
+                    ],
+                    borderColor: [
+                        'rgb(255, 0, 0)',
+                    ],
+                    borderWidth: 1,
+                },
+              ],
+            },
+            options: {
+                
+                // marche pas ( //
+                title: {
+                    display: true,
+                    text: "Graphique des besoins de la Pharmacie",
+                    fontSize: 20,
+                },
+                legend: {
+                    display: false,
+                },
+                // Cette merde ) //
+
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    
+</body>
+</html>

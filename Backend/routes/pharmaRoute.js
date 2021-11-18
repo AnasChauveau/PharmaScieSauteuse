@@ -18,4 +18,6 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .post('/Confirmation', PharmaControle.pharmAjoutDePatient)
 
+    .get('/Graph', PharmaControle.Chart)
+
 module.exports = routeur

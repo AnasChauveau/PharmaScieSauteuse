@@ -96,12 +96,17 @@ function pharmAjoutDePatient(req, res) {
     }
 }
 
+function Chart(req, res) {
+    res.render("chart")
+}
+
 module.exports = {
     pharMenu,
     pharmAffichagePatients,
     pharmAffichageStocks,
     pharmulairePatient,
-    pharmAjoutDePatient
+    pharmAjoutDePatient,
+    Chart
 }
 
 
