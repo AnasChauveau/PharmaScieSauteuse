@@ -60,7 +60,7 @@
                      <select class="field1" name="traitement" id="medic" placeholder="Traitement *" required>
                         
                         <% medicaments.forEach(function(medicament){ %>
-                        <option value="<%medicament.idMedic%>"><%medicament.Nom_Medic%></option>
+                        <option value="<%=medicament.idMedic%>"><%=medicament.Nom_Medic%></option>
                         <% }) %>
 
                      </select>
@@ -88,7 +88,7 @@
                   <select class="field2" name="medecin" required>
 
                      <% medecins.forEach(function(medecin){ %>
-                     <option value="<%medecin.idMede%>"><%medecin.Nom_Mede%></option>
+                     <option value="<%=medecin.idMede%>"><%=medecin.Nom_Mede%></option>
                      <% }) %>
 
                   </select>
@@ -99,7 +99,7 @@
                   <select class="field2" name="mutuel">
 
                      <% assurances.forEach(function(assurance){ %>
-                     <option value="<%assurance.noAssur%>"><%assurance.Nom_Assur%></option>
+                     <option value="<%=assurance.noAssur%>"><%=assurance.Nom_Assur%></option>
                      <% }) %>
 
                   </select>
