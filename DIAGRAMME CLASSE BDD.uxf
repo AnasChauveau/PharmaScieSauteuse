@@ -1,4 +1,4 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>100</x><y>240</y><w>210</w><h>100</h></coordinates><panel_attributes>Patient
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>60</x><y>210</y><w>210</w><h>100</h></coordinates><panel_attributes>Patient
 --
 _Num_Carte_Vitale_
 Nom_Patient
@@ -7,46 +7,46 @@ Date_naissance
 
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>240</y><w>210</w><h>90</h></coordinates><panel_attributes>Ordonnance
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>210</y><w>210</w><h>90</h></coordinates><panel_attributes>Ordonnance
 --
-_idOrdonance_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>560</y><w>210</w><h>110</h></coordinates><panel_attributes>Médicament
+_idOrdonance_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>530</y><w>210</w><h>110</h></coordinates><panel_attributes>Médicament
 --
 _idMédic_
 Nom_Médic
 Quantité_En_Stock
 Quantité_Nécéssaire
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>100</x><y>550</y><w>210</w><h>90</h></coordinates><panel_attributes>Assurance
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>60</x><y>520</y><w>210</w><h>90</h></coordinates><panel_attributes>Assurance
 --
 _Num_Assurance_
 Nom_Assurance
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>960</x><y>240</y><w>210</w><h>110</h></coordinates><panel_attributes>Médecin
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>920</x><y>210</y><w>210</w><h>110</h></coordinates><panel_attributes>Médecin
 --
 _idMédecin_
 nom_médecin
-prénom_médecin</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>290</y><w>260</w><h>40</h></coordinates><panel_attributes>lt=-
+prénom_médecin</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>260</y><w>260</w><h>40</h></coordinates><panel_attributes>lt=-
 m1=*
-m2=1</panel_attributes><additional_attributes>10;10;240;10</additional_attributes></element><element><id>Relation</id><coordinates><x>610</x><y>320</y><w>50</w><h>260</h></coordinates><panel_attributes>lt=-
+m2=1</panel_attributes><additional_attributes>10;10;240;10</additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>290</y><w>50</w><h>260</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=1..*
-</panel_attributes><additional_attributes>10;10;10;240</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>330</y><w>50</w><h>240</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes>10;10;10;240</additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>300</y><w>50</w><h>240</h></coordinates><panel_attributes>lt=-
 m1=*
 m2=0..1
 
-</panel_attributes><additional_attributes>10;10;10;220</additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>280</y><w>240</w><h>50</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes>10;10;10;220</additional_attributes></element><element><id>Relation</id><coordinates><x>260</x><y>250</y><w>240</w><h>50</h></coordinates><panel_attributes>lt=-
 m1=1
 m2=1..*
-</panel_attributes><additional_attributes>10;20;220;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>770</x><y>420</y><w>210</w><h>70</h></coordinates><panel_attributes>Traitement
+</panel_attributes><additional_attributes>10;20;220;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>730</x><y>390</y><w>210</w><h>70</h></coordinates><panel_attributes>Traitement
 --
 nbBoite_Ordonnance
-Durée</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>610</x><y>440</y><w>180</w><h>40</h></coordinates><panel_attributes>lt=.
-</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>510</x><y>30</y><w>220</w><h>70</h></coordinates><panel_attributes>Pathologie
+Durée</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>410</y><w>180</w><h>40</h></coordinates><panel_attributes>lt=.
+</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>470</x><y>0</y><w>220</w><h>70</h></coordinates><panel_attributes>Pathologie
 --
 _idPath_
-Nom_Path</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>610</x><y>90</y><w>40</w><h>170</h></coordinates><panel_attributes>lt=-
+Nom_Path</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>60</y><w>40</w><h>170</h></coordinates><panel_attributes>lt=-
 m1=1
 m2=*
-</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>320</x><y>410</y><w>210</w><h>70</h></coordinates><panel_attributes>Echeance
+</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>380</y><w>210</w><h>70</h></coordinates><panel_attributes>Echeance
 --
-Date_Echeance</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>430</y><w>150</w><h>40</h></coordinates><panel_attributes>lt=.
+Date_Echeance</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>150</x><y>400</y><w>150</w><h>40</h></coordinates><panel_attributes>lt=.
 </panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element></diagram>

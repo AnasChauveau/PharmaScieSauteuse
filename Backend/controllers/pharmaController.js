@@ -18,16 +18,19 @@ function pharmAffichageStocks(req, res) {
 }
 
 function pharmulairePatient(req, res) {
+    let leMoment = moment;
 
     // Préparations des Requetes //
     let requeteMedic = "SELECT * FROM medicament" ;
-    let requeteMedec = "SELECT * FROM medecin" ;
+    let requeteMedec = "SELECT CONCAT(Nom_Mede, ' ', Prenom_Mede) AS NomMede, idMede FROM medecin" ;
     let requeteAssurance = "SELECT * FROM assurance" ;
+    let requetePathologie = "SELECT * FROM pathologie" ;
 
     // Conteneur du résultats des Requetes //
     let lesMedics = "";
     let lesMedecins = "";
     let lesAssurances = "";
+    let lesPathologies = "";
 
     // Exécution des Requetes //
     mysqlconnexion.query( requeteMedic, (err, lignes, champs) => {
@@ -39,8 +42,10 @@ function pharmulairePatient(req, res) {
     mysqlconnexion.query( requeteAssurance, (err, lignes, champs) => {
         lesAssurances = lignes;
     })
-    setTimeout(() => {res.render('formPat', {medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances})}, 200)
-    
+    mysqlconnexion.query( requetePathologie, (err, lignes, champs) => {
+        lesPathologies = lignes;
+    })
+    setTimeout(() => {res.render('formPat', {moment : leMoment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})}, 200)
 }
 
 function pharmAjoutDePatient(req, res) {
@@ -60,6 +65,7 @@ function pharmAjoutDePatient(req, res) {
     // Traitement //
     let medic = req.body.traitement;
     let nbBoite = req.body.nbBoite;
+    let duree = req.body.duree;
 
     if (nomPatient == "" || prenomPatient == "" || dateNaissance == "" || noSS == "" ||
     path == "" || medecin == "" || medic == "" || nbBoite == ""){
@@ -68,15 +74,17 @@ function pharmAjoutDePatient(req, res) {
         // Requete Patient //
         let requeteSQL_1 = "INSERT INTO patient (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
         requeteSQL_1 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
-        /*
+        
         // Requete Ordonnance //
-        let idPath = "SELECT idPath FROM Pathologie WHERE Nom_Path = "+path;
-        let idMede = "SELECT idPath FROM Pathologie WHERE Nom_Path = "+medecin;
-        let requeteSQL_2 = "INSERT INTO ordonnance (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
-        requeteSQL_2 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
+        let requeteSQL_2 = "INSERT INTO ordonnance (noSS, Id_Path, Id_Mede) VALUES";
+        requeteSQL_2 += ' (' + noSS + ',"' + path + '","' + medecin + '")';
 
-        let requeteSQL_3 = "INSERT INTO patient (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
-        requeteSQL_3 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
+        let test = "select noOrd from ordonnance, patient, pathologie where ";
+
+        // Requete Traitement //
+        let requeteSQL_3 = "INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, Duree) VALUES";
+        requeteSQL_3 += ' (' + ord + ',"' + medic + '","' + nbBoite + '","' + duree + '")';
+        
 
         let requetesSQL = [requeteSQL_1, requeteSQL_2, requeteSQL_3];
 
@@ -90,7 +98,7 @@ function pharmAjoutDePatient(req, res) {
                     res.send("Erreur ajout : "+JSON.stringify(err))
                 }
             })
-        } */    
+        }   
     }
 }
 

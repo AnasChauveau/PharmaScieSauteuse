@@ -28,7 +28,7 @@
                   <span class="nav_logo-name">Pharmacie Sautheuz</span> 
                   </a>
                   <div class="nav_list"> 
-                     <a href="#" class="nav_link"> 
+                     <a href="/PharmaScieSauteuse/Gestion-de-Patient" class="nav_link"> 
                      <i class='bx bx-grid-alt nav_icon'></i> 
                      <span class="nav_name">Gestion des patients</span> 
                      </a> 
@@ -52,20 +52,27 @@
                   <legend><span class="number">1</span> Patient :</legend>
                   <input type="text" class="field2" name="nom" placeholder="Nom *" required>
                   <input type="text" class="field2" name="prenom" placeholder="Prénom *" required>
-                  <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *" required>
-                  <input type="text" class="field2" name="pathologie" placeholder="Pathologie *" required>
-                  <input type="date" class="field2" name="date_naissance" placeholder="Date de naissance : 23/09/2001*" required>
+                  <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *" minlength="15" maxlength="15" required>
+                  <input type="date" class="field2" name="date_naissance" placeholder="Date de naissance : 23-09-2001*" required>
+                  <select  class="field2" name="pathologie" id="patoche">
+
+                     <option value='' selected>- Pathologie -</option>
+                     <% pathologies.forEach(function(pathologie){ %>
+                     <option value='<%=pathologie.idPath%>'><%=pathologie.Nom_Path%></option>
+                     <% }) %>
+                  </select>
                   <!-- TRAITEMENT OBLIGATOIRE : -->
                   <div class="align">
-                     <select class="field1" name="traitement" id="medic" placeholder="Traitement *" required>
-                        
+                     <select class="field1" name="traitement" id="medic" required>
+
+                        <option value='' selected>- Choix Médicament -</option>
                         <% medicaments.forEach(function(medicament){ %>
-                        <option value="<%=medicament.idMedic%>"><%=medicament.Nom_Medic%></option>
+                        <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option>
                         <% }) %>
 
                      </select>
-                     <input type="text" class="field1" name="nbBoite" placeholder="Nombre total de boîtes *" required>
-                     <input type="text" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
+                     <input type="number" class="field1" name="nbBoite" placeholder="Nombre total de boîtes *" required>
+                     <input type="number" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
                      <button onclick="newline()">+</button>
                   </div>
                   <!-- FIN TRAITEMENT OBLIGATOIRE -->
@@ -73,11 +80,22 @@
                   <script>
                      let a = 1;
                      function newline(){
-                        document.getElementById('dynamic').innerHTML += "<select class='field1' id='medic"+a+"' name='traitement"+a+"' required><option value='1'>Doliprane2</option></select>" 
-                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='nbBoite' placeholder='Nombre total de boîtes *' required>" 
-                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' id='duree' placeholder='Durée traitement (mois)*' required>"  
+                        document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' name='Qte"+a+"' id='Qte' placeholder='Quantité*' required>"
+                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1'name='duree"+a+"' id='Duree' placeholder='Durée traitement (M)' required> <button id='del' onclick='delline()'>x</button>" 
                         a = a+1
                         document.getElementById('nb').innerHTML = a;
+                     }
+                     function delline(){
+                        var select = document.getElementById("Count");
+                        select.remove();
+                        var Qte = document.getElementById("Qte");
+                        Qte.remove();
+                        var duree = document.getElementById("duree");
+                        duree.remove();
+                        var delbtn = document.getElementById("del");
+                        delbtn.remove();
+                        a = a-1
                      }
                   </script>
 
@@ -86,9 +104,10 @@
                   <legend><span class="number">2</span> Médecin</legend>
                   <label for="mutuel">Nom du médecin :</label>
                   <select class="field2" name="medecin" required>
-
+                     
+                     <option value='' selected>- Choix Médecin -</option>
                      <% medecins.forEach(function(medecin){ %>
-                     <option value="<%=medecin.idMede%>"><%=medecin.Nom_Mede%></option>
+                     <option value="<%=medecin.idMede%>"><%=medecin.NomMede%></option>
                      <% }) %>
 
                   </select>
@@ -98,14 +117,16 @@
                   <label for="mutuel">Nom de la Mutuelle :</label>
                   <select class="field2" name="mutuel">
 
+                     <option value='' selected>- Choix Assurance -</option>
                      <% assurances.forEach(function(assurance){ %>
                      <option value="<%=assurance.noAssur%>"><%=assurance.Nom_Assur%></option>
                      <% }) %>
 
                   </select>
                </fieldset>
-               <input type="submit" value="Envoyer" />
-               <p name="nbT" id="nb"></p>
+               <p class="hidden" name="date_aujourd'hui"><%=moment().add(1,'years').calendar()%></p>
+               <input type="submit" value="Envoyer" >
+               <p name="nbT" class="hidden"></p>
             </form>
          </div>
       </body>

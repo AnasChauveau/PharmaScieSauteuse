@@ -22,6 +22,7 @@
 .form-style-5 input[type="text"],
 .form-style-5 input[type="email"],
 .form-style-5 input[type="number"],
+.form-style-5 input[type="date"],
 .form-style-5 select {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	background: rgba(255,255,255,.1);
@@ -85,4 +86,8 @@
 .form-style-5 input[type="button"]:hover
 {
 	background: #6c7ae0;
+}
+.hidden{
+	opacity: 0;
+	height: 1px !important;
 }
