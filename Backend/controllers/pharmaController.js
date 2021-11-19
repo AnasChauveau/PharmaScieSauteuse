@@ -22,7 +22,7 @@ function pharmulairePatient(req, res) {
 
     // Préparations des Requetes //
     let requeteMedic = "SELECT * FROM medicament" ;
-    let requeteMedec = "SELECT CONCAT(Nom_Mede, ' ', Prenom_Mede) AS NomMede, idMede FROM medecin" ;
+    let requeteMedec = "SELECT * FROM medecin" ;
     let requeteAssurance = "SELECT * FROM assurance" ;
     let requetePathologie = "SELECT * FROM pathologie" ;
 
@@ -61,44 +61,88 @@ function pharmAjoutDePatient(req, res) {
     // Ordonnance //
     let path = req.body.pathologie;
     let medecin = req.body.medecin;
+    let ordonnance = "";
 
     // Traitement //
     let medic = req.body.traitement;
     let nbBoite = req.body.nbBoite;
     let duree = req.body.duree;
+    let nb_traitement = req.body.nb_traitement;
+    
+    // Assurance //
+    let assur = req.body.mutuelle;
+    let date_scan = req.body.date_scan;
 
     if (nomPatient == "" || prenomPatient == "" || dateNaissance == "" || noSS == "" ||
     path == "" || medecin == "" || medic == "" || nbBoite == ""){
-        console.log("Veuillez remplir tous les champs obligatoires !")
+        alert("Veuillez remplir tous les champs obligatoires !")
     }else{
         // Requete Patient //
         let requeteSQL_1 = "INSERT INTO patient (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
         requeteSQL_1 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
         
         // Requete Ordonnance //
-        let requeteSQL_2 = "INSERT INTO ordonnance (noSS, Id_Path, Id_Mede) VALUES";
-        requeteSQL_2 += ' (' + noSS + ',"' + path + '","' + medecin + '")';
-
-        let test = "select noOrd from ordonnance, patient, pathologie where ";
-
-        // Requete Traitement //
-        let requeteSQL_3 = "INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, Duree) VALUES";
-        requeteSQL_3 += ' (' + ord + ',"' + medic + '","' + nbBoite + '","' + duree + '")';
+        let requeteSQL_2 = "INSERT INTO ordonnance (no_SS, Id_Path, Id_Mede) VALUES";
+        requeteSQL_2 += ' (' + noSS + ',' + path + ',' + medecin + ')';
         
-
-        let requetesSQL = [requeteSQL_1, requeteSQL_2, requeteSQL_3];
+        let requetesSQL = [requeteSQL_1, requeteSQL_2];
 
         for (let t = 0;t < requetesSQL.length;t++) {
-            mysqlconnexion.query( requeteSQL_1, (err, lignes, champs) => {
+            mysqlconnexion.query( requetesSQL[t], (err, lignes, champs) => {
                 if (!err) {
                     console.log("Insertion du patient terminé");
-                    res.render("confirm");
                 } else {
-                    console.log("Erreur lors de l'enregistrment")
+                    console.log("Erreur lors de l'enregistrment de "+requetesSQL[t])
                     res.send("Erreur ajout : "+JSON.stringify(err))
                 }
             })
         }   
+        let requeteOrdonnance = "SELECT noOrd FROM ordonnance WHERE Id_Path = "+path+" AND Id_Mede = "+medecin+" and no_SS = "+noSS;
+        mysqlconnexion.query( requeteOrdonnance, (err, lignes, champs) => {
+            ordonnance = lignes;
+        })
+
+        // Requete Traitement //
+        setTimeout(() => {console.log(ordonnance);
+
+            let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + medic + ',' + nbBoite + ',' + duree + ')';
+            mysqlconnexion.query( requeteSQL_3, (err, lignes, champs) => {
+                if (!err) {
+                    console.log("Insertion du patient terminé");
+                } else {
+                    console.log("Erreur lors de l'enregistrment de "+requeteSQL_3)
+                    res.send("Erreur ajout : "+JSON.stringify(err))
+                }
+            })
+            
+            if(nb_traitement != ''){  
+                for(let i = 1;i<nb_traitement;i++){
+                    requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + req.body.traitement+""+i+ ',' + req.body.nbBoite+""+i+ ',' + req.body.duree+""+i+ ')';
+                    mysqlconnexion.query( requeteSQL_3, (err, lignes, champs) => {
+                        if (!err) {
+                            console.log("Insertion du patient terminé");
+                        } else {
+                            console.log("Erreur lors de l'enregistrment de "+requeteSQL_3)
+                            res.send("Erreur ajout : "+JSON.stringify(err))
+                        }
+                    })
+                }
+            }
+        }, 200)
+
+        if (assur != 0){
+            let requeteSQL_4 = "INSERT INTO echeance (no_SS, no_Assur, Date_Scan) VALUES";
+            requeteSQL_4 += ' (' + noSS + ',' + assur + ',"' + date_scan + '")';
+            mysqlconnexion.query( requeteSQL_4, (err, lignes, champs) => {
+                if (!err) {
+                    console.log("Insertion du patient terminé");
+                } else {
+                    console.log("Erreur lors de l'enregistrment de "+requeteSQL_4)
+                    res.send("Erreur ajout : "+JSON.stringify(err))
+                }
+            })
+        }
+        res.render('confirm')
     }
 }
 

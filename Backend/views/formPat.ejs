@@ -53,10 +53,10 @@
                   <input type="text" class="field2" name="nom" placeholder="Nom *" required>
                   <input type="text" class="field2" name="prenom" placeholder="Prénom *" required>
                   <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *" minlength="15" maxlength="15" required>
-                  <input type="date" class="field2" name="date_naissance" placeholder="Date de naissance : 23-09-2001*" required>
+                  <input type="date" class="field2" name="date_naissance" required>
                   <select  class="field2" name="pathologie" id="patoche">
 
-                     <option value='' selected>- Pathologie -</option>
+                     <option value='0' selected>- Pathologie -</option>
                      <% pathologies.forEach(function(pathologie){ %>
                      <option value='<%=pathologie.idPath%>'><%=pathologie.Nom_Path%></option>
                      <% }) %>
@@ -65,7 +65,7 @@
                   <div class="align">
                      <select class="field1" name="traitement" id="medic" required>
 
-                        <option value='' selected>- Choix Médicament -</option>
+                        <option value='0' selected>- Choix Médicament -</option>
                         <% medicaments.forEach(function(medicament){ %>
                         <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option>
                         <% }) %>
@@ -80,11 +80,11 @@
                   <script>
                      let a = 1;
                      function newline(){
-                        document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
-                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1' name='Qte"+a+"' id='Qte' placeholder='Quantité*' required>"
-                        document.getElementById('dynamic').innerHTML += "<input type='text' class='field1'name='duree"+a+"' id='Duree' placeholder='Durée traitement (M)' required> <button id='del' onclick='delline()'>x</button>" 
+                        document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='Qte' placeholder='Quantité*' required>"
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='duree' placeholder='Durée traitement (mois)' required> <button id='del' onclick='delline()'>x</button>" 
                         a = a+1
-                        document.getElementById('nb').innerHTML = a;
+                        document.getElementById('nbT').value = a;
                      }
                      function delline(){
                         var select = document.getElementById("Count");
@@ -96,6 +96,7 @@
                         var delbtn = document.getElementById("del");
                         delbtn.remove();
                         a = a-1
+                        document.getElementById('nbT').value = a;
                      }
                   </script>
 
@@ -107,26 +108,26 @@
                      
                      <option value='' selected>- Choix Médecin -</option>
                      <% medecins.forEach(function(medecin){ %>
-                     <option value="<%=medecin.idMede%>"><%=medecin.NomMede%></option>
+                     <option value="<%=medecin.idMede%>"><%=medecin.NomCompletMede%></option>
                      <% }) %>
 
                   </select>
                </fieldset>
                <fieldset>
                   <legend><span class="number">3</span> Mutuelle</legend>
-                  <label for="mutuel">Nom de la Mutuelle :</label>
-                  <select class="field2" name="mutuel">
+                  <label for="mutuelle">Nom de la Mutuelle :</label>
+                  <select class="field2" name="mutuelle">
 
-                     <option value='' selected>- Choix Assurance -</option>
+                     <option value='0' selected>- Choix Assurance -</option>
                      <% assurances.forEach(function(assurance){ %>
                      <option value="<%=assurance.noAssur%>"><%=assurance.Nom_Assur%></option>
                      <% }) %>
 
                   </select>
                </fieldset>
-               <p class="hidden" name="date_aujourd'hui"><%=moment().add(1,'years').calendar()%></p>
+               <input class="hidden" name="date_scan" value="<%=moment().add(1,'years').format("YYYY-MM-DD")%>">
                <input type="submit" value="Envoyer" >
-               <p name="nbT" class="hidden"></p>
+               <input id="nbT" name="nb_traitement" class="hidden">
             </form>
          </div>
       </body>
