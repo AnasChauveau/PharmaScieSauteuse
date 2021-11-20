@@ -12,7 +12,9 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Gestion-de-Patient', PharmaControle.pharmAffichagePatients)
 
-    .get('/Gestion-de-Patient/info:id', PharmaControle.pharmInfoPatient)
+    .get('/Gestion-de-Patient/info/:id', PharmaControle.pharmInfoPatient)
+
+    .get('/Gestion-de-Patient/newOrdonnance:id', PharmaControle.pharmulaireOrdonnance)
 
     .get('/Gestion-de-Stock', PharmaControle.pharmAffichageStocks)
 
@@ -20,6 +22,6 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .post('/Confirmation', PharmaControle.pharmAjoutDePatient)
 
-    .get('/Graphe', PharmaControle.Chart)
+    .get('/Gestion-de-Stock/Graphe:id', PharmaControle.Chart)
 
 module.exports = routeur

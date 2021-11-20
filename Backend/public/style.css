@@ -221,23 +221,27 @@ th {
 
 }
 .column1 {
-    width: 20%;
+    width: 15%;
     padding-left: 10px;
 }
 .column2{
-    width: 20%;
+    width: 15%;
     padding-left: 10px;
 }
 .column3{
-    width: 20%;
+    width: 15%;
     padding-left: 10px;
 }
 .column4{
-    width: 20%;
+    width: 15%;
     padding-left: 10px;
 }
 .column5{
-    width: 20%;
+    width: 15%;
+    padding-left: 10px;
+}
+.column6{
+    width: 15%;
     padding-left: 10px;
 }
 

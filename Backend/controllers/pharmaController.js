@@ -1,6 +1,5 @@
 const db = require('../models/donnees')
 const moment = require ("../config/moment")
-const { getMedecin, getStock, getMutuelle, getPathologie } = require('../models/donnees')
 
 
 const pharMenu = (req, res) => {
@@ -21,12 +20,48 @@ const pharmAffichageStocks = (req, res) => {
     })
 }
 
+const pharmInfoPatient = (req, res) => {
+    let noSS = req.params.id;
+    
+    // Conteneur du résultats des Requetes //
+    let patient = "";
+    let pathologie = "";
+    let medicament = "";
+    let mutuelle = "";
+
+    db.getOnePatient(noSS, (data) =>{patient = data})
+    db.getPathPatient(noSS, (data) =>{pathologie = data})
+    //db.getOnePatient(noSS, (data) =>{patient = data})
+    db.getMutuellePatient(noSS, (data) =>{mutuelle = data})
+    setTimeout(() => {console.log(pathologie, mutuelle)
+        res.render("fichePatient", {moment : moment, patient : patient, pathologie : pathologie, mutuelle :mutuelle})}, 200)
+}
+
+const pharmulaireOrdonnance = (req, res) => {
+    // Conteneur du résultats des Requetes //
+    let lesMedics = "";
+    let lesMedecins = "";
+    let lesPathologies = "";
+
+    db.getStock((data) => {lesMedics = data;})
+    db.getMedecin((data) => {lesMedecins = data;})
+    db.getPathologie((data) => {lesPathologies = data;})
+    setTimeout(() => {res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies})}, 200)
+}
+
 const pharmulairePatient = (req, res) => {
-    db.getStock((medic))
-    db.getMedecin((medecin))
-    db.getMutuelle((mutuelle))
-    db.getPathologie((path))
-        res.render('formPat', {moment : moment, medicaments : medic, medecins : medecin, assurances : mutuelle, pathologies : path})
+
+    // Conteneur du résultats des Requetes //
+    let lesMedics = "";
+    let lesMedecins = "";
+    let lesAssurances = "";
+    let lesPathologies = "";
+
+    db.getStock((data) => {lesMedics = data;})
+    db.getMedecin((data) => {lesMedecins = data;})
+    db.getMutuelle((data) => {lesAssurances = data;})
+    db.getPathologie((data) => {lesPathologies = data;})
+    setTimeout(() => {res.render('formPat', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})}, 200)
 }
 
 const pharmAjoutDePatient = (req, res) => {
@@ -160,10 +195,6 @@ const pharmAjoutDePatient = (req, res) => {
     }
 }
 
-const pharmInfoPatient = (req, res) => {
-    res.render("fichePatient")
-}
-
 const Chart = (req, res) => {
     res.render("chart")
 }
@@ -175,7 +206,10 @@ module.exports = {
     pharmulairePatient,
     pharmAjoutDePatient,
     pharmInfoPatient,
+    pharmulaireOrdonnance,
     Chart
 }
+
+
 
 

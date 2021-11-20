@@ -22,13 +22,13 @@
             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                <div class="accordion-body">
                   <strong>Nom :</strong>
-                  <p>DAVID</p>
+                  <p><%=patient.Nom_Patient%></p>
                   <strong>Prénom :</strong>
-                  <p>Louis</p>
+                  <p><%=patient.Prenom_Patient%></p>
                   <strong>Date de naissance :</strong>
-                  <p>11/09/2001</p>
+                  <p><%=moment(patient.Date_Naissance).calendar()%></p>
                   <strong>Numéro de sécurité sociale :</strong>
-                  <p>2430450832145 17</p>
+                  <p><%=patient.noSS%></p>
                </div>
             </div>
          </div>
@@ -41,9 +41,7 @@
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                <div class="accordion-body">
                   <strong>Pathologie 1 :</strong>
-                  <p>Cancer</p>
-                  <strong>Pathologie 2 :</strong>
-                  <p>Sida</p>
+                  <p><%=pathologie.Nom_Path%></p>
                </div>
             </div>
          </div>
@@ -56,9 +54,9 @@
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                <div class="accordion-body">
                   <strong>Traitement 1 :</strong>
-                  <p>Doliprane</p>
+                  <p>2 Boîtes de Doliprane par mois pendant 5 mois</p>
                   <strong>Traitement 2 :</strong>
-                  <p>Ventoline</p>
+                  <p>1 Boîtes de Ventoline par mois pendant 2 mois</p>
 
                </div>
             </div>
@@ -71,10 +69,17 @@
             </h2>
             <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                <div class="accordion-body">
-                  <strong>Numéro de Mutuelle</strong>
-                  <p>Pas de Mutuelle</p>
-                  <strong>Nom de Mutuelle</strong>
-                  <p>Pas de Mutuelle</p>
+                  <% if(mutuelle != undefined) { %> 
+                     <strong>Numéro de Mutuelle</strong>
+                     <p><%=mutuelle.noAssur%></p>
+                     <strong>Nom de Mutuelle</strong>
+                     <p><%=mutuelle.Nom_Assur%></p>
+                  <% }else{ %>
+                     <strong>Numéro de Mutuelle</strong>
+                     <p>Pas de Mutuelle</p>
+                     <strong>Nom de Mutuelle</strong>
+                     <p>Pas de Mutuelle</p>
+                  <% } %>
                </div>
             </div>
          </div>

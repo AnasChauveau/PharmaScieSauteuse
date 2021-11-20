@@ -38,8 +38,9 @@ Utilité : Affichage de la liste des patients
                         <th class="column1">Nom et prénom</th>
                         <th class="column2">Numéro de sécurité social</th>
                         <th class="column3">Date de naissance</th>
-                        <th class="column4">En voir plus</th>
-                        <th class="column5"></th>
+                        <th class="column4"></th>
+                        <th class="column5">En voir plus</th>
+                        <th class="column6"></th>
                     </tr>
                 </thead>
             </table>
@@ -53,8 +54,9 @@ Utilité : Affichage de la liste des patients
                         <td class="column1"><%=patient.Nom_Patient%></td>
                         <td class="column2"><%=patient.noSS%></td>
                         <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
-                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info:<%=patient.noSS%>">Fiche patient</a></td>
-                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance:<%=patient.noSS%>">Ajouter ordonnance</a></td>
+                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Nouvelle ordonnance</a></td>
+                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
+                        <td class="column6"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/delete/<%=patient.noSS%>">Supprimer</a></td>
                     </tr>
 
                     <% if(c == 1) c = 0; else c = 1 %>
