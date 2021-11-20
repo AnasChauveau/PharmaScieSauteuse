@@ -13,11 +13,11 @@ const pharmAffichagePatients = (req, res) => {
     })
 }
 
-function pharmAffichageStocks(req, res) {
+const pharmAffichageStocks = (req, res) => {
     res.render('stock')
 }
 
-function pharmulairePatient(req, res) {
+const pharmulairePatient = (req, res) => {
     let leMoment = moment;
 
     // Préparations des Requetes //
@@ -48,7 +48,7 @@ function pharmulairePatient(req, res) {
     setTimeout(() => {res.render('formPat', {moment : leMoment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})}, 200)
 }
 
-function pharmAjoutDePatient(req, res) {
+const pharmAjoutDePatient = (req, res) => {
 
     console.log(req.body);
 
@@ -65,7 +65,7 @@ function pharmAjoutDePatient(req, res) {
 
     // Traitement //
     let medic = req.body.traitement;
-    let nbBoite = req.body.nbBoite;
+    let Qte = req.body.Qte;
     let duree = req.body.duree;
     let nb_traitement = req.body.nb_traitement;
     
@@ -74,7 +74,7 @@ function pharmAjoutDePatient(req, res) {
     let date_scan = req.body.date_scan;
 
     if (nomPatient == "" || prenomPatient == "" || dateNaissance == "" || noSS == "" ||
-    path == "" || medecin == "" || medic == "" || nbBoite == ""){
+    path == "" || medecin == "" || medic == "" || Qte == ""){
         alert("Veuillez remplir tous les champs obligatoires !")
     }else{
         // Requete Patient //
@@ -104,25 +104,55 @@ function pharmAjoutDePatient(req, res) {
 
         // Requete Traitement //
         setTimeout(() => {console.log(ordonnance);
-
-            let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + medic + ',' + nbBoite + ',' + duree + ')';
+            let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + medic + ',' + Qte + ',' + duree + ')';
             mysqlconnexion.query( requeteSQL_3, (err, lignes, champs) => {
                 if (!err) {
                     console.log("Insertion du patient terminé");
+
+                    let requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ Qte +" WHERE idMedic = "+ medic;
+                    mysqlconnexion.query( requeteQteNec, (err, lignes, champs) => {
+                        if (!err) {
+                            console.log("Insertion du patient terminé");
+                        } else {
+                            console.log("Erreur lors de l'enregistrment de "+requeteQteNec)
+                            res.send("Erreur ajout : "+JSON.stringify(err))
+                        }
+                    })
+                    
                 } else {
                     console.log("Erreur lors de l'enregistrment de "+requeteSQL_3)
                     res.send("Erreur ajout : "+JSON.stringify(err))
                 }
             })
-            
+
+            let traitementX = "";
+            let QteX = "";
+            let dureeX = "";
+            let requeteQteNec = "";
             if(nb_traitement != ''){  
                 for(let i = 1;i<nb_traitement;i++){
-                    requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + req.body.traitement+""+i+ ',' + req.body.nbBoite+""+i+ ',' + req.body.duree+""+i+ ')';
+
+                    traitementX = 'req.body.traitement'+i ;
+                    QteX = 'req.body.Qte'+i ;
+                    dureeX = 'req.body.duree'+i ;
+
+                    requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + eval(traitementX) + ',' + eval(QteX) + ',' + eval(dureeX) + ')';
                     mysqlconnexion.query( requeteSQL_3, (err, lignes, champs) => {
                         if (!err) {
                             console.log("Insertion du patient terminé");
+
                         } else {
                             console.log("Erreur lors de l'enregistrment de "+requeteSQL_3)
+                            res.send("Erreur ajout : "+JSON.stringify(err))
+                        }
+                    })
+
+                    requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ eval(QteX) +" WHERE idMedic = "+ eval(traitementX);
+                    mysqlconnexion.query( requeteQteNec, (err, lignes, champs) => {
+                        if (!err) {
+                            console.log("Insertion du patient terminé : ");
+                        } else {
+                            console.log("Erreur lors de l'enregistrment de "+requeteQteNec)
                             res.send("Erreur ajout : "+JSON.stringify(err))
                         }
                     })
@@ -146,7 +176,7 @@ function pharmAjoutDePatient(req, res) {
     }
 }
 
-function Chart(req, res) {
+const Chart = (req, res) => {
     res.render("chart")
 }
 

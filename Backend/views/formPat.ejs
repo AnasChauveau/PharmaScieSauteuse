@@ -71,7 +71,7 @@
                         <% }) %>
 
                      </select>
-                     <input type="number" class="field1" name="nbBoite" placeholder="Nombre total de boîtes *" required>
+                     <input type="number" class="field1" name="Qte" placeholder="Nombre total de boîtes *" required>
                      <input type="number" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
                      <button onclick="newline()">+</button>
                   </div>
@@ -81,17 +81,17 @@
                      let a = 1;
                      function newline(){
                         document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
-                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='Qte' placeholder='Quantité*' required>"
-                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='duree' placeholder='Durée traitement (mois)' required> <button id='del' onclick='delline()'>x</button>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte' placeholder='Quantité*' required>"
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree' placeholder='Durée traitement (mois)' required> <button id='del' onclick='delline()'>x</button>" 
                         a = a+1
                         document.getElementById('nbT').value = a;
                      }
                      function delline(){
                         var select = document.getElementById("Count");
                         select.remove();
-                        var Qte = document.getElementById("Qte");
+                        var Qte = document.getElementById("LaQte");
                         Qte.remove();
-                        var duree = document.getElementById("duree");
+                        var duree = document.getElementById("LaDuree");
                         duree.remove();
                         var delbtn = document.getElementById("del");
                         delbtn.remove();
