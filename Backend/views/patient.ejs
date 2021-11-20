@@ -53,8 +53,8 @@ Utilité : Affichage de la liste des patients
                     <td class="column1"><%=patient.Nom_Patient%></td>
                     <td class="column2"><%=patient.noSS%></td>
                     <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
-                    <td class="column4"><button>fiche patient</button></td>
-                    <td class="column5"><button>Ajouter ordonnance</button></td>
+                    <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
+                    <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Ajouter ordonnance</a></td>
                 </tr>
                 
                 <% })%>
