@@ -1,51 +1,32 @@
-const mysqlconnexion = require('../models/connexion')
+const db = require('../models/donnees')
 const moment = require ("../config/moment")
+const { getMedecin, getStock, getMutuelle, getPathologie } = require('../models/donnees')
+
 
 const pharMenu = (req, res) => {
     res.render('menu')
 }
 
 const pharmAffichagePatients = (req, res) => {
-    let requete = "SELECT CONCAT(Nom_Patient, ' ', Prenom_Patient) AS Nom_Patient, noSS, Date_naissance FROM patient order by Nom_Patient, Prenom_Patient"
-    mysqlconnexion.query(requete, (err, lignes, champs) => {
-        console.log(lignes)
-        res.render('patient', {patients : lignes, moment : moment})
+    let couleur = 1;
+    db.getPatient( (data) =>{
+        res.render('patient', {patients : data, moment : moment, c : couleur})
     })
 }
 
 const pharmAffichageStocks = (req, res) => {
-    res.render('stock')
+    let couleur = 1;
+    db.getStock( (data) =>{
+        res.render('stock', {medicaments : data, c : couleur})
+    })
 }
 
 const pharmulairePatient = (req, res) => {
-    let leMoment = moment;
-
-    // Préparations des Requetes //
-    let requeteMedic = "SELECT * FROM medicament" ;
-    let requeteMedec = "SELECT * FROM medecin" ;
-    let requeteAssurance = "SELECT * FROM assurance" ;
-    let requetePathologie = "SELECT * FROM pathologie" ;
-
-    // Conteneur du résultats des Requetes //
-    let lesMedics = "";
-    let lesMedecins = "";
-    let lesAssurances = "";
-    let lesPathologies = "";
-
-    // Exécution des Requetes //
-    mysqlconnexion.query( requeteMedic, (err, lignes, champs) => {
-        lesMedics = lignes;
-    })
-    mysqlconnexion.query( requeteMedec, (err, lignes, champs) => {
-        lesMedecins = lignes;
-    })
-    mysqlconnexion.query( requeteAssurance, (err, lignes, champs) => {
-        lesAssurances = lignes;
-    })
-    mysqlconnexion.query( requetePathologie, (err, lignes, champs) => {
-        lesPathologies = lignes;
-    })
-    setTimeout(() => {res.render('formPat', {moment : leMoment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})}, 200)
+    db.getStock((medic))
+    db.getMedecin((medecin))
+    db.getMutuelle((mutuelle))
+    db.getPathologie((path))
+        res.render('formPat', {moment : moment, medicaments : medic, medecins : medecin, assurances : mutuelle, pathologies : path})
 }
 
 const pharmAjoutDePatient = (req, res) => {
@@ -88,7 +69,7 @@ const pharmAjoutDePatient = (req, res) => {
         let requetesSQL = [requeteSQL_1, requeteSQL_2];
 
         for (let t = 0;t < requetesSQL.length;t++) {
-            mysqlconnexion.query( requetesSQL[t], (err, lignes, champs) => {
+            db.query( requetesSQL[t], (err, lignes, champs) => {
                 if (!err) {
                     console.log("Insertion du patient terminé");
                 } else {
@@ -98,7 +79,7 @@ const pharmAjoutDePatient = (req, res) => {
             })
         }   
         let requeteOrdonnance = "SELECT noOrd FROM ordonnance WHERE Id_Path = "+path+" AND Id_Mede = "+medecin+" and no_SS = "+noSS;
-        mysqlconnexion.query( requeteOrdonnance, (err, lignes, champs) => {
+        db.query( requeteOrdonnance, (err, lignes, champs) => {
             ordonnance = lignes;
         })
 
@@ -107,13 +88,13 @@ const pharmAjoutDePatient = (req, res) => {
             let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + medic + ',' + Qte + ',' + duree + ')';
             let requeteQteNec = "";
             let QteTotal = 0;
-            mysqlconnexion.query( requeteSQL_3, (err, lignes, champs) => {
+            db.query( requeteSQL_3, (err, lignes, champs) => {
                 if (!err) {
                     console.log("Insertion du patient terminé");
 
                     QteTotal = Qte*duree;
                     requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ QteTotal +" WHERE idMedic = "+ medic;
-                    mysqlconnexion.query( requeteQteNec, (err, lignes, champs) => {
+                    db.query( requeteQteNec, (err, lignes, champs) => {
                         if (!err) {
                             console.log("Insertion du patient terminé");
                         } else {
@@ -139,7 +120,7 @@ const pharmAjoutDePatient = (req, res) => {
                     dureeX = 'req.body.duree'+i ;
 
                     requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + eval(traitementX) + ',' + eval(QteX) + ',' + eval(dureeX) + ')';
-                    mysqlconnexion.query( requeteSQL_3, (err, lignes, champs) => {
+                    db.query( requeteSQL_3, (err, lignes, champs) => {
                         if (!err) {
                             console.log("Insertion du patient terminé");
 
@@ -151,7 +132,7 @@ const pharmAjoutDePatient = (req, res) => {
                     
                     QteTotal = eval(QteX)*eval(dureeX);
                     requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ QteTotal +" WHERE idMedic = "+ eval(traitementX);
-                    mysqlconnexion.query( requeteQteNec, (err, lignes, champs) => {
+                    db.query( requeteQteNec, (err, lignes, champs) => {
                         if (!err) {
                             console.log("Insertion du patient terminé");
                         } else {
@@ -166,7 +147,7 @@ const pharmAjoutDePatient = (req, res) => {
         if (assur != 0){
             let requeteSQL_4 = "INSERT INTO echeance (no_SS, no_Assur, Date_Scan) VALUES";
             requeteSQL_4 += ' (' + noSS + ',' + assur + ',"' + date_scan + '")';
-            mysqlconnexion.query( requeteSQL_4, (err, lignes, champs) => {
+            db.query( requeteSQL_4, (err, lignes, champs) => {
                 if (!err) {
                     console.log("Insertion du patient terminé");
                 } else {

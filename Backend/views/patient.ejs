@@ -48,14 +48,16 @@ Utilité : Affichage de la liste des patients
             <table>
             <tbody>
 
-                <% patients.forEach(function(patient){ %>
-                <tr class="body row100">
-                    <td class="column1"><%=patient.Nom_Patient%></td>
-                    <td class="column2"><%=patient.noSS%></td>
-                    <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
-                    <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
-                    <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Ajouter ordonnance</a></td>
-                </tr>
+                <% patients.forEach(function(patient){ %> 
+                    <tr class='body row10<%=c%>'>
+                        <td class="column1"><%=patient.Nom_Patient%></td>
+                        <td class="column2"><%=patient.noSS%></td>
+                        <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
+                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info:<%=patient.noSS%>">Fiche patient</a></td>
+                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance:<%=patient.noSS%>">Ajouter ordonnance</a></td>
+                    </tr>
+
+                    <% if(c == 1) c = 0; else c = 1 %>
                 
                 <% })%>
                 

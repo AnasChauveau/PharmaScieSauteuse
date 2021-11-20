@@ -37,9 +37,8 @@ Utilité : Affichage de la liste des stocks
                     <tr class="row100 head">
                         <th class="column1">Référence</th>
                         <th class="column2">Nom commercial</th>
-                        <th class="column3">Quantité en stocks</th>
+                        <th class="column3">Quantité en stock</th>
                         <th class="column4">Quantité nécéssaire</th>
-                        <th class="column5">Date limite</th>
                     </tr>
                 </thead>
             </table>
@@ -47,20 +46,19 @@ Utilité : Affichage de la liste des stocks
             <div class="table100-body">
             <table>
             <tbody>
-                <tr class="row100 body">
-                    <td class="column1">1521</td>
-                    <td class="column2">Doliprane 1000mg</td>
-                    <td class="column3">150 boites</td>
-                    <td class="column4">12 boites</td>
-                    <td class="column5">22/01/2025</td>
-                </tr>
-                <tr class="row101 body">
-                    <td class="column1">1522</td>
-                    <td class="column2">Doliprane 500mg</td>
-                    <td class="column3">112 boites</td>
-                    <td class="column4">18 boites</td>
-                    <td class="column5">22/05/2023</td>
-                </tr>
+                
+                <% medicaments.forEach(function(medicament){ %> 
+                    <tr class='body row10<%=c%>'>
+                        <td class="column1"><%=medicament.idMedic%></td>
+                        <td class="column2"><%=medicament.Nom_Medic%></td>
+                        <td class="column3"><%=medicament.Qte_En_Stock%> boîtes</td>
+                        <td class="column4"><%=medicament.Qte_Necessaire%> boîtes</td>
+                    </tr>
+
+                    <% if(c == 1) c = 0; else c = 1 %>
+
+                <% })%>
+
             </tbody>
             </table>
         </div>

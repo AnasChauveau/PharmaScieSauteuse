@@ -3,7 +3,7 @@ const iniparser = require('iniparser')
 
 // récupération des paramètres et préparation de connexion à la BDD
 let configDB = iniparser.parseSync('./DB.ini')
-let mysqlconnexion = mysql.createConnection({
+let db = mysql.createConnection({
     host:configDB['dev']['host'],
     user:configDB['dev']['user'],
     password:configDB['dev']['password'],
@@ -11,10 +11,10 @@ let mysqlconnexion = mysql.createConnection({
 })
 
 // connexion à la base de données
-mysqlconnexion.connect((err) => {
+db.connect((err) => {
     if (!err) console.log('BDD connectée.')
     else console.log('BDD connexion échouée \n Erreur: '+JSON.stringify(err))
 })
 
 
-module.exports = mysqlconnexion
+module.exports = db
