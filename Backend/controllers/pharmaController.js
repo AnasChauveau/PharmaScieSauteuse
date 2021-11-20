@@ -105,11 +105,14 @@ const pharmAjoutDePatient = (req, res) => {
         // Requete Traitement //
         setTimeout(() => {console.log(ordonnance);
             let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + medic + ',' + Qte + ',' + duree + ')';
+            let requeteQteNec = "";
+            let QteTotal = 0;
             mysqlconnexion.query( requeteSQL_3, (err, lignes, champs) => {
                 if (!err) {
                     console.log("Insertion du patient terminé");
 
-                    let requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ Qte +" WHERE idMedic = "+ medic;
+                    QteTotal = Qte*duree;
+                    requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ QteTotal +" WHERE idMedic = "+ medic;
                     mysqlconnexion.query( requeteQteNec, (err, lignes, champs) => {
                         if (!err) {
                             console.log("Insertion du patient terminé");
@@ -128,7 +131,6 @@ const pharmAjoutDePatient = (req, res) => {
             let traitementX = "";
             let QteX = "";
             let dureeX = "";
-            let requeteQteNec = "";
             if(nb_traitement != ''){  
                 for(let i = 1;i<nb_traitement;i++){
 
@@ -146,11 +148,12 @@ const pharmAjoutDePatient = (req, res) => {
                             res.send("Erreur ajout : "+JSON.stringify(err))
                         }
                     })
-
-                    requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ eval(QteX) +" WHERE idMedic = "+ eval(traitementX);
+                    
+                    QteTotal = eval(QteX)*eval(dureeX);
+                    requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ QteTotal +" WHERE idMedic = "+ eval(traitementX);
                     mysqlconnexion.query( requeteQteNec, (err, lignes, champs) => {
                         if (!err) {
-                            console.log("Insertion du patient terminé : ");
+                            console.log("Insertion du patient terminé");
                         } else {
                             console.log("Erreur lors de l'enregistrment de "+requeteQteNec)
                             res.send("Erreur ajout : "+JSON.stringify(err))
@@ -176,6 +179,10 @@ const pharmAjoutDePatient = (req, res) => {
     }
 }
 
+const pharmInfoPatient = (req, res) => {
+    res.render("fichePatient")
+}
+
 const Chart = (req, res) => {
     res.render("chart")
 }
@@ -186,6 +193,7 @@ module.exports = {
     pharmAffichageStocks,
     pharmulairePatient,
     pharmAjoutDePatient,
+    pharmInfoPatient,
     Chart
 }
 

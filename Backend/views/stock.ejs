@@ -9,12 +9,10 @@ Utilité : Affichage de la liste des stocks
 
       <title>Pharmacie Sautheuz | Gestion des Stocks</title>
    </head>
-   <!-- ================= NAVBAR ================= -->
    <body id="body-pd">
       <header class="header" id="header">
          <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
          <!-- barre de recherche -->
-          <!-- insertion d'une balise formulaire-->
             <div class="wrap">
                 <div class="search">
                 <input type="text" class="searchTerm" placeholder="Référence médicament">
@@ -23,34 +21,13 @@ Utilité : Affichage de la liste des stocks
                 </button>
                 </div>
             </div>
-            <!-- fin du formulaire-->
           <!-- Fin barre de recherche -->
       </header>
-      <div class="l-navbar" id="nav-bar">
-         <nav class="nav">
-            <div>
-               <a href="/PharmaScieSauteuse" class="nav_logo"> 
-               <i class='bx bx-heart nav_logo-icon'></i> 
-               <span class="nav_logo-name">Pharmacie Sautheuz</span> 
-               </a>
-               <div class="nav_list"> 
-                  <a href="/PharmaScieSauteuse/Gestion-de-Patient" class="nav_link"> 
-                  <i class='bx bx-grid-alt nav_icon'></i> 
-                  <span class="nav_name">Gestion des patients</span> 
-                  </a> 
-                  <a href="/PharmaScieSauteuse/Formulaire" class="nav_link"> 
-                  <i class='bx bx-user nav_icon'></i> 
-                  <span class="nav_name">Ajouter un nouveau patient</span> 
-                  </a> 
-                    <a href="#" class="nav_link active"> 
-                        <i class='bx bx-bookmark nav_icon'></i> 
-                        <span class="nav_name">Gestion des stocks</span> 
-                    </a>  
-               </div>
-            </div>
-         </nav>
-      </div>
-      <!-- ================= FIN NAVBAR ================= -->
+      
+            <!-- ================= NAVBAR ================= -->
+                        <%- include('navbar') %>
+            <!-- ================= NAVBAR ================= -->
+
       <!-- ================= CONTENEUR POUR AFFICHAGE LISTE DES Médicaments =================-->
       <div class="height-100 bg-light">
         <div class="table100 ver1">
@@ -86,5 +63,6 @@ Utilité : Affichage de la liste des stocks
                 </tr>
             </tbody>
             </table>
-
+        </div>
+        
 <%- include('footer') %>

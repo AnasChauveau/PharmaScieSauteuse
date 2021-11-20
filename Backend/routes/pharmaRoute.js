@@ -12,12 +12,14 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Gestion-de-Patient', PharmaControle.pharmAffichagePatients)
 
+    .get('/Gestion-de-Patient/info:id', PharmaControle.pharmInfoPatient)
+
     .get('/Gestion-de-Stock', PharmaControle.pharmAffichageStocks)
 
     .get('/Formulaire', PharmaControle.pharmulairePatient)
 
     .post('/Confirmation', PharmaControle.pharmAjoutDePatient)
 
-    .get('/Graph', PharmaControle.Chart)
+    .get('/Graphe', PharmaControle.Chart)
 
 module.exports = routeur

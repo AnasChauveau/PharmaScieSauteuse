@@ -1,49 +1,16 @@
-<!DOCTYPE html>
-<html lang="fr-FR">
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- ================= NAVBAR DÉPENDENCE ================= -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-      <link rel="stylesheet" href="/style.css">
-      <link rel="icon" type="image/png" href="/logo.png">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="/nav.js"></script>
-      <!-- ================= FIN NAVBAR DÉPENDENCE ================= -->
+<%- include('header') %>
+
       <link rel="stylesheet" type="text/css" href="/formulaire.css" media="all"/>
       <title>Formulaire ajout de patient</title>
    </head>
-      <!-- ================= NAVBAR ================= -->
-      <body id="body-pd">
-         <header class="header" id="header">
-            <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-         </header>
-         <div class="l-navbar" id="nav-bar">
-            <nav class="nav">
-               <div>
-                  <a href="/PharmaScieSauteuse" class="nav_logo"> 
-                  <i class='bx bx-heart nav_logo-icon'></i> 
-                  <span class="nav_logo-name">Pharmacie Sautheuz</span> 
-                  </a>
-                  <div class="nav_list"> 
-                     <a href="/PharmaScieSauteuse/Gestion-de-Patient" class="nav_link"> 
-                     <i class='bx bx-grid-alt nav_icon'></i> 
-                     <span class="nav_name">Gestion des patients</span> 
-                     </a> 
-                     <a href="/PharmaScieSauteuse/Formulaire" class="nav_link active"> 
-                       <i class='bx bx-user nav_icon'></i> 
-                       <span class="nav_name">Ajouter un nouveau patient</span> 
-                     </a> 
-                      <a href="/PharmaScieSauteuse/Gestion-de-Stock" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> 
-                     <span class="nav_name">Gestion des stocks</span> 
-                   </a>
-                  </div>
-               </div>
-            </nav>
-         </div>
-         <!-- ================= FIN NAVBAR ================= -->
+   <body id="body-pd">
+      <header class="header" id="header">
+         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+      </header>
+         <!-- ================= NAVBAR ================= -->
+                        <%- include('navbar') %>
+         <!-- ================= NAVBAR ================= -->
+
          <!-- ================= CONTENEUR POUR AFFICHAGE LISTE DES PATIENTS =================-->
          <div class="height-100 bg-light">
          <div class="form-style-5">
@@ -71,7 +38,7 @@
                         <% }) %>
 
                      </select>
-                     <input type="number" class="field1" name="Qte" placeholder="Nombre total de boîtes *" required>
+                     <input type="number" class="field1" name="Qte" placeholder="Nombre de boites par mois *" required>
                      <input type="number" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
                      <button onclick="newline()">+</button>
                   </div>
@@ -81,8 +48,8 @@
                      let a = 1;
                      function newline(){
                         document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
-                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte' placeholder='Quantité*' required>"
-                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree' placeholder='Durée traitement (mois)' required> <button id='del' onclick='delline()'>x</button>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte' placeholder='Quantité (mois)*' required>"
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree' placeholder='Durée traitement (mois)*' required> <button id='del' onclick='delline()'>x</button>" 
                         a = a+1
                         document.getElementById('nbT').value = a;
                      }
@@ -129,6 +96,5 @@
                <input type="submit" value="Envoyer" >
                <input id="nbT" name="nb_traitement" class="hidden">
             </form>
-         </div>
-      </body>
-   </html>
+
+<%- include('header') %>
