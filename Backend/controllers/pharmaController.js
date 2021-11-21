@@ -22,6 +22,7 @@ const pharmAffichageStocks = (req, res) => {
 
 const pharmInfoPatient = (req, res) => {
     let noSS = req.params.id;
+    let no = 1;
     
     // Conteneur du résultats des Requetes //
     let patient = "";
@@ -34,7 +35,7 @@ const pharmInfoPatient = (req, res) => {
     //db.getOnePatient(noSS, (data) =>{patient = data})
     db.getMutuellePatient(noSS, (data) =>{mutuelle = data})
     setTimeout(() => {console.log(pathologie, mutuelle)
-        res.render("fichePatient", {moment : moment, patient : patient, pathologie : pathologie, mutuelle :mutuelle})}, 200)
+        res.render("fichePatient", {moment : moment, no : no, patient : patient, pathologie : pathologie, mutuelle :mutuelle})}, 200)
 }
 
 const pharmulaireOrdonnance = (req, res) => {

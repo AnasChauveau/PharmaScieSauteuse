@@ -40,8 +40,11 @@
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                <div class="accordion-body">
-                  <strong>Pathologie 1 :</strong>
-                  <p><%=pathologie.Nom_Path%></p>
+
+                  <% pathologie.forEach(function(path) {%>
+                     <strong>Pathologie <%=no%> :</strong>
+                     <p><%=path.Nom_Path%></p>   
+                  <%no += 1; }) %>
                </div>
             </div>
          </div>
