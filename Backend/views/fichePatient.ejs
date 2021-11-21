@@ -56,11 +56,11 @@
             </h2>
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                <div class="accordion-body">
-                  <strong>Traitement 1 :</strong>
-                  <p>2 Boîtes de Doliprane par mois pendant 5 mois</p>
-                  <strong>Traitement 2 :</strong>
-                  <p>1 Boîtes de Ventoline par mois pendant 2 mois</p>
-
+                  <% no = 1; %> 
+                  <% medicament.forEach(function(medic) {%>
+                     <strong>Traitement <%=no%> :</strong>
+                     <p><%=medic.nb_Boite%> Boîtes de <%=medic.Nom_Medic%> par mois pendant <%=medic.DureeEnMois%> mois</p>
+                  <%no += 1; }) %>
                </div>
             </div>
          </div>

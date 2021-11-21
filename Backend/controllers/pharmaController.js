@@ -32,10 +32,10 @@ const pharmInfoPatient = (req, res) => {
 
     db.getOnePatient(noSS, (data) =>{patient = data})
     db.getPathPatient(noSS, (data) =>{pathologie = data})
-    //db.getOnePatient(noSS, (data) =>{patient = data})
+    db.getMedicPatient(noSS, (data) =>{medicament = data})
     db.getMutuellePatient(noSS, (data) =>{mutuelle = data})
-    setTimeout(() => {console.log(pathologie, mutuelle)
-        res.render("fichePatient", {moment : moment, no : no, patient : patient, pathologie : pathologie, mutuelle :mutuelle})}, 200)
+    setTimeout(() => {console.log(medicament)
+        res.render("fichePatient", {moment : moment, no : no, patient : patient, pathologie : pathologie, mutuelle : mutuelle, medicament : medicament})}, 200)
 }
 
 const pharmulaireOrdonnance = (req, res) => {
