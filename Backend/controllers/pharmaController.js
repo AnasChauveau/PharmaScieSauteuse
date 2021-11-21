@@ -60,6 +60,7 @@ const pharmulaireModifPatient = async (req, res) => {
 
 
 const pharmulaireOrdonnance = async (req, res) => {
+
     // Conteneur du résultats des Requetes //
     let lesMedics = await db.getStock();
     let lesMedecins = await db.getMedecin();
@@ -68,135 +69,131 @@ const pharmulaireOrdonnance = async (req, res) => {
     res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies})
 }
 
+const pharmAjoutOrdonnance = async (req, res) => {
+    // Patient //
+    let noSS = req.params.id;
+
+    // Ordonnance //
+    let path = req.body.pathologie;
+    let medecin = req.body.medecin;
+    
+    // Traitement //
+    let traitement = req.body.traitement;
+    let Qte = req.body.Qte
+    let duree = req.body.duree
+    let nb_traitement = req.body.nb_traitement;
+
+    // Requete Insert : Ordonnance //
+    await db.newOrdonnance(noSS, path, medecin);
+    console.log("Ajout Ordonnance : Sucess ");
+    
+    let Ordonnance = await db.getOrdonnancePatient(path, medecin, noSS);
+    let noOrd = Ordonnance.noOrd;
+
+    // Requete Insert : Traitement //
+    await db.newTraitement(noOrd, traitement, Qte, duree);
+    
+    // Requete Update : Qté Nécessaire //
+    let QteTotal = Qte*duree;
+    await db.updateQteNec(QteTotal, traitement);
+    
+    // Requete Insert : Traitements //
+    if (nb_traitement > 1){
+        let traitementX = "";
+        let QteX = "";
+        let dureeX = "";
+        let QteTotalX = 0;
+        for(let i = 1;i<nb_traitement;i++){        
+            traitementX = 'req.body.traitement'+i ;
+            QteX = 'req.body.Qte'+i ;
+            dureeX = 'req.body.duree'+i ;
+            await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
+            // Requete Update : Qtés Nécessaires //
+            QteTotalX = eval(QteX)*eval(dureeX)
+            await db.updateQteNec(QteTotalX, eval(traitementX));
+        }
+        console.log("Ajout Des Traitements : Sucess ");
+    } else{
+        console.log("Ajout Du Traitement : Sucess ");
+    }
+    res.render('confirm')
+}
+
 const pharmAjoutDePatient = async (req, res) => {
 
     console.log(req.body);
 
     // Patient //
-    let Nom_Patient = req.body.nom.replace(/ /g, "");
-    let Prenom_Patient = req.body.prenom.replace(/ /g, "");
-    let Date_Naissance = req.body.date_naissance;
-    let noSS = req.body.noSS.replace(/ /g, "");
+    let nomPatient = req.body.nom;
+    let prenomPatient = req.body.prenom;
+    let dateNaissance = req.body.date_naissance;
+    let noSS = req.body.noSS;
 
     // Ordonnance //
-    let Id_Path = req.body.pathologie;
-    let Id_Mede = req.body.medecin;
+    let path = req.body.pathologie;
+    let medecin = req.body.medecin;
 
     // Traitement //
-    let idMedic = req.body.traitement;
-    let Nb_Boite = req.body.Qte.replace(/ /g, "");
-    let DureeEnMois = req.body.duree.replace(/ /g, "");
+    let traitement = req.body.traitement;
+    let Qte = req.body.Qte
+    let duree = req.body.duree
     let nb_traitement = req.body.nb_traitement;
     
     // Assurance //
     let assur = req.body.mutuelle;
     let date_scan = req.body.date_scan;
 
-    if (Nom_Patient == "" || Prenom_Patient == "" || Date_Naissance == "" || noSS == "" ||
-    Id_Path == "" || Id_Mede == "" || idMedic == "" || Nb_Boite == "" || DureeEnMois == ""){
-        console.log("Veuillez remplir tous les champs obligatoires !");
-    }else {
-        console.log("Tous roules")
+    if (nomPatient == "" || prenomPatient == "" || dateNaissance == "" || noSS == "" ||
+        path == "" || medecin == "" || traitement == "" || Qte == "" || duree == ""){
+            // MESSAGE D'ERREUR //
+    }else{
+            // PAS DE MESSAGE D'ERREUR //
 
-        // Requete Patient //
-        let AjoutPatient = { noSS, Nom_Patient, Prenom_Patient, Date_Naissance}
-        db.newPatient(AjoutPatient, (data) => {
-            console.log("Ajout Patient : Sucess ");
-        });
+        // Requete Insert : Patient, Ordonnance //
+        await db.newPatient(noSS, nomPatient, prenomPatient, dateNaissance);
+        console.log("Ajout Patient : Sucess ");
 
-        // Requete Ordonnance //
-        let no_SS = noSS;
-        let AjoutOrdonnance = { no_SS, Id_Path, Id_Mede}
-        db.newOrdonnance(AjoutOrdonnance, (data) => {
-            console.log("Ajout Ordonnance : Sucess ");
-        });
+        await db.newOrdonnance(noSS, path, medecin);
+        console.log("Ajout Ordonnance : Sucess ");
+        
+        let Ordonnance = await db.getOrdonnancePatient(path, medecin, noSS);
+        let noOrd = Ordonnance.noOrd;
 
-        let Ordonnance = await db.getOrdonnancePatient(Id_Path, Id_Mede, noSS);
-        console.log(Ordonnance)
-
-        /*
-        let requeteOrdonnance = "SELECT noOrd FROM ordonnance WHERE Id_Path = "+path+" AND Id_Mede = "+medecin+" and no_SS = "+noSS;
-        db.query( requeteOrdonnance, (err, lignes, champs) => {
-            ordonnance = lignes;
-        })
-
-        // Requete Traitement //
-        setTimeout(() => {console.log(ordonnance);
-            let noOrd = ordonnance[0].noOrd;
-            let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + noOrd + ',' + medic + ',' + Qte + ',' + duree + ')';
-            let requeteQteNec = "";
-            let QteTotal = 0;
-            db.query( requeteSQL_3, (err, lignes, champs) => {
-                if (!err) {
-                    console.log("Insertion du patient terminé");
-
-                    QteTotal = Qte*duree;
-                    requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ QteTotal +" WHERE idMedic = "+ medic;
-                    db.query( requeteQteNec, (err, lignes, champs) => {
-                        if (!err) {
-                            console.log("Insertion du patient terminé");
-                        } else {
-                            console.log("Erreur lors de l'enregistrment de "+requeteQteNec)
-                            res.send("Erreur ajout : "+JSON.stringify(err))
-                        }
-                    })
-                    
-                } else {
-                    console.log("Erreur lors de l'enregistrment de "+requeteSQL_3)
-                    res.send("Erreur ajout : "+JSON.stringify(err))
-                }
-            })
-
+        // Requete Insert : Traitement //
+        await db.newTraitement(noOrd, traitement, Qte, duree);
+        
+        // Requete Update : Qté Nécessaire //
+        let QteTotal = Qte*duree;
+        await db.updateQteNec(QteTotal, traitement);
+        
+        // Requete Insert : Traitements //
+        if (nb_traitement > 1){
             let traitementX = "";
             let QteX = "";
             let dureeX = "";
-            if(nb_traitement != ''){  
-                for(let i = 1;i<nb_traitement;i++){
-
-                    traitementX = 'req.body.traitement'+i ;
-                    QteX = 'req.body.Qte'+i ;
-                    dureeX = 'req.body.duree'+i ;
-
-                    requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + eval(traitementX) + ',' + eval(QteX) + ',' + eval(dureeX) + ')';
-                    db.query( requeteSQL_3, (err, lignes, champs) => {
-                        if (!err) {
-                            console.log("Insertion du patient terminé");
-
-                        } else {
-                            console.log("Erreur lors de l'enregistrment de "+requeteSQL_3)
-                            res.send("Erreur ajout : "+JSON.stringify(err))
-                        }
-                    })
-                    
-                    QteTotal = eval(QteX)*eval(dureeX);
-                    requeteQteNec = "UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + "+ QteTotal +" WHERE idMedic = "+ eval(traitementX);
-                    db.query( requeteQteNec, (err, lignes, champs) => {
-                        if (!err) {
-                            console.log("Insertion du patient terminé");
-                        } else {
-                            console.log("Erreur lors de l'enregistrment de "+requeteQteNec)
-                            res.send("Erreur ajout : "+JSON.stringify(err))
-                        }
-                    })
-                }
+            let QteTotalX = 0;
+            for(let i = 1;i<nb_traitement;i++){        
+                traitementX = 'req.body.traitement'+i ;
+                QteX = 'req.body.Qte'+i ;
+                dureeX = 'req.body.duree'+i ;
+                await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
+                // Requete Update : Qtés Nécessaires //
+                QteTotalX = eval(QteX)*eval(dureeX)
+                await db.updateQteNec(QteTotalX, eval(traitementX));
             }
-        }, 200)
+            console.log("Ajout Des Traitements : Sucess ");
+        } else{
+            console.log("Ajout Du Traitement : Sucess ");
+        }
 
         if (assur != 0){
-            let requeteSQL_4 = "INSERT INTO echeance (no_SS, no_Assur, Date_Scan) VALUES";
-            requeteSQL_4 += ' (' + noSS + ',' + assur + ',"' + date_scan + '")';
-            db.query( requeteSQL_4, (err, lignes, champs) => {
-                if (!err) {
-                    console.log("Insertion du patient terminé");
-                } else {
-                    console.log("Erreur lors de l'enregistrment de "+requeteSQL_4)
-                    res.send("Erreur ajout : "+JSON.stringify(err))
-                }
-            })
+            await db.newAssurance(noSS , assur, date_scan);    
         }
-        res.render('confirm')*/
+        res.render('confirm')
     }
 }
+
+
 
 
 const Chart = async (req, res) => {
@@ -210,6 +207,7 @@ module.exports = {
     pharmAffichageStocks,
     pharmulairePatient,
     pharmAjoutDePatient,
+    pharmAjoutOrdonnance,
     pharmInfoPatient,
     pharmulaireOrdonnance,
     pharmulaireModifPatient,

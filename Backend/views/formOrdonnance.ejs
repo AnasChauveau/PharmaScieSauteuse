@@ -1,6 +1,39 @@
 <%- include('header') %>
 
       <link rel="stylesheet" type="text/css" href="/formulaire.css" media="all"/>
+      <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
+      <script>
+         let a = 1;
+         let b = 0;
+
+         function newline(){
+             let ecriture = "<div id='T"+a+"' class='align'><select class='field3' id='Count"+a+"' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>";
+             ecriture += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte"+a+"' placeholder='Quantité (mois)*' minlength='1' maxlength='2' required>";
+             ecriture += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree"+a+"' placeholder='Durée traitement (mois)*' minlength='1' maxlength='2' required><button id='del"+a+"' onclick='delline()'>x</button></div>";
+             document.getElementById('T'+b).insertAdjacentHTML('afterend', ecriture);
+             a = a+1
+             b = b+1
+             document.getElementById('nbT').value = a;
+         }
+
+         function delline(){
+             a = a-1
+             b = b-1
+             var select = document.getElementById("Count"+a);
+             select.remove();
+             var Qte = document.getElementById("LaQte"+a);
+             Qte.remove();
+             var duree = document.getElementById("LaDuree"+a);
+             duree.remove();
+             var delbtn = document.getElementById("del"+a);
+             delbtn.remove();
+             var delDiv = document.getElementById("T"+a);
+             delDiv.remove();
+             document.getElementById('nbT').value = a;
+         }
+
+      </script>
+
       <title>Formulaire ajout d'une Ordonnance</title>
    </head>
    <body id="body-pd">
@@ -17,7 +50,7 @@
          <!-- ================= CONTENEUR POUR AFFICHAGE LISTE DES PATIENTS =================-->
          <div class="height-100 bg-light">
          <div class="form-style-5">
-            <form action="/PharmaScieSauteuse/Confirmation" method="post">
+            <form action="/PharmaScieSauteuse/Ordonnance/Confirmation" method="post">
                <fieldset id="dynamic">
                   <legend><span class="number">1</span> Ordonnance :</legend>
 
@@ -29,7 +62,7 @@
                      <% }) %>
                   </select>
                   <!-- TRAITEMENT OBLIGATOIRE : -->
-                  <div class="align">
+                  <div id="T0" class="align">
                      <select class="field1" name="traitement" id="medic" required>
 
                         <option value='0' selected>- Choix Médicament -</option>
@@ -38,34 +71,12 @@
                         <% }) %>
 
                      </select>
-                     <input type="number" class="field1" name="Qte" placeholder="Nombre de boites par mois *" required>
-                     <input type="number" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
+                     <input type="number" class="field1" name="Qte" min="1" max="12" placeholder="Nombre de boites par mois *" required>
+                     <input type="number" class="field1" name="duree" min="1" max="12" placeholder="Durée traitement (mois) *" required>
                      <button onclick="newline()">+</button>
                   </div>
                   <!-- FIN TRAITEMENT OBLIGATOIRE -->
-                  <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
-                  <script>
-                     let a = 1;
-                     function newline(){
-                        document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
-                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte' placeholder='Quantité (mois)*' required>"
-                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree' placeholder='Durée traitement (mois)*' required> <button id='del' onclick='delline()'>x</button>" 
-                        a = a+1
-                        document.getElementById('nbT').value = a;
-                     }
-                     function delline(){
-                        var select = document.getElementById("Count");
-                        select.remove();
-                        var Qte = document.getElementById("LaQte");
-                        Qte.remove();
-                        var duree = document.getElementById("LaDuree");
-                        duree.remove();
-                        var delbtn = document.getElementById("del");
-                        delbtn.remove();
-                        a = a-1
-                        document.getElementById('nbT').value = a;
-                     }
-                  </script>
+
 
                </fieldset>
                <fieldset>

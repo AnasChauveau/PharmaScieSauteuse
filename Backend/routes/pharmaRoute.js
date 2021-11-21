@@ -22,8 +22,10 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Formulaire', PharmaControle.pharmulairePatient)
 
-    .post('/Confirmation', PharmaControle.pharmAjoutDePatient)
+    .post('/Patient/Confirmation', PharmaControle.pharmAjoutDePatient)
 
-    .get('/Gestion-de-Stock/Graphe:id', PharmaControle.Chart)
+    .post('/Ordonnance/Confirmation', PharmaControle.pharmAjoutOrdonnance)
+
+    .get('/Gestion-de-Stock/Graphe/:id', PharmaControle.Chart)
 
 module.exports = routeur

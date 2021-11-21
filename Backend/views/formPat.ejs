@@ -51,7 +51,7 @@
          <!-- ================= CONTENEUR POUR AFFICHAGE LISTE DES PATIENTS =================-->
          <div class="height-100 bg-light">
          <div class="form-style-5">
-            <form action="/PharmaScieSauteuse/Confirmation" method="post">
+            <form action="/PharmaScieSauteuse/Patient/Confirmation" method="post">
                <fieldset id="dynamic">
                   <legend><span class="number">1</span> Patient :</legend>
                   <input type="text" class="field2" name="nom" placeholder="Nom *" minlength="3" maxlength="35" required>
@@ -109,7 +109,8 @@
                </fieldset>
                <input class="hidden" name="date_scan" value="<%=moment().add(1,'years').format("YYYY-MM-DD")%>">
                <input type="submit" value="Envoyer" >
-               <input id="nbT" name="nb_traitement" class="hidden">
+               <div id="erreur"></div>
+               <input type="number" id="nbT" name="nb_traitement" value="1" class="hidden">
             </form>
 
 <%- include('header') %>

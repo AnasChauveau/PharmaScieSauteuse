@@ -300,3 +300,6 @@ th {
     display: flex;
     justify-content: center;
 }
+#erreur{
+    color: rgba(145, 22, 22, 0.884);
+}
