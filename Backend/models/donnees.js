@@ -92,6 +92,44 @@ const getPathologie = async () => {
     })
 }
 
+/*const newPatient = async (noSS, nomPatient, prenomPatient, dateNaissance) => {
+    return new Promise((resolve, reject) => {
+        let sql='INSERT INTO patient (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES ( ?, "?", "?", "?")';
+        db.query(sql, noSS, nomPatient, prenomPatient, dateNaissance,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}*/
+
+const newOrdonnance = (table, callback) => {
+    let sql='INSERT INTO ordonnance SET ?';
+    db.query(sql, table,(err, data, fields) => {
+        if (err) throw err;
+        return callback(data);
+    })
+}
+
+
+const getOrdonnancePatient = async (path, medecin, noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="SELECT noOrd FROM ordonnance WHERE Id_Path = ? AND Id_Mede = ? and no_SS = ?";
+        db.query(sql, [path, medecin, noSS],(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+const newPatient = (table, callback) => {
+    let sql='INSERT INTO patient SET ?';
+    db.query(sql, table,(err, data, fields) => {
+        if (err) throw err;
+        return callback(data);
+    })
+}
+
+
 module.exports={
     getPatient,
     getOnePatient,
@@ -101,5 +139,8 @@ module.exports={
     getStock,
     getMedecin,
     getMutuelle,
-    getPathologie
+    getPathologie,
+    getOrdonnancePatient,
+    newOrdonnance,
+    newPatient,
 }

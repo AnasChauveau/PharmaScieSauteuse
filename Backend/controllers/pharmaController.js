@@ -34,6 +34,17 @@ const pharmInfoPatient = async (req, res) => {
     res.render("fichePatient", {moment : moment, no : no, patient : patient, pathologie : pathologie, mutuelle : mutuelle, medicament : medicament, noSS : noSS})
 }
 
+const pharmulairePatient = async (req, res) => {
+
+    // Conteneur du résultats des Requetes //
+    let lesMedics = await db.getStock();
+    let lesMedecins = await db.getMedecin();
+    let lesAssurances = await db.getMutuelle();
+    let lesPathologies = await db.getPathologie();
+
+    res.render('formPat', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})
+}
+
 
 const pharmulaireModifPatient = async (req, res) => {
     let noSS = req.params.id;
@@ -57,68 +68,53 @@ const pharmulaireOrdonnance = async (req, res) => {
     res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies})
 }
 
-
-const pharmulairePatient = async (req, res) => {
-
-    // Conteneur du résultats des Requetes //
-    let lesMedics = await db.getStock();
-    let lesMedecins = await db.getMedecin();
-    let lesAssurances = await db.getMutuelle();
-    let lesPathologies = await db.getPathologie();
-
-    res.render('formPat', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})
-}
-
-
 const pharmAjoutDePatient = async (req, res) => {
 
     console.log(req.body);
 
     // Patient //
-    let nomPatient = req.body.nom;
-    let prenomPatient = req.body.prenom;
-    let dateNaissance = req.body.date_naissance;
-    let noSS = req.body.noSS;
+    let Nom_Patient = req.body.nom.replace(/ /g, "");
+    let Prenom_Patient = req.body.prenom.replace(/ /g, "");
+    let Date_Naissance = req.body.date_naissance;
+    let noSS = req.body.noSS.replace(/ /g, "");
 
     // Ordonnance //
-    let path = req.body.pathologie;
-    let medecin = req.body.medecin;
-    let ordonnance = "";
+    let Id_Path = req.body.pathologie;
+    let Id_Mede = req.body.medecin;
 
     // Traitement //
-    let medic = req.body.traitement;
-    let Qte = req.body.Qte;
-    let duree = req.body.duree;
+    let idMedic = req.body.traitement;
+    let Nb_Boite = req.body.Qte.replace(/ /g, "");
+    let DureeEnMois = req.body.duree.replace(/ /g, "");
     let nb_traitement = req.body.nb_traitement;
     
     // Assurance //
     let assur = req.body.mutuelle;
     let date_scan = req.body.date_scan;
 
-    if (nomPatient == "" || prenomPatient == "" || dateNaissance == "" || noSS == "" ||
-    path == "" || medecin == "" || medic == "" || Qte == ""){
-        alert("Veuillez remplir tous les champs obligatoires !")
-    }else{
-        // Requete Patient //
-        let requeteSQL_1 = "INSERT INTO patient (noSS, Nom_Patient, Prenom_Patient, Date_Naissance) VALUES";
-        requeteSQL_1 += ' (' + noSS + ',"' + nomPatient + '","' + prenomPatient + '","' + dateNaissance + '")';
-        
-        // Requete Ordonnance //
-        let requeteSQL_2 = "INSERT INTO ordonnance (no_SS, Id_Path, Id_Mede) VALUES";
-        requeteSQL_2 += ' (' + noSS + ',' + path + ',' + medecin + ')';
-        
-        let requetesSQL = [requeteSQL_1, requeteSQL_2];
+    if (Nom_Patient == "" || Prenom_Patient == "" || Date_Naissance == "" || noSS == "" ||
+    Id_Path == "" || Id_Mede == "" || idMedic == "" || Nb_Boite == "" || DureeEnMois == ""){
+        console.log("Veuillez remplir tous les champs obligatoires !");
+    }else {
+        console.log("Tous roules")
 
-        for (let t = 0;t < requetesSQL.length;t++) {
-            db.query( requetesSQL[t], (err, lignes, champs) => {
-                if (!err) {
-                    console.log("Insertion du patient terminé");
-                } else {
-                    console.log("Erreur lors de l'enregistrment de "+requetesSQL[t])
-                    res.send("Erreur ajout : "+JSON.stringify(err))
-                }
-            })
-        }   
+        // Requete Patient //
+        let AjoutPatient = { noSS, Nom_Patient, Prenom_Patient, Date_Naissance}
+        db.newPatient(AjoutPatient, (data) => {
+            console.log("Ajout Patient : Sucess ");
+        });
+
+        // Requete Ordonnance //
+        let no_SS = noSS;
+        let AjoutOrdonnance = { no_SS, Id_Path, Id_Mede}
+        db.newOrdonnance(AjoutOrdonnance, (data) => {
+            console.log("Ajout Ordonnance : Sucess ");
+        });
+
+        let Ordonnance = await db.getOrdonnancePatient(Id_Path, Id_Mede, noSS);
+        console.log(Ordonnance)
+
+        /*
         let requeteOrdonnance = "SELECT noOrd FROM ordonnance WHERE Id_Path = "+path+" AND Id_Mede = "+medecin+" and no_SS = "+noSS;
         db.query( requeteOrdonnance, (err, lignes, champs) => {
             ordonnance = lignes;
@@ -126,7 +122,8 @@ const pharmAjoutDePatient = async (req, res) => {
 
         // Requete Traitement //
         setTimeout(() => {console.log(ordonnance);
-            let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + ordonnance[0].noOrd + ',' + medic + ',' + Qte + ',' + duree + ')';
+            let noOrd = ordonnance[0].noOrd;
+            let requeteSQL_3 = 'INSERT INTO traitement (Id_Ord, Id_Medic, Nb_Boite, DureeEnMois) VALUES (' + noOrd + ',' + medic + ',' + Qte + ',' + duree + ')';
             let requeteQteNec = "";
             let QteTotal = 0;
             db.query( requeteSQL_3, (err, lignes, champs) => {
@@ -197,7 +194,7 @@ const pharmAjoutDePatient = async (req, res) => {
                 }
             })
         }
-        res.render('confirm')
+        res.render('confirm')*/
     }
 }
 
