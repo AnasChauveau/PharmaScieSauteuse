@@ -145,7 +145,9 @@ a {
 }
 
 .height-100 {
-    height: 100%
+    height: 100%;
+
+
 }
 
 @media screen and (min-width: 768px) {
@@ -182,19 +184,18 @@ a {
 }
 .table100 {
     position: relative;
-    padding-top: 60px;
 }
 .table100 {
     background-color: #fff;
 }
 
-
 .table100-head {
-    position: absolute;
+    position: relative;
     width: 100%;
     top: 0;
     left: 0;
-    height: 10px;
+
+    overflow: hidden;
 }
 table{
     width: 100%;
@@ -245,7 +246,12 @@ th {
     padding-left: 10px;
 }
 
-
+.heading{
+    background-color: #6c7ae0;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+}
 
 /*  ------------ Barre de recherche ------------ */
 .search {
@@ -291,15 +297,24 @@ th {
   transform: translate(-50%, -50%);
 }
 
-/*Fait par Anas*/
-.Droite{
+
+/* ------------ 404 & inscription ------------ */
+.card {
+    position: relative;
     display: flex;
-    justify-content: flex-end;
-}
-.Centre{
-    display: flex;
-    justify-content: center;
-}
-#erreur{
-    color: rgba(145, 22, 22, 0.884);
-}
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: .25rem;
+  }
+  
+  .card .card-header {
+    background-color: #fff;
+    border-bottom: none;
+  }
+  .btn-color{
+    background-color: #6c7ae0;
+  }
