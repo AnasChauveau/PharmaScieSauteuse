@@ -50,12 +50,28 @@ const pharmulaireModifPatient = async (req, res) => {
     let noSS = req.params.id;
 
     // Conteneur du résultats des Requetes //
-    let lesMedics = await db.getStock(noSS);
-    let lesMedecins = await db.getMedecin(noSS);
-    let lesAssurances = await db.getMutuelle();
-    let lesPathologies = await db.getPathologie(noSS);
+    let patient = await db.getOnePatient(noSS);
 
-    res.render('formModifPatient', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies, assurances : lesAssurances})
+    res.render('formModifPatient', {moment : moment, patient : patient})
+}
+
+const pharModifPatient = async (req, res) => {
+    let noSS = req.params.id;
+
+    let newNom = req.body.newNom;
+    let newPrenom = req.body.newPrenom;
+    let newNoSS = req.body.newNoSS;
+    let newDate_Naissance = req.body.newDate_Naissance;
+
+    if (noSS != newNoSS) { // Si le noSS(clé primaire) est modifié, alors on l'a modifie de partout pour ne pas faire d'orphelin
+        await db.updateNoSSAssur(newNoSS, noSS)
+        await db.updateNoSSOrd(newNoSS, noSS)
+        await db.updateNoSSPatient(newNoSS, noSS)
+    }
+
+    await db.updatePatient(newNom, newPrenom, newDate_Naissance, noSS)
+
+    res.render("confirm")
 }
 
 
@@ -227,9 +243,10 @@ module.exports = {
     pharmInfoPatient,
     pharmulaireOrdonnance,
     pharmulaireModifPatient,
+    pharModifPatient,
     pharmulaireModifStock,
     pharModifStock,
-    Chart
+    Chart,
 }
 
 

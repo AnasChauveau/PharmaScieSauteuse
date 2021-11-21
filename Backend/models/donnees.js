@@ -72,7 +72,6 @@ const getMutuellePatient = async (Myid) => {
 } 
 
 
-
 const getMedecin = async () => {
     return new Promise((resolve, reject) => {
         let sql='SELECT * FROM medecin';
@@ -175,6 +174,50 @@ const updateMedic = async (nom, QteStock, Qte_Necessaire, IDmedic) => {
     })
 }
 
+const updateNoSSOrd = async (newNoSS, noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="UPDATE ordonnance SET no_SS = ? WHERE no_SS = ?";
+        db.query(sql, [newNoSS, noSS],(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+
+const updateNoSSAssur = async (newNoSS, noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="UPDATE echeance SET no_SS = ? WHERE no_SS = ?";
+        db.query(sql, [newNoSS, noSS],(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+
+const updateNoSSPatient = async (newNoSS, noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="UPDATE patient SET noSS = ? WHERE noSS = ?";
+        db.query(sql, [newNoSS, noSS],(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+
+const updatePatient = async (newNom, newPrenom, newDate_Naissance, noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="UPDATE patient SET Nom_Patient = ?, Prenom_Patient = ?, Date_Naissance = ? WHERE noSS = ?";
+        db.query(sql, [newNom, newPrenom, newDate_Naissance, noSS],(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+
 module.exports={
     getPatient,
     getOnePatient,
@@ -193,4 +236,8 @@ module.exports={
     newAssurance,
     updateQteNec,
     updateMedic,
+    updateNoSSAssur,
+    updateNoSSOrd,
+    updateNoSSPatient,
+    updatePatient,
 }

@@ -26,6 +26,8 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Formulaire', PharmaControle.pharmulairePatient)
 
+    .post('/Modif-Patient/Confirmation/:id', PharmaControle.pharModifPatient)
+
     .post('/Stock/Confirmation/:id', PharmaControle.pharModifStock)
 
     .post('/Patient/Confirmation', PharmaControle.pharmAjoutDePatient)
