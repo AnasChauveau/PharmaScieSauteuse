@@ -1,0 +1,70 @@
+<!-----------------------------------------------------------
+AUTEUR : DAVID Louis
+Version : 1.2
+Dernière modification : 23/10/2021
+Utilité : Affichage de la liste des patients
+----------------------------------------------------------->
+
+<%- include('header') %>
+
+      <title>Pharmacie Sautheuz | Gestion des patients</title>
+   </head>
+   <body id="body-pd">
+      <header class="header" id="header">
+         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+         <!-- barre de recherche -->
+            <div class="wrap">
+                <div class="search">
+                <input type="text" class="searchTerm" placeholder="Numéro de sécurité social">
+                <button type="submit" class="searchButton">
+                    <i class="bx bx-search"></i>
+                </button>
+                </div>
+            </div>
+          <!-- Fin barre de recherche -->
+      </header>
+      
+            <!-- ================= NAVBAR ================= -->
+                        <%- include('navbar') %>
+            <!-- ================= NAVBAR ================= -->
+      
+      <!-- ================= CONTENEUR POUR AFFICHAGE LISTE DES PATIENTS =================-->
+      <div class="height-100 bg-light">
+        <div class="table100 ver1">
+            <div class="table100-head">
+            <table>
+                <thead>
+                    <tr class="row100 head">
+                        <th class="column1">Nom et prénom</th>
+                        <th class="column2">Numéro de sécurité social</th>
+                        <th class="column3">Date de naissance</th>
+                        <th class="column4"></th>
+                        <th class="column5">En voir plus</th>
+                        <th class="column6"></th>
+                    </tr>
+                </thead>
+            </table>
+            </div>
+            <div class="table100-body">
+            <table>
+            <tbody>
+
+                <% patients.forEach(function(patient){ %> 
+                    <tr class='body row10<%=c%>'>
+                        <td class="column1"><%=patient.Nom_Patient%></td>
+                        <td class="column2"><%=patient.noSS%></td>
+                        <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
+                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Nouvelle ordonnance</a></td>
+                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
+                        <td class="column6"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/delete/<%=patient.noSS%>">Supprimer</a></td>
+                    </tr>
+
+                    <% if(c == 1) c = 0; else c = 1 %>
+                
+                <% })%>
+                
+            </tbody>
+            </table>
+        </div>
+
+<%- include('footer') %>
