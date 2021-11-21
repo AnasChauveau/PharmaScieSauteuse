@@ -6,66 +6,71 @@ const pharMenu = (req, res) => {
     res.render('menu')
 }
 
-const pharmAffichagePatients = (req, res) => {
+
+const pharmAffichagePatients = async (req, res) => {
     let couleur = 1;
-    db.getPatient( (data) =>{
-        res.render('patient', {patients : data, moment : moment, c : couleur})
-    })
+    let data = await db.getPatient()
+    res.render('patient', {patients : data, moment : moment, c : couleur})  
 }
 
-const pharmAffichageStocks = (req, res) => {
+
+const pharmAffichageStocks = async (req, res) => {
     let couleur = 1;
-    db.getStock( (data) =>{
-        res.render('stock', {medicaments : data, c : couleur})
-    })
+    let data = await db.getStock()
+    res.render('stock', {medicaments : data, c : couleur})
 }
 
-const pharmInfoPatient = (req, res) => {
+
+const pharmInfoPatient = async (req, res) => {
     let noSS = req.params.id;
     let no = 1;
     
     // Conteneur du résultats des Requetes //
-    let patient = "";
-    let pathologie = "";
-    let medicament = "";
-    let mutuelle = "";
-
-    db.getOnePatient(noSS, (data) =>{patient = data})
-    db.getPathPatient(noSS, (data) =>{pathologie = data})
-    db.getMedicPatient(noSS, (data) =>{medicament = data})
-    db.getMutuellePatient(noSS, (data) =>{mutuelle = data})
-    setTimeout(() => {console.log(medicament)
-        res.render("fichePatient", {moment : moment, no : no, patient : patient, pathologie : pathologie, mutuelle : mutuelle, medicament : medicament})}, 200)
+    let patient = await db.getOnePatient(noSS);
+    let pathologie = await db.getPathPatient(noSS);
+    let medicament = await db.getMedicPatient(noSS);
+    let mutuelle = await db.getMutuellePatient(noSS);
+    
+    res.render("fichePatient", {moment : moment, no : no, patient : patient, pathologie : pathologie, mutuelle : mutuelle, medicament : medicament, noSS : noSS})
 }
 
-const pharmulaireOrdonnance = (req, res) => {
-    // Conteneur du résultats des Requetes //
-    let lesMedics = "";
-    let lesMedecins = "";
-    let lesPathologies = "";
 
-    db.getStock((data) => {lesMedics = data;})
-    db.getMedecin((data) => {lesMedecins = data;})
-    db.getPathologie((data) => {lesPathologies = data;})
-    setTimeout(() => {res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies})}, 200)
-}
-
-const pharmulairePatient = (req, res) => {
+const pharmulaireModifPatient = async (req, res) => {
+    let noSS = req.params.id;
 
     // Conteneur du résultats des Requetes //
-    let lesMedics = "";
-    let lesMedecins = "";
-    let lesAssurances = "";
-    let lesPathologies = "";
+    let lesMedics = await db.getStock(noSS);
+    let lesMedecins = await db.getMedecin(noSS);
+    let lesAssurances = await db.getMutuelle();
+    let lesPathologies = await db.getPathologie(noSS);
 
-    db.getStock((data) => {lesMedics = data;})
-    db.getMedecin((data) => {lesMedecins = data;})
-    db.getMutuelle((data) => {lesAssurances = data;})
-    db.getPathologie((data) => {lesPathologies = data;})
-    setTimeout(() => {res.render('formPat', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})}, 200)
+    res.render('formModifPatient', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies, assurances : lesAssurances})
 }
 
-const pharmAjoutDePatient = (req, res) => {
+
+const pharmulaireOrdonnance = async (req, res) => {
+    // Conteneur du résultats des Requetes //
+    let lesMedics = await db.getStock();
+    let lesMedecins = await db.getMedecin();
+    let lesPathologies = await db.getPathologie();
+
+    res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies})
+}
+
+
+const pharmulairePatient = async (req, res) => {
+
+    // Conteneur du résultats des Requetes //
+    let lesMedics = await db.getStock();
+    let lesMedecins = await db.getMedecin();
+    let lesAssurances = await db.getMutuelle();
+    let lesPathologies = await db.getPathologie();
+
+    res.render('formPat', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})
+}
+
+
+const pharmAjoutDePatient = async (req, res) => {
 
     console.log(req.body);
 
@@ -196,9 +201,11 @@ const pharmAjoutDePatient = (req, res) => {
     }
 }
 
-const Chart = (req, res) => {
+
+const Chart = async (req, res) => {
     res.render("chart")
 }
+
 
 module.exports = {
     pharMenu,
@@ -208,6 +215,7 @@ module.exports = {
     pharmAjoutDePatient,
     pharmInfoPatient,
     pharmulaireOrdonnance,
+    pharmulaireModifPatient,
     Chart
 }
 

@@ -1,18 +1,15 @@
 <%- include('header') %>
 
       <link rel="stylesheet" type="text/css" href="/formulaire.css" media="all"/>
-      <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
-      <script src="/plusieursTraitement.js"></script>
-      <title>Formulaire ajout de patient</title>
+      <title>Formulaire ajout d'une Ordonnance</title>
    </head>
    <body id="body-pd">
       <header class="header" id="header">
          <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
       </header>
       <div class="Centre">      
-         <h1>Formulaire de nouveau Patient</h1>
+         <h1>Formulaire de nouvelle Ordonnance</h1>
       </div>
-
          <!-- ================= NAVBAR ================= -->
                         <%- include('navbar') %>
          <!-- ================= NAVBAR ================= -->
@@ -22,11 +19,8 @@
          <div class="form-style-5">
             <form action="/PharmaScieSauteuse/Confirmation" method="post">
                <fieldset id="dynamic">
-                  <legend><span class="number">1</span> Patient :</legend>
-                  <input type="text" class="field2" name="nom" placeholder="Nom *" required>
-                  <input type="text" class="field2" name="prenom" placeholder="Prénom *" required>
-                  <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *" minlength="15" maxlength="15" required>
-                  <input type="date" class="field2" name="date_naissance" required>
+                  <legend><span class="number">1</span> Ordonnance :</legend>
+
                   <select  class="field2" name="pathologie" id="patoche">
 
                      <option value='0' selected>- Pathologie -</option>
@@ -35,7 +29,7 @@
                      <% }) %>
                   </select>
                   <!-- TRAITEMENT OBLIGATOIRE : -->
-                  <div id="T0" class="align">
+                  <div class="align">
                      <select class="field1" name="traitement" id="medic" required>
 
                         <option value='0' selected>- Choix Médicament -</option>
@@ -46,10 +40,32 @@
                      </select>
                      <input type="number" class="field1" name="Qte" placeholder="Nombre de boites par mois *" required>
                      <input type="number" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
-                     <button id="create" onclick="newline()">+</button>
+                     <button onclick="newline()">+</button>
                   </div>
                   <!-- FIN TRAITEMENT OBLIGATOIRE -->
-                  
+                  <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
+                  <script>
+                     let a = 1;
+                     function newline(){
+                        document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte' placeholder='Quantité (mois)*' required>"
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree' placeholder='Durée traitement (mois)*' required> <button id='del' onclick='delline()'>x</button>" 
+                        a = a+1
+                        document.getElementById('nbT').value = a;
+                     }
+                     function delline(){
+                        var select = document.getElementById("Count");
+                        select.remove();
+                        var Qte = document.getElementById("LaQte");
+                        Qte.remove();
+                        var duree = document.getElementById("LaDuree");
+                        duree.remove();
+                        var delbtn = document.getElementById("del");
+                        delbtn.remove();
+                        a = a-1
+                        document.getElementById('nbT').value = a;
+                     }
+                  </script>
 
                </fieldset>
                <fieldset>
@@ -64,19 +80,6 @@
 
                   </select>
                </fieldset>
-               <fieldset>
-                  <legend><span class="number">3</span> Mutuelle</legend>
-                  <label for="mutuelle">Nom de la Mutuelle :</label>
-                  <select class="field2" name="mutuelle">
-
-                     <option value='0' selected>- Choix Assurance -</option>
-                     <% assurances.forEach(function(assurance){ %>
-                     <option value="<%=assurance.noAssur%>"><%=assurance.Nom_Assur%></option>
-                     <% }) %>
-
-                  </select>
-               </fieldset>
-               <input class="hidden" name="date_scan" value="<%=moment().add(1,'years').format("YYYY-MM-DD")%>">
                <input type="submit" value="Envoyer" >
                <input id="nbT" name="nb_traitement" class="hidden">
             </form>

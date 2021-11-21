@@ -290,3 +290,13 @@ th {
   left: 84%;
   transform: translate(-50%, -50%);
 }
+
+/*Fait par Anas*/
+.Droite{
+    display: flex;
+    justify-content: flex-end;
+}
+.Centre{
+    display: flex;
+    justify-content: center;
+}

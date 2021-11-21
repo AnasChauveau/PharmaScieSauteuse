@@ -1,8 +1,6 @@
 <%- include('header') %>
 
       <link rel="stylesheet" type="text/css" href="/formulaire.css" media="all"/>
-      <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
-      <script src="/plusieursTraitement.js"></script>
       <title>Formulaire ajout de patient</title>
    </head>
    <body id="body-pd">
@@ -10,7 +8,7 @@
          <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
       </header>
       <div class="Centre">      
-         <h1>Formulaire de nouveau Patient</h1>
+         <h1>Formulaire de Modification : Patient</h1>
       </div>
 
          <!-- ================= NAVBAR ================= -->
@@ -35,7 +33,7 @@
                      <% }) %>
                   </select>
                   <!-- TRAITEMENT OBLIGATOIRE : -->
-                  <div id="T0" class="align">
+                  <div class="align">
                      <select class="field1" name="traitement" id="medic" required>
 
                         <option value='0' selected>- Choix Médicament -</option>
@@ -46,10 +44,32 @@
                      </select>
                      <input type="number" class="field1" name="Qte" placeholder="Nombre de boites par mois *" required>
                      <input type="number" class="field1" name="duree" placeholder="Durée traitement (mois) *" required>
-                     <button id="create" onclick="newline()">+</button>
+                     <button onclick="newline()">+</button>
                   </div>
                   <!-- FIN TRAITEMENT OBLIGATOIRE -->
-                  
+                  <!-- SCRIPT NOUVEAU TRAITEMENT OPTIONNEL : -->
+                  <script>
+                     let a = 1;
+                     function newline(){
+                        document.getElementById('dynamic').innerHTML += "<select class='field3' id='Count' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>" 
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte' placeholder='Quantité (mois)*' required>"
+                        document.getElementById('dynamic').innerHTML += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree' placeholder='Durée traitement (mois)*' required> <button id='del' onclick='delline()'>x</button>" 
+                        a = a+1
+                        document.getElementById('nbT').value = a;
+                     }
+                     function delline(){
+                        var select = document.getElementById("Count");
+                        select.remove();
+                        var Qte = document.getElementById("LaQte");
+                        Qte.remove();
+                        var duree = document.getElementById("LaDuree");
+                        duree.remove();
+                        var delbtn = document.getElementById("del");
+                        delbtn.remove();
+                        a = a-1
+                        document.getElementById('nbT').value = a;
+                     }
+                  </script>
 
                </fieldset>
                <fieldset>
@@ -77,7 +97,7 @@
                   </select>
                </fieldset>
                <input class="hidden" name="date_scan" value="<%=moment().add(1,'years').format("YYYY-MM-DD")%>">
-               <input type="submit" value="Envoyer" >
+               <input type="submit" value="Envoyer" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce poste ?');">
                <input id="nbT" name="nb_traitement" class="hidden">
             </form>
 
