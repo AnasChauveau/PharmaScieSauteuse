@@ -63,13 +63,13 @@ const pharModifPatient = async (req, res) => {
     let newNoSS = req.body.newNoSS;
     let newDate_Naissance = req.body.newDate_Naissance;
 
+    await db.updatePatient(newNom, newPrenom, newDate_Naissance, noSS)
+
     if (noSS != newNoSS) { // Si le noSS(clé primaire) est modifié, alors on l'a modifie de partout pour ne pas faire d'orphelin
         await db.updateNoSSAssur(newNoSS, noSS)
         await db.updateNoSSOrd(newNoSS, noSS)
         await db.updateNoSSPatient(newNoSS, noSS)
     }
-
-    await db.updatePatient(newNom, newPrenom, newDate_Naissance, noSS)
 
     res.render("confirm")
 }
