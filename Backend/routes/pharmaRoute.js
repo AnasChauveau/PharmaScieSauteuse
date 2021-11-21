@@ -24,7 +24,7 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .post('/Patient/Confirmation', PharmaControle.pharmAjoutDePatient)
 
-    .post('/Ordonnance/Confirmation', PharmaControle.pharmAjoutOrdonnance)
+    .post('/Ordonnance/Confirmation/:id', PharmaControle.pharmAjoutOrdonnance)
 
     .get('/Gestion-de-Stock/Graphe/:id', PharmaControle.Chart)
 

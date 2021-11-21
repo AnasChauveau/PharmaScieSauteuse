@@ -60,19 +60,19 @@ const pharmulaireModifPatient = async (req, res) => {
 
 
 const pharmulaireOrdonnance = async (req, res) => {
-
+    let noSS = req.params.id;
     // Conteneur du résultats des Requetes //
     let lesMedics = await db.getStock();
     let lesMedecins = await db.getMedecin();
     let lesPathologies = await db.getPathologie();
 
-    res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies})
+    res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies, noSS : noSS})
 }
 
 const pharmAjoutOrdonnance = async (req, res) => {
     // Patient //
     let noSS = req.params.id;
-
+    
     // Ordonnance //
     let path = req.body.pathologie;
     let medecin = req.body.medecin;
