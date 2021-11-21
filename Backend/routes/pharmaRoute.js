@@ -20,12 +20,16 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Gestion-de-Stock', PharmaControle.pharmAffichageStocks)
 
+    .get('/Gestion-de-Stock/Graphe/:id', PharmaControle.Chart)
+
+    .get('/Gestion-de-Stock/Update/:id', PharmaControle.pharmulaireModifStock)
+
     .get('/Formulaire', PharmaControle.pharmulairePatient)
+
+    .post('/Stock/Confirmation/:id', PharmaControle.pharModifStock)
 
     .post('/Patient/Confirmation', PharmaControle.pharmAjoutDePatient)
 
     .post('/Ordonnance/Confirmation/:id', PharmaControle.pharmAjoutOrdonnance)
-
-    .get('/Gestion-de-Stock/Graphe/:id', PharmaControle.Chart)
 
 module.exports = routeur

@@ -36,7 +36,7 @@ body {
     padding: 0 1rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
-    transition: .5s
+    transition: .5s;
 }
 
 a {

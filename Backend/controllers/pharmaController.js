@@ -193,8 +193,24 @@ const pharmAjoutDePatient = async (req, res) => {
     }
 }
 
+const pharmulaireModifStock = async (req, res) => {
+    let idMedic = req.params.id;
+    let medicament = await db.getOneMedic(idMedic);
 
+    res.render("formModifStock", {idMedic : idMedic, medicament : medicament})
+}
 
+const pharModifStock = async (req, res) => {
+    let idMedic = req.params.id;
+
+    let newNom = req.body.newNom;
+    let newStock = req.body.newStock;
+    let newNecess = req.body.newNecess;
+
+    await db.updateMedic(newNom, newStock, newNecess, idMedic);
+
+    res.render('confirm')
+}
 
 const Chart = async (req, res) => {
     res.render("chart")
@@ -211,6 +227,8 @@ module.exports = {
     pharmInfoPatient,
     pharmulaireOrdonnance,
     pharmulaireModifPatient,
+    pharmulaireModifStock,
+    pharModifStock,
     Chart
 }
 

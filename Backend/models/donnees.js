@@ -31,6 +31,16 @@ const getOnePatient = async (Myid) => {
     })
 }
 
+const getOneMedic = async (Myid) => {
+    return new Promise((resolve, reject) => {
+        let sql = "SELECT * FROM medicament WHERE idMedic = ?";
+        db.query(sql, Myid,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data[0]);
+        })
+    })
+}
+
 const getPathPatient = async (Myid) => {
     return new Promise((resolve, reject) => {
         let sql = "SELECT Nom_Path FROM ordonnance, pathologie WHERE idPath = Id_Path and no_SS = ?";
@@ -155,9 +165,20 @@ const updateQteNec = async (Qte, IDmedic) => {
     })
 }
 
+const updateMedic = async (nom, QteStock, Qte_Necessaire, IDmedic) => {
+    return new Promise((resolve, reject) => {
+        let sql="UPDATE medicament SET Nom_Medic = ?, Qte_En_Stock = ?, Qte_Necessaire = ? WHERE idMedic = ?";
+        db.query(sql, [nom, QteStock, Qte_Necessaire, IDmedic],(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
 module.exports={
     getPatient,
     getOnePatient,
+    getOneMedic,
     getPathPatient,
     getMedicPatient,
     getMutuellePatient,
@@ -171,4 +192,5 @@ module.exports={
     newTraitement,
     newAssurance,
     updateQteNec,
+    updateMedic,
 }
