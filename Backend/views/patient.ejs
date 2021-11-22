@@ -13,15 +13,16 @@ Utilité : Affichage de la liste des patients
       <header class="header" id="header">
          <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
          <!-- barre de recherche -->
+         <form action="/PharmaScieSauteuse/Gestion-de-Patient/search">
             <div class="wrap">
                 <div class="search">
-                <form action="/PharmaScieSauteuse/Gestion-de-Patient"></form>
-                <input type="text" class="searchTerm" placeholder="Numéro de sécurité social">
+                <input type="text" name="searchPat" class="searchTerm" placeholder="Numéro de sécurité social">
                 <button type="submit" class="searchButton">
                     <i class="bx bx-search"></i>
                 </button>
                 </div>
             </div>
+        </form>
           <!-- Fin barre de recherche -->
       </header>
       

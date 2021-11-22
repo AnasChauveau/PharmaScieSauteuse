@@ -14,14 +14,15 @@ const pharmAffichagePatients = async (req, res) => {
     res.render('patient', {patients : data, moment : moment, c : couleur})  
 }
 
-/*const pharmaRecherchePatient = async (req, res) => {
-    let mot = req.body.search;
+const pharmaRecherchePatient = async (req, res) => {
+    let couleur = 0;
+    let mot = req.params.id;
 
     console.log(mot)
     let data = await db.searchPatient(mot)
 
-    res.render('searchPatient', {patients : data, moment : moment, c : couleur})
-}*/
+    res.render('patient', {patients : data, moment : moment, c : couleur})
+}
 
 const pharmAffichageStocks = async (req, res) => {
     let couleur = 0;
@@ -299,6 +300,7 @@ module.exports = {
     pharmulairePatient,
     pharmAjoutDePatient,
     pharmAjoutOrdonnance,
+    pharmaRecherchePatient,
     pharmInfoPatient,
     pharmulaireOrdonnance,
     pharmulaireModifPatient,
