@@ -119,18 +119,13 @@ const pharmAjoutOrdonnance = async (req, res) => {
     let Qte = req.body.Qte
     let duree = req.body.duree
     let nb_traitement = req.body.nb_traitement;
-    
-    console.log("nouveau",parseInt(newPath),"ancien",patho)
 
     var pathologie = "OK";
     patho.forEach(function(path){
-        console.log(path)
-        console.log(path.Id_Path)
-        console.log(parseInt(newPath))
+
         if(path.Id_Path === parseInt(newPath)){
             pathologie = "Pas OK"
         }
-        console.log(pathologie)
     })
     if(pathologie == "OK"){    
         // Requete Insert : Ordonnance //
@@ -139,7 +134,6 @@ const pharmAjoutOrdonnance = async (req, res) => {
     
         let Ordonnance = await db.getOrdonnancePatient(newPath, medecin, noSS);
         let noOrd = Ordonnance.noOrd;
-        console.log("noOrd :",noOrd)
 
         // Requete Insert : Traitement //
         await db.newTraitement(noOrd, traitement, Qte, duree);
@@ -169,13 +163,12 @@ const pharmAjoutOrdonnance = async (req, res) => {
         }
         res.render('confirmPatient')
     }else{
-        res.render('erreur')
+        let erreur = "Cette Pathologie à déjà été enregistré !"
+
     }
 }
 
 const pharmAjoutDePatient = async (req, res) => {
-
-    console.log(req.body);
 
     // Patient //
     let nomPatient = req.body.nom;
@@ -197,9 +190,11 @@ const pharmAjoutDePatient = async (req, res) => {
     let assur = req.body.mutuelle;
     let date_scan = req.body.date_scan;
 
-    if (nomPatient == "" || prenomPatient == "" || dateNaissance == "" || noSS == "" ||
-        path == "" || medecin == "" || traitement == "" || Qte == "" || duree == ""){
+    if (nomPatient.length < 3 || prenomPatient.length < 3 || dateNaissance == "" || noSS < 15 || noSS > 15 ||
+        path == "" || medecin == "" || traitement == "" || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
             // MESSAGE D'ERREUR //
+            let erreur = "Veuillez remplir correctement les champs !"
+            res.redirect("/PharmaScieSauteuse/Formulaire")
     }else{
             // PAS DE MESSAGE D'ERREUR //
 
