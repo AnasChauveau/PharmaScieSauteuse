@@ -16,6 +16,8 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Gestion-de-Patient/Update/:id', PharmaControle.pharmulaireModifPatient)
 
+    .get('/Gestion-de-Patient/delete/:id', PharmaControle.pharmaDeletePatient)
+
     .get('/Gestion-de-Patient/newOrdonnance/:id', PharmaControle.pharmulaireOrdonnance)
 
     .get('/Gestion-de-Stock', PharmaControle.pharmAffichageStocks)
@@ -23,6 +25,8 @@ routeur.get('/', PharmaControle.pharMenu)
     .get('/Gestion-de-Stock/Graphe/:id', PharmaControle.Chart)
 
     .get('/Gestion-de-Stock/Update/:id', PharmaControle.pharmulaireModifStock)
+
+    .get('/Gestion-de-Stock/delete/:id', PharmaControle.pharmaDeleteMedic)
 
     .get('/Formulaire', PharmaControle.pharmulairePatient)
 

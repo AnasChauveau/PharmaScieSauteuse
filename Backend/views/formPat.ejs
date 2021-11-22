@@ -7,7 +7,7 @@
          let b = 0;
 
          function newline(){
-             let ecriture = "<div id='T"+a+"' class='align'><select class='field3' id='Count"+a+"' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>";
+             let ecriture = "<div id='T"+a+"' class='align'><select class='field1' id='Count"+a+"' name='traitement"+a+"' required><option value='0' selected>- Choix Médicament -</option><% medicaments.forEach(function(medicament){ %> <option value='<%=medicament.idMedic%>'><%=medicament.Nom_Medic%></option> <% }) %></select>";
              ecriture += "<input type='number' class='field1' name='Qte"+a+"' id='LaQte"+a+"' placeholder='Quantité (mois)*' minlength='1' maxlength='2' required>";
              ecriture += "<input type='number' class='field1'name='duree"+a+"' id='LaDuree"+a+"' placeholder='Durée traitement (mois)*' minlength='1' maxlength='2' required><button id='del"+a+"' onclick='delline()'>x</button></div>";
              document.getElementById('T'+b).insertAdjacentHTML('afterend', ecriture);

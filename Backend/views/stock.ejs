@@ -55,8 +55,8 @@ Utilité : Affichage de la liste des stocks
                         <td class="column2"><%=medicament.Qte_En_Stock%> boîtes</td>
                         <td class="column3"><%=medicament.Qte_Necessaire%> boîtes</td>
                         <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Stock/Graphe/<%=medicament.idMedic%>">Graphique</a></td>
-                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Stock/Update/<%=medicament.idMedic%>">Modifier</a></td>
-                        <td class="column6"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/delete/<%=medicament.idMedic%>">Supprimer</a></td>
+                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Stock/Update/<%=medicament.idMedic%>" >Modifier</a></td>
+                        <td class="column6"><a class="btn btn-outline-secondary"  href="/pharmaScieSauteuse/Gestion-de-Stock/delete/<%=medicament.idMedic%>" onclick="return confirm('Etes-vous sûr de vouloir Supprimer ce poste ?')">Supprimer</a></td>
                     </tr>
 
                     <% if(c == 1) c = 0; else c = 1 %>

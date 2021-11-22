@@ -111,6 +111,16 @@ const getOrdonnancePatient = async (IDpath, IDmedecin, noSS) => {
         })
     })
 }
+
+const getPathologiePatient = async (noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="SELECT Id_Path FROM ordonnance WHERE no_SS = ?";
+        db.query(sql, noSS,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
 //
 
 // INSERT //
@@ -217,6 +227,57 @@ const updatePatient = async (newNom, newPrenom, newDate_Naissance, noSS) => {
     })
 }
 
+const deleteOrdPatient = async (noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="DELETE FROM ordonnance WHERE no_SS = ?";
+        db.query(sql, noSS,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+
+const deleteAssurPatient = async (noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="DELETE FROM echeance WHERE no_SS = ?";
+        db.query(sql, noSS,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+const deletePatient = async (noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="DELETE FROM patient WHERE noSS = ?";
+        db.query(sql, noSS,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+const deleteTraitement = async (id) => {
+    return new Promise((resolve, reject) => {
+        let sql="Delete FROM traitement WHERE Id_Medic = ?";
+        db.query(sql, id,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
+const deleteMedic = async (id) => {
+    return new Promise((resolve, reject) => {
+        let sql="Delete FROM medicament WHERE idMedic = ?";
+        db.query(sql, id,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
 
 module.exports={
     getPatient,
@@ -230,6 +291,7 @@ module.exports={
     getMutuelle,
     getPathologie,
     getOrdonnancePatient,
+    getPathologiePatient,
     newOrdonnance,
     newPatient,
     newTraitement,
@@ -240,4 +302,9 @@ module.exports={
     updateNoSSOrd,
     updateNoSSPatient,
     updatePatient,
+    deleteAssurPatient,
+    deleteOrdPatient,
+    deletePatient,
+    deleteTraitement,
+    deleteMedic,
 }

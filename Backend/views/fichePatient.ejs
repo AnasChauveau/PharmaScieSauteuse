@@ -59,11 +59,14 @@
             </h2>
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                <div class="accordion-body">
+                  <% if (medicament.length == 0) { %> 
+                     <p>Aucun Traitement en cours</p>
+                  <% } %> 
                   <% no = 1; %> 
                   <% medicament.forEach(function(medic) {%>
                      <strong>Traitement <%=no%> :</strong>
                      <p><%=medic.nb_Boite%> Boîtes de <%=medic.Nom_Medic%> par mois pendant <%=medic.DureeEnMois%> mois</p>
-                  <%no += 1; }) %>
+                  <% no += 1; }) %>
                </div>
             </div>
          </div>

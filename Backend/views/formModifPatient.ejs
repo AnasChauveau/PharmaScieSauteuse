@@ -25,7 +25,7 @@
                   <input type="text" class="field2" name="newNoSS" value="<%=patient.noSS%>" placeholder="Numéro de carte vitale" minlength="15" maxlength="15" required>
                   <input type="date" class="field2" name="newDate_Naissance" value="<%=moment(patient.Date_Naissance).format("YYYY-MM-DD")%>" required>
             
-               <input type="submit" value="Envoyer" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce poste ?');">
+               <input type="submit" value="Envoyer" onclick="return confirm('Etes-vous sûr de vouloir Modifier ce poste ?');">
             </form>
 
 <%- include('footer') %>

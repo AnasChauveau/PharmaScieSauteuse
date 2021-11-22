@@ -8,14 +8,14 @@ const pharMenu = (req, res) => {
 
 
 const pharmAffichagePatients = async (req, res) => {
-    let couleur = 1;
+    let couleur = 0;
     let data = await db.getPatient()
     res.render('patient', {patients : data, moment : moment, c : couleur})  
 }
 
 
 const pharmAffichageStocks = async (req, res) => {
-    let couleur = 1;
+    let couleur = 0;
     let data = await db.getStock()
     res.render('stock', {medicaments : data, c : couleur})
 }
@@ -71,12 +71,13 @@ const pharModifPatient = async (req, res) => {
         await db.updateNoSSPatient(newNoSS, noSS)
     }
 
-    res.render("confirm")
+    res.render("confirmPatient")
 }
 
 
 const pharmulaireOrdonnance = async (req, res) => {
     let noSS = req.params.id;
+
     // Conteneur du résultats des Requetes //
     let lesMedics = await db.getStock();
     let lesMedecins = await db.getMedecin();
@@ -90,7 +91,8 @@ const pharmAjoutOrdonnance = async (req, res) => {
     let noSS = req.params.id;
     
     // Ordonnance //
-    let path = req.body.pathologie;
+    let patho = await db.getPathologiePatient(noSS); // récupération des pathologies du patient
+    let newPath = req.body.pathologie;
     let medecin = req.body.medecin;
     
     // Traitement //
@@ -98,41 +100,58 @@ const pharmAjoutOrdonnance = async (req, res) => {
     let Qte = req.body.Qte
     let duree = req.body.duree
     let nb_traitement = req.body.nb_traitement;
+    
+    console.log("nouveau",parseInt(newPath),"ancien",patho)
 
-    // Requete Insert : Ordonnance //
-    await db.newOrdonnance(noSS, path, medecin);
-    console.log("Ajout Ordonnance : Sucess ");
-    
-    let Ordonnance = await db.getOrdonnancePatient(path, medecin, noSS);
-    let noOrd = Ordonnance.noOrd;
-
-    // Requete Insert : Traitement //
-    await db.newTraitement(noOrd, traitement, Qte, duree);
-    
-    // Requete Update : Qté Nécessaire //
-    let QteTotal = Qte*duree;
-    await db.updateQteNec(QteTotal, traitement);
-    
-    // Requete Insert : Traitements //
-    if (nb_traitement > 1){
-        let traitementX = "";
-        let QteX = "";
-        let dureeX = "";
-        let QteTotalX = 0;
-        for(let i = 1;i<nb_traitement;i++){        
-            traitementX = 'req.body.traitement'+i ;
-            QteX = 'req.body.Qte'+i ;
-            dureeX = 'req.body.duree'+i ;
-            await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
-            // Requete Update : Qtés Nécessaires //
-            QteTotalX = eval(QteX)*eval(dureeX)
-            await db.updateQteNec(QteTotalX, eval(traitementX));
+    var pathologie = "OK";
+    patho.forEach(function(path){
+        console.log(path)
+        console.log(path.Id_Path)
+        console.log(parseInt(newPath))
+        if(path.Id_Path === parseInt(newPath)){
+            pathologie = "Pas OK"
         }
-        console.log("Ajout Des Traitements : Sucess ");
-    } else{
-        console.log("Ajout Du Traitement : Sucess ");
+        console.log(pathologie)
+    })
+    if(pathologie == "OK"){    
+        // Requete Insert : Ordonnance //
+        await db.newOrdonnance(noSS, newPath, medecin);
+        console.log("Ajout Ordonnance : Sucess ");
+    
+        let Ordonnance = await db.getOrdonnancePatient(newPath, medecin, noSS);
+        let noOrd = Ordonnance.noOrd;
+        console.log("noOrd :",noOrd)
+
+        // Requete Insert : Traitement //
+        await db.newTraitement(noOrd, traitement, Qte, duree);
+    
+        // Requete Update : Qté Nécessaire //
+        let QteTotal = Qte*duree;
+        await db.updateQteNec(QteTotal, traitement);
+    
+        // Requete Insert : Traitements //
+        if (nb_traitement > 1){
+            let traitementX = "";
+            let QteX = "";
+            let dureeX = "";
+            let QteTotalX = 0;
+            for(let i = 1;i<nb_traitement;i++){        
+                traitementX = 'req.body.traitement'+i ;
+                QteX = 'req.body.Qte'+i ;
+                dureeX = 'req.body.duree'+i ;
+                await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
+                // Requete Update : Qtés Nécessaires //
+                QteTotalX = eval(QteX)*eval(dureeX)
+                await db.updateQteNec(QteTotalX, eval(traitementX));
+            }
+            console.log("Ajout Des Traitements : Sucess ");
+        } else{
+            console.log("Ajout Du Traitement : Sucess ");
+        }
+        res.render('confirmPatient')
+    }else{
+        res.render('erreur')
     }
-    res.render('confirm')
 }
 
 const pharmAjoutDePatient = async (req, res) => {
@@ -205,7 +224,7 @@ const pharmAjoutDePatient = async (req, res) => {
         if (assur != 0){
             await db.newAssurance(noSS , assur, date_scan);    
         }
-        res.render('confirm')
+        res.render('confirmPatient')
     }
 }
 
@@ -225,11 +244,30 @@ const pharModifStock = async (req, res) => {
 
     await db.updateMedic(newNom, newStock, newNecess, idMedic);
 
-    res.render('confirm')
+    res.render('confirmStock')
 }
 
 const Chart = async (req, res) => {
     res.render("chart")
+}
+
+const pharmaDeleteMedic = async (req, res) => {
+    let idMedic = req.params.id;
+
+    await db.deleteMedic(idMedic);
+    await db.deleteTraitement(idMedic); // Suppression des traitements de ce medicament
+
+    res.render("confirmStock")
+}
+
+const pharmaDeletePatient = async (req, res) => {
+    let noSS = req.params.id;
+
+    await db.deleteAssurPatient(noSS); // Suppresion du lien Assurance/Patient
+    await db.deleteOrdPatient(noSS); // Suppression des ordonnances du Patient
+    await db.deletePatient(noSS); // Suppression du Patient
+
+    res.render("confirmPatient")
 }
 
 
@@ -244,8 +282,10 @@ module.exports = {
     pharmulaireOrdonnance,
     pharmulaireModifPatient,
     pharModifPatient,
+    pharmaDeletePatient,
     pharmulaireModifStock,
     pharModifStock,
+    pharmaDeleteMedic,
     Chart,
 }
 
