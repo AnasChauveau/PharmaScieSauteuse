@@ -131,6 +131,17 @@ const getTraitement = async (id) => {
         })
     })
 }
+/*
+const searchPatient = async (mot) => {
+    return new Promise((resolve, reject) => {
+        let sql = "SELECT CONCAT(Nom_Patient, ' ', Prenom_Patient) AS Nom_Patient, noSS, Date_naissance FROM patient WHERE Nom_Patient = ? order by Nom_Patient, Prenom_Patient, noSS";
+        db.query(sql, mot,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data)
+        })
+    })
+}
+*/
 //
 
 // INSERT //

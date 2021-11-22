@@ -12,6 +12,8 @@ routeur.get('/', PharmaControle.pharMenu)
 
     .get('/Gestion-de-Patient', PharmaControle.pharmAffichagePatients)
 
+    //.get('/Gestion-de-Patient/search', PharmaControle.pharmaRecherchePatient)
+
     .get('/Gestion-de-Patient/info/:id', PharmaControle.pharmInfoPatient)
 
     .get('/Gestion-de-Patient/Update/:id', PharmaControle.pharmulaireModifPatient)

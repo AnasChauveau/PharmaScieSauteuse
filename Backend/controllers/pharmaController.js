@@ -10,9 +10,18 @@ const pharMenu = (req, res) => {
 const pharmAffichagePatients = async (req, res) => {
     let couleur = 0;
     let data = await db.getPatient()
+
     res.render('patient', {patients : data, moment : moment, c : couleur})  
 }
 
+/*const pharmaRecherchePatient = async (req, res) => {
+    let mot = req.body.search;
+
+    console.log(mot)
+    let data = await db.searchPatient(mot)
+
+    res.render('searchPatient', {patients : data, moment : moment, c : couleur})
+}*/
 
 const pharmAffichageStocks = async (req, res) => {
     let couleur = 0;
