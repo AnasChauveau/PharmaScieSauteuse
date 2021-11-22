@@ -121,6 +121,16 @@ const getPathologiePatient = async (noSS) => {
         })
     })
 }
+
+const getTraitement = async (id) => {
+    return new Promise((resolve, reject) => {
+        let sql="SELECT Nb_Boite, DureeEnMois FROM traitement WHERE Id_Medic = ?";
+        db.query(sql, id,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
 //
 
 // INSERT //
@@ -290,6 +300,7 @@ module.exports={
     getMedecin,
     getMutuelle,
     getPathologie,
+    getTraitement,
     getOrdonnancePatient,
     getPathologiePatient,
     newOrdonnance,

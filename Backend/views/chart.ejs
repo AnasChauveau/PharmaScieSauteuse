@@ -21,10 +21,16 @@
                 const myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+                        labels: [
+                            '<%=moment().add(0,"months").format("MMMM")%><%for(let i = 1;i<12;i++){%>',
+                            '<%=moment().add(i,"months").format("MMMM")%><%}%>',
+                        ],
                         datasets: [{
                             label: 'Nombre de Boîte de Doliprane',
-                            data: [12, 19, 3, 5, 2, 3],
+                            data: [
+                            '<%for(let i = 0;i<12;i++){%>',
+                            '<%=nb[i]%><%}%>',
+                            ],
                             backgroundColor: [
                             'rgb(255, 0, 0)',
                             ],
