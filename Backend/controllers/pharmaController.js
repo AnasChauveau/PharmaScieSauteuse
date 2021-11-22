@@ -269,6 +269,7 @@ const pharModifStock = async (req, res) => {
 const Chart = async (req, res) => {
     let idMedic = req.params.id;
 
+    let Medic = await db.getOneMedic(idMedic)
     let traitement = await db.getTraitement(idMedic);
 
     var nbBoiteMois = [0,0,0,0,0,0,0,0,0,0,0,0];
@@ -279,7 +280,7 @@ const Chart = async (req, res) => {
         }
     }
 
-    res.render("chart", {moment : moment, idMedic : idMedic, info : traitement, nb : nbBoiteMois})
+    res.render("chart", {moment : moment, nb : nbBoiteMois, medic : Medic})
 }
 
 const pharmaDeleteMedic = async (req, res) => {

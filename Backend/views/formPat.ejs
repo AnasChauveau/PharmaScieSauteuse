@@ -98,7 +98,7 @@
                   <label for="mutuelle">Nom de la Mutuelle :</label>
                   <select class="field2" name="mutuelle">
 
-                     <option value='0' selected>- Choix Assurance -</option>
+                     <option value='0' selected>- Pas d'Assurance -</option>
                      <% assurances.forEach(function(assurance){ %>
                      <option value="<%=assurance.noAssur%>"><%=assurance.Nom_Assur%></option>
                      <% }) %>

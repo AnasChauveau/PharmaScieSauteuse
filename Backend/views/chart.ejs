@@ -29,7 +29,7 @@
                             '<%=moment().add(i,"months").format("MMMM")%><%}%>',
                         ],
                         datasets: [{
-                            label: 'Nombre de Boîte de Doliprane',
+                            label: 'Nombre de Boîtes de <%=medic.Nom_Medic%>',
                             data: [
                             '<%for(let i = 0;i<12;i++){%>',
                             '<%=nb[i]%><%}%>',
@@ -57,7 +57,7 @@
                                 },
                                 
                                 display: true,
-                                text: "Graphique des besoins de la Pharmacie",
+                                text: "Graphique des besoins de la Pharmacie : <%=medic.Nom_Medic%>",
                             },
                             tooltips:{
                                 enabled: false

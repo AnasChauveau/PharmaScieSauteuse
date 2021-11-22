@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 22 nov. 2021 à 20:30
+-- Généré le : lun. 22 nov. 2021 à 20:58
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `medicament` (
 --
 
 INSERT INTO `medicament` (`idMedic`, `Nom_Medic`, `Qte_En_Stock`, `Qte_Necessaire`) VALUES
-(1, 'Doliprane', 0, 0),
+(1, 'Doliprane', 0, 6),
 (15, 'Aranesp', 0, 0),
 (9, 'Lucentis', 0, 0),
 (4, 'Dafalgan', 0, 0),
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `pathologie` (
   `idPath` int(11) NOT NULL AUTO_INCREMENT,
   `Nom_Path` varchar(30) NOT NULL,
   PRIMARY KEY (`idPath`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `pathologie`
@@ -162,7 +162,11 @@ INSERT INTO `pathologie` (`idPath`, `Nom_Path`) VALUES
 (1, 'Cancer'),
 (2, 'Sida'),
 (3, 'Rhume'),
-(4, 'Ebola');
+(4, 'Ebola'),
+(5, 'Diabète'),
+(6, 'TOP'),
+(7, 'COVID-19'),
+(8, 'COVID-21');
 
 -- --------------------------------------------------------
 
