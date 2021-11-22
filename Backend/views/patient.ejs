@@ -13,7 +13,7 @@ Utilité : Affichage de la liste des patients
       <header class="header" id="header">
          <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
          <!-- barre de recherche -->
-         <form action="/PharmaScieSauteuse/Gestion-de-Patient/search">
+         <form action="/PharmaScieSauteuse/Gestion-de-Patient/search" method="get">
             <div class="wrap">
                 <div class="search">
                 <input type="text" name="searchPat" class="searchTerm" placeholder="Numéro de sécurité social">
@@ -40,8 +40,8 @@ Utilité : Affichage de la liste des patients
                         <th class="column1">Nom et prénom</th>
                         <th class="column2">Numéro de sécurité social</th>
                         <th class="column3">Date de naissance</th>
-                        <th class="column4"></th>
-                        <th class="column5">En voir plus</th>
+                        <th class="column4">En voir plus</th>
+                        <th class="column5"></th>
                         <th class="column6"></th>
                     </tr>
                 </thead>
@@ -56,9 +56,13 @@ Utilité : Affichage de la liste des patients
                         <td class="column1"><%=patient.Nom_Patient%></td>
                         <td class="column2"><%=patient.noSS%></td>
                         <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
-                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Nouvelle ordonnance</a></td>
-                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
-                        <td class="column6"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/delete/<%=patient.noSS%>" onclick="return confirm('Etes-vous sûr de vouloir Supprimer ce poste ?')">Supprimer</a></td>
+                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
+                        <td class="column5"><a class="btn btn-primary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Nouvelle ordonnance</a></td>
+                        
+                        <td class="column6">
+                            <a class="btn btn-warning" href="/pharmaScieSauteuse/Gestion-de-Patient/Update/<%=patient.noSS%>">Modifier</a>
+                            <a class="btn btn-danger" href="/pharmaScieSauteuse/Gestion-de-Patient/delete/<%=patient.noSS%>" onclick="return confirm('Etes-vous sûr de vouloir Supprimer ce poste ?')">Supprimer</a>
+                        </td>
                     </tr>
 
                     <% if(c == 0) c = 1; else c = 0 %>

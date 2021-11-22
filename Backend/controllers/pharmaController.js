@@ -16,17 +16,26 @@ const pharmAffichagePatients = async (req, res) => {
 
 const pharmaRecherchePatient = async (req, res) => {
     let couleur = 0;
-    let mot = req.params.id;
-
-    console.log(mot)
-    let data = await db.searchPatient(mot)
+    let mot = req.param('searchPat'); // Les autres solution n'étaient pas fonctionnelles
+    mot = "%"+mot+"%";
+    let data = await db.searchPatient(mot,mot,mot)
 
     res.render('patient', {patients : data, moment : moment, c : couleur})
+
 }
 
 const pharmAffichageStocks = async (req, res) => {
     let couleur = 0;
     let data = await db.getStock()
+    res.render('stock', {medicaments : data, c : couleur})
+}
+
+const pharmaRechercheStocks = async (req, res) => {
+    let couleur = 0;
+    let mot = req.param('searchStock'); // Les autres solution n'étaient pas fonctionnelles
+    mot = "%"+mot+"%";
+    let data = await db.searchStock(mot, mot)
+    
     res.render('stock', {medicaments : data, c : couleur})
 }
 
@@ -301,6 +310,7 @@ module.exports = {
     pharmAjoutDePatient,
     pharmAjoutOrdonnance,
     pharmaRecherchePatient,
+    pharmaRechercheStocks,
     pharmInfoPatient,
     pharmulaireOrdonnance,
     pharmulaireModifPatient,

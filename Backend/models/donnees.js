@@ -132,16 +132,25 @@ const getTraitement = async (id) => {
     })
 }
 
-const searchPatient = async (mot) => {
+const searchPatient = async (mot,mot2,mot3) => {
     return new Promise((resolve, reject) => {
-        let sql = "SELECT CONCAT(Nom_Patient, ' ', Prenom_Patient) AS Nom_Patient, noSS, Date_naissance FROM patient WHERE Nom_Patient = '?' order by Nom_Patient, Prenom_Patient, noSS";
-        db.query(sql, mot,(err, data, fields) => {
+        let sql = "SELECT CONCAT(Nom_Patient, ' ', Prenom_Patient) AS Nom_Patient, noSS, Date_naissance FROM patient WHERE noSS LIKE ? OR Nom_Patient Like ? OR Prenom_Patient Like ? order by Nom_Patient, Prenom_Patient, noSS";
+        db.query(sql, [mot,mot2,mot3],(err, data, fields) => {
             if (err) throw err;
             return resolve(data)
         })
     })
 }
 
+const searchStock = async (mot,mot2) => {
+    return new Promise((resolve, reject) => {
+        let sql = "SELECT * FROM medicament WHERE idMedic LIKE ? OR Nom_Medic LIKE ? order by Nom_Medic, idMedic";
+        db.query(sql, [mot,mot2],(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data)
+        })
+    })
+}
 //
 
 // INSERT //
@@ -184,7 +193,9 @@ const newAssurance = async (noSS, noAssur, DateScan) => {
         })
     })
 }
+//
 
+// Update //
 const updateQteNec = async (Qte, IDmedic) => {
     return new Promise((resolve, reject) => {
         let sql="UPDATE medicament SET Qte_Necessaire = Qte_Necessaire + ? WHERE idMedic = ?";
@@ -247,7 +258,9 @@ const updatePatient = async (newNom, newPrenom, newDate_Naissance, noSS) => {
         })
     })
 }
+//
 
+// DELETE //
 const deleteOrdPatient = async (noSS) => {
     return new Promise((resolve, reject) => {
         let sql="DELETE FROM ordonnance WHERE no_SS = ?";
@@ -298,6 +311,7 @@ const deleteMedic = async (id) => {
         })
     })
 }
+//
 
 
 module.exports={
@@ -315,6 +329,7 @@ module.exports={
     getOrdonnancePatient,
     getPathologiePatient,
     searchPatient,
+    searchStock,
     newOrdonnance,
     newPatient,
     newTraitement,

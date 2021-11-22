@@ -13,14 +13,16 @@ Utilité : Affichage de la liste des stocks
       <header class="header" id="header">
          <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
          <!-- barre de recherche -->
+         <form action="/PharmaScieSauteuse/Gestion-de-Stock/search" method="get">
             <div class="wrap">
                 <div class="search">
-                <input type="text" class="searchTerm" placeholder="Nom médicament">
+                <input type="text" name="searchStock" class="searchTerm" placeholder="Nom médicament">
                 <button type="submit" class="searchButton">
                     <i class="bx bx-search"></i>
                 </button>
                 </div>
             </div>
+        </form>
           <!-- Fin barre de recherche -->
       </header>
       
@@ -36,10 +38,10 @@ Utilité : Affichage de la liste des stocks
                 <thead>
                     <tr class="row100 head">
                         <th class="column1">Nom commercial</th>
-                        <th class="column2">Quantité en stock</th>
-                        <th class="column3">Quantité nécéssaire</th>
-                        <th class="column4">En voir plus</th>
-                        <th class="column5"></th>
+                        <th class="column2">Référence</th>
+                        <th class="column3">Quantité en stock</th>
+                        <th class="column4">Quantité nécéssaire</th>
+                        <th class="column5">En voir plus</th>
                         <th class="column6"></th>
                     </tr>
                 </thead>
@@ -52,11 +54,14 @@ Utilité : Affichage de la liste des stocks
                 <% medicaments.forEach(function(medicament){ %> 
                     <tr class='body row10<%=c%>'>
                         <td class="column1"><%=medicament.Nom_Medic%></td>
-                        <td class="column2"><%=medicament.Qte_En_Stock%> boîtes</td>
-                        <td class="column3"><%=medicament.Qte_Necessaire%> boîtes</td>
-                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Stock/Graphe/<%=medicament.idMedic%>">Graphique</a></td>
-                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Stock/Update/<%=medicament.idMedic%>" >Modifier</a></td>
-                        <td class="column6"><a class="btn btn-outline-secondary"  href="/pharmaScieSauteuse/Gestion-de-Stock/delete/<%=medicament.idMedic%>" onclick="return confirm('Etes-vous sûr de vouloir Supprimer ce poste ?')">Supprimer</a></td>
+                        <td class="column2"><%=medicament.idMedic%> </td>
+                        <td class="column3"><%=medicament.Qte_En_Stock%> boîtes</td>
+                        <td class="column4"><%=medicament.Qte_Necessaire%> boîtes</td>
+                        <td class="column5"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Stock/Graphe/<%=medicament.idMedic%>">Graphique</a></td>
+                        <td class="column6">
+                            <a class="btn btn-warning" href="/pharmaScieSauteuse/Gestion-de-Stock/Update/<%=medicament.idMedic%>">Modifier</a>
+                            <a class="btn btn-danger"  href="/pharmaScieSauteuse/Gestion-de-Stock/delete/<%=medicament.idMedic%>" onclick="return confirm('Etes-vous sûr de vouloir Supprimer ce poste ?')">Supprimer</a>
+                        </td>
                     </tr>
 
                     <% if(c == 1) c = 0; else c = 1 %>
