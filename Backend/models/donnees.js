@@ -344,5 +344,5 @@ module.exports={
     deleteOrdPatient,
     deletePatient,
     deleteTraitement,
-    deleteMedic,
+    deleteMedic
 }

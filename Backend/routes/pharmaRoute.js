@@ -5,47 +5,48 @@ const routeur = express.Router()
 app.set('view engine', 'ejs')
 app.use(express.static('views'))
 app.use(express.static('public'))
-const PharmaControle = require('../controllers/PharmaController')
+const PharmaControlePatient = require('../controllers/pharmaControllerPatient')
+const PharmaControleStock = require('../controllers/pharmaControllerStock')
 
 
-routeur.get('/', PharmaControle.pharMenu)
+routeur.get('/', PharmaControlePatient.pharMenu)
 
     // ------------------------ Patients ---------------------------- //
 
-    .get('/Gestion-de-Patient', PharmaControle.pharmAffichagePatients)
+    .get('/Gestion-de-Patient', PharmaControlePatient.pharmAffichagePatients)
 
-    .get('/Gestion-de-Patient/search', PharmaControle.pharmaRecherchePatient)
+    .get('/Gestion-de-Patient/search', PharmaControlePatient.pharmaRecherchePatient)
 
-    .get('/Gestion-de-Patient/info/:id', PharmaControle.pharmInfoPatient)
+    .get('/Gestion-de-Patient/info/:id', PharmaControlePatient.pharmInfoPatient)
 
-    .get('/Gestion-de-Patient/newOrdonnance/:id', PharmaControle.pharmulaireOrdonnance)
+    .get('/Gestion-de-Patient/newOrdonnance/:id', PharmaControlePatient.pharmulaireOrdonnance)
 
-    .get('/Gestion-de-Patient/Update/:id', PharmaControle.pharmulaireModifPatient)
+    .get('/Gestion-de-Patient/Update/:id', PharmaControlePatient.pharmulaireModifPatient)
 
-    .get('/Gestion-de-Patient/delete/:id', PharmaControle.pharmaDeletePatient)
+    .get('/Gestion-de-Patient/delete/:id', PharmaControlePatient.pharmaDeletePatient)
 
-    .get('/Formulaire', PharmaControle.pharmulairePatient)
+    .get('/Formulaire', PharmaControlePatient.pharmulairePatient)
 
-    .post('/Patient/Confirmation', PharmaControle.pharmAjoutDePatient)
+    .post('/Patient/Confirmation', PharmaControlePatient.pharmAjoutDePatient)
 
-    .post('/Ordonnance/Confirmation/:id', PharmaControle.pharmAjoutOrdonnance)
+    .post('/Ordonnance/Confirmation/:id', PharmaControlePatient.pharmAjoutOrdonnance)
 
-    .post('/Modif-Patient/Confirmation/:id', PharmaControle.pharModifPatient)
+    .post('/Modif-Patient/Confirmation/:id', PharmaControlePatient.pharModifPatient)
 
 
     // ------------------------ Stocks ----------------------------- //
 
-    .get('/Gestion-de-Stock', PharmaControle.pharmAffichageStocks)
+    .get('/Gestion-de-Stock', PharmaControleStock.pharmAffichageStocks)
 
-    .get('/Gestion-de-Stock/search', PharmaControle.pharmaRechercheStocks)
+    .get('/Gestion-de-Stock/search', PharmaControleStock.pharmaRechercheStocks)
 
-    .get('/Gestion-de-Stock/Graphe/:id', PharmaControle.Chart)
+    .get('/Gestion-de-Stock/Graphe/:id', PharmaControleStock.Chart)
 
-    .get('/Gestion-de-Stock/Update/:id', PharmaControle.pharmulaireModifStock)
+    .get('/Gestion-de-Stock/Update/:id', PharmaControleStock.pharmulaireModifStock)
 
-    .get('/Gestion-de-Stock/delete/:id', PharmaControle.pharmaDeleteMedic)
+    .get('/Gestion-de-Stock/delete/:id', PharmaControleStock.pharmaDeleteMedic)
 
-    .post('/Stock/Confirmation/:id', PharmaControle.pharModifStock)
+    .post('/Stock/Confirmation/:id', PharmaControleStock.pharModifStock)
 
 
 module.exports = routeur

@@ -24,20 +24,7 @@ const pharmaRecherchePatient = async (req, res) => {
 
 }
 
-const pharmAffichageStocks = async (req, res) => {
-    let couleur = 0;
-    let data = await db.getStock()
-    res.render('stock', {medicaments : data, c : couleur})
-}
 
-const pharmaRechercheStocks = async (req, res) => {
-    let couleur = 0;
-    let mot = req.param('searchStock'); // Les autres solution n'étaient pas fonctionnelles
-    mot = "%"+mot+"%";
-    let data = await db.searchStock(mot, mot)
-    
-    res.render('stock', {medicaments : data, c : couleur})
-}
 
 
 const pharmInfoPatient = async (req, res) => {
@@ -82,15 +69,22 @@ const pharModifPatient = async (req, res) => {
     let newNoSS = req.body.newNoSS;
     let newDate_Naissance = req.body.newDate_Naissance;
 
-    await db.updatePatient(newNom, newPrenom, newDate_Naissance, noSS)
+    if (newNom.length < 3 || newPrenom.length < 3 || newDate_Naissance == "" || newNoSS < 15 || newNoSS > 15){
+            // MESSAGE D'ERREUR //
+            let erreur = "Veuillez remplir correctement les champs !"
+            res.redirect("/pharmaScieSauteuse/Gestion-de-Patient/Update/"+noSS)
+    }else{
+            // PAS DE MESSAGE D'ERREUR //
 
-    if (noSS != newNoSS) { // Si le noSS(clé primaire) est modifié, alors on l'a modifie de partout pour ne pas faire d'orphelin
-        await db.updateNoSSAssur(newNoSS, noSS)
-        await db.updateNoSSOrd(newNoSS, noSS)
-        await db.updateNoSSPatient(newNoSS, noSS)
+        await db.updatePatient(newNom, newPrenom, newDate_Naissance, noSS)
+
+        if (noSS != newNoSS) { // Si le noSS(clé primaire) est modifié, alors on l'a modifie de partout pour ne pas faire d'orphelin
+            await db.updateNoSSAssur(newNoSS, noSS)
+            await db.updateNoSSOrd(newNoSS, noSS)
+            await db.updateNoSSPatient(newNoSS, noSS)
+        }
+        res.render("confirmPatient")
     }
-
-    res.render("confirmPatient")
 }
 
 
@@ -120,14 +114,22 @@ const pharmAjoutOrdonnance = async (req, res) => {
     let duree = req.body.duree
     let nb_traitement = req.body.nb_traitement;
 
-    var pathologie = "OK";
+    var pass = "OK";
     patho.forEach(function(path){
 
         if(path.Id_Path === parseInt(newPath)){
-            pathologie = "Pas OK"
+            pass = "Pas OK"
         }
     })
-    if(pathologie == "OK"){    
+
+    if (newPath == "" || medecin == "" || traitement == "" || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
+        // MESSAGE D'ERREUR //
+        let erreur = "Veuillez remplir correctement les champs !"
+        pass = "Pas OK"
+        res.redirect("/PharmaScieSauteuse/Formulaire")
+    }
+
+    if(pass == "OK"){    
         // Requete Insert : Ordonnance //
         await db.newOrdonnance(noSS, newPath, medecin);
         console.log("Ajout Ordonnance : Sucess ");
@@ -242,51 +244,6 @@ const pharmAjoutDePatient = async (req, res) => {
     }
 }
 
-const pharmulaireModifStock = async (req, res) => {
-    let idMedic = req.params.id;
-    let medicament = await db.getOneMedic(idMedic);
-
-    res.render("formModifStock", {idMedic : idMedic, medicament : medicament})
-}
-
-const pharModifStock = async (req, res) => {
-    let idMedic = req.params.id;
-
-    let newNom = req.body.newNom;
-    let newStock = req.body.newStock;
-    let newNecess = req.body.newNecess;
-
-    await db.updateMedic(newNom, newStock, newNecess, idMedic);
-
-    res.render('confirmStock')
-}
-
-const Chart = async (req, res) => {
-    let idMedic = req.params.id;
-
-    let Medic = await db.getOneMedic(idMedic)
-    let traitement = await db.getTraitement(idMedic);
-
-    var nbBoiteMois = [0,0,0,0,0,0,0,0,0,0,0,0];
-
-    for(let y = 0;y<traitement.length;y++){
-        for(let i = 0;i<traitement[y].DureeEnMois;i++){
-            nbBoiteMois[i] += traitement[y].Nb_Boite
-        }
-    }
-
-    res.render("chart", {moment : moment, nb : nbBoiteMois, medic : Medic})
-}
-
-const pharmaDeleteMedic = async (req, res) => {
-    let idMedic = req.params.id;
-
-    await db.deleteMedic(idMedic);
-    await db.deleteTraitement(idMedic); // Suppression des traitements de ce medicament
-
-    res.render("confirmStock")
-}
-
 const pharmaDeletePatient = async (req, res) => {
     let noSS = req.params.id;
 
@@ -301,21 +258,15 @@ const pharmaDeletePatient = async (req, res) => {
 module.exports = {
     pharMenu,
     pharmAffichagePatients,
-    pharmAffichageStocks,
     pharmulairePatient,
     pharmAjoutDePatient,
     pharmAjoutOrdonnance,
     pharmaRecherchePatient,
-    pharmaRechercheStocks,
     pharmInfoPatient,
     pharmulaireOrdonnance,
     pharmulaireModifPatient,
     pharModifPatient,
     pharmaDeletePatient,
-    pharmulaireModifStock,
-    pharModifStock,
-    pharmaDeleteMedic,
-    Chart,
 }
 
 
