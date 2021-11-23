@@ -1,5 +1,5 @@
-const db = require('../models/donnees')
-const moment = require ("../config/moment")
+const db = require('../models/donnees') // Requetes 
+const moment = require ("../config/moment") // format de date fr 
 
 // Affichage Menu //
 const pharMenu = (req, res) => {
@@ -143,10 +143,16 @@ const pharmAjoutOrdonnance = async (req, res) => {
                 traitementX = 'req.body.traitement'+i ;
                 QteX = 'req.body.Qte'+i ;
                 dureeX = 'req.body.duree'+i ;
-                await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
-                // Requete Update : Qtés Nécessaires //
-                QteTotalX = eval(QteX)*eval(dureeX)
-                await db.updateQteNec(QteTotalX, eval(traitementX));
+                if (eval(traitementX) == "" || eval(QteX) < 1 || eval(dureeX) < 1 || eval(QteX) > 20 || eval(dureeX) > 12){
+                    // MESSAGE D'ERREUR //
+                    let erreur = "Veuillez remplir correctement les champs !"
+                    res.redirect("/PharmaScieSauteuse/Formulaire")
+                }else{
+                    await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
+                    // Requete Update : Qtés Nécessaires //
+                    QteTotalX = eval(QteX)*eval(dureeX)
+                    await db.updateQteNec(QteTotalX, eval(traitementX));
+                }
             }
             console.log("Ajout Des Traitements : Sucess ");
         } else{
@@ -230,7 +236,7 @@ const pharmAjoutDePatient = async (req, res) => {
         let QteTotal = Qte*duree;
         await db.updateQteNec(QteTotal, traitement);
         
-        // Requete Insert : Traitements //
+        // Requete Insert : Traitements (Si plusieurs traitement) //
         if (nb_traitement > 1){
             let traitementX = "";
             let QteX = "";

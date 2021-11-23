@@ -51,4 +51,5 @@ routeur.get('/', PharmaControlePatient.pharMenu)
     .post('/Stock/Confirmation/:id', PharmaControleStock.pharModifStock)
 
 
+// Exportation //
 module.exports = routeur
