@@ -1,12 +1,14 @@
 const db = require('../models/donnees')
 const moment = require ("../config/moment")
 
+// Affichage de tous les tocks //
 const pharmAffichageStocks = async (req, res) => {
     let couleur = 0;
     let data = await db.getStock() // Obtenir les stocks de medicament
     res.render('stock', {medicaments : data, c : couleur})
 }
 
+// Recherche de Stocks en particulier //
 const pharmaRechercheStocks = async (req, res) => {
     let couleur = 0;
     let mot = req.param('searchStock'); // Les autres solution n'étaient pas fonctionnelles
@@ -16,6 +18,7 @@ const pharmaRechercheStocks = async (req, res) => {
     res.render('stock', {medicaments : data, c : couleur})
 }
 
+// Affichage formulaire de modif Stock //
 const pharmulaireModifStock = async (req, res) => {
     let idMedic = req.params.id;
     let medicament = await db.getOneMedic(idMedic); // Obtenir les infos du medicament
@@ -23,6 +26,7 @@ const pharmulaireModifStock = async (req, res) => {
     res.render("formModifStock", {idMedic : idMedic, medicament : medicament})
 }
 
+// Lancement de la modif Stock //
 const pharModifStock = async (req, res) => {
     let idMedic = req.params.id;
 
@@ -42,6 +46,7 @@ const pharModifStock = async (req, res) => {
     res.render('confirmStock')
 }
 
+// Affichage Graphique de la Quantité nécessaire du medicament //
 const Chart = async (req, res) => {
     let idMedic = req.params.id;
 
@@ -61,6 +66,7 @@ const Chart = async (req, res) => {
     res.render("chart", {moment : moment, nb : nbBoiteMois, medic : Medic})
 }
 
+// Suppression du medicament //
 const pharmaDeleteMedic = async (req, res) => {
     let idMedic = req.params.id;
 
@@ -70,7 +76,7 @@ const pharmaDeleteMedic = async (req, res) => {
     res.render("confirmStock")
 }
 
-
+// Exportation //
 module.exports = {
     pharmAffichageStocks,
     pharmaRechercheStocks,

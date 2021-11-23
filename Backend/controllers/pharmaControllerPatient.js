@@ -6,7 +6,7 @@ const pharMenu = (req, res) => {
     res.render('menu')
 }
 
-// Affichage de tous les Patients
+// Affichage de tous les Patients //
 const pharmAffichagePatients = async (req, res) => {
     let couleur = 0;
     let data = await db.getPatient()
@@ -48,7 +48,7 @@ const pharmulaireModifPatient = async (req, res) => {
     res.render('formModifPatient', {moment : moment, patient : patient})
 }
 
-// Lancement de la modif Patient
+// Lancement de la modif Patient //
 const pharModifPatient = async (req, res) => {
     let noSS = req.params.id;
 
@@ -265,7 +265,7 @@ const pharmAjoutDePatient = async (req, res) => {
     }
 }
 
-
+// Exportation //
 module.exports = {
     pharMenu,
     pharmAffichagePatients,
