@@ -5,10 +5,12 @@ const routeur = express.Router()
 app.set('view engine', 'ejs')
 app.use(express.static('views'))
 app.use(express.static('public'))
+
+// Ajout des controllers //
 const PharmaControlePatient = require('../controllers/pharmaControllerPatient')
 const PharmaControleStock = require('../controllers/pharmaControllerStock')
 
-
+// Enregistrement des routeurs
 routeur.get('/', PharmaControlePatient.pharMenu)
 
     // ------------------------ Patients ---------------------------- //

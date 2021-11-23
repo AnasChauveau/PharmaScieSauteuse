@@ -211,7 +211,7 @@ const pharmAjoutDePatient = async (req, res) => {
         let noOrd = Ordonnance.noOrd;
 
         // Requete Insert : Traitement //
-        await db.newTraitement(noOrd, traitement, Qte, duree);
+        await db.newTraitement(noOrd, traitement, Qte, duree); // Ajout du premier traitement
         
         // Requete Update : Qté Nécessaire //
         let QteTotal = Qte*duree;
@@ -223,22 +223,30 @@ const pharmAjoutDePatient = async (req, res) => {
             let QteX = "";
             let dureeX = "";
             let QteTotalX = 0;
+            // Ajout des autres traitements, si ils sont selectionnés //
             for(let i = 1;i<nb_traitement;i++){        
                 traitementX = 'req.body.traitement'+i ;
                 QteX = 'req.body.Qte'+i ;
                 dureeX = 'req.body.duree'+i ;
+                if (eval(traitementX) == "" || eval(QteX) < 1 || eval(dureeX) < 1 || eval(QteX) > 20 || eval(dureeX) > 12){
+                    // MESSAGE D'ERREUR //
+                    let erreur = "Veuillez remplir correctement les champs !"
+                    res.redirect("/PharmaScieSauteuse/Formulaire")
+                }else{
                 await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
                 // Requete Update : Qtés Nécessaires //
                 QteTotalX = eval(QteX)*eval(dureeX)
                 await db.updateQteNec(QteTotalX, eval(traitementX));
+                }
             }
             console.log("Ajout Des Traitements : Sucess ");
         } else{
             console.log("Ajout Du Traitement : Sucess ");
         }
 
+        // Ajout d'une assurance, si elle est selectionné //
         if (assur != 0){
-            await db.newAssurance(noSS , assur, date_scan);    
+            await db.newAssurance(noSS , assur, date_scan);
         }
         res.render('confirmPatient')
     }

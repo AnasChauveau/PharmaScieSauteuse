@@ -17,12 +17,12 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-
+// Ecoute //
 app.listen(adresse, () => console.log('le serveur est prêt.'))
 
 app.use('/PharmaScieSauteuse', Routeur);
 
-// erreur 404
+// erreur 404 //
 app.use((req, res) => {
     res.status(404).render('erreur')
 });
