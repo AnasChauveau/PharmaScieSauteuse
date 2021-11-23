@@ -210,8 +210,8 @@ const pharmAjoutDePatient = async (req, res) => {
     // Assurance //
     let assur = req.body.mutuelle;
     let date_scan = req.body.date_scan;
-
-    if (nomPatient.length < 3 || prenomPatient.length < 3 || dateNaissance == "" || noSS < 15 || noSS > 15 ||
+    console.log("Voir :",nomPatient.length,prenomPatient.length, dateNaissance, noSS,path,medecin,traitement,Qte,duree)
+    if (nomPatient.length < 3 || prenomPatient.length < 3 || dateNaissance == "" || noSS.length < 15 || noSS.length > 15 ||
         path == "" || medecin == "" || traitement == "" || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
             // MESSAGE D'ERREUR //
             let erreur = "Veuillez remplir correctement les champs !"
