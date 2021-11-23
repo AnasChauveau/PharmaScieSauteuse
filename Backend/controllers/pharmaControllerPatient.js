@@ -58,9 +58,9 @@ const pharModifPatient = async (req, res) => {
     let newDate_Naissance = req.body.newDate_Naissance;
 
     if (newNom.length < 3 || newPrenom.length < 3 || newDate_Naissance == "" || newNoSS.length < 15 || newNoSS.length > 15){
-            // MESSAGE D'ERREUR //
-            let erreur = "Veuillez remplir correctement les champs !"
-            res.redirect("/pharmaScieSauteuse/Gestion-de-Patient/Update/"+noSS)
+        // MESSAGE D'ERREUR //
+        let url = "/pharmaScieSauteuse/Gestion-de-Patient/Update/"+noSS;
+        res.render('errChamps', {url : url})
     }else{
             // PAS DE MESSAGE D'ERREUR //
 
@@ -111,11 +111,8 @@ const pharmAjoutOrdonnance = async (req, res) => {
         }
     })
 
-    if (newPath == "" || medecin == "" || traitement == "" || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
-        // MESSAGE D'ERREUR //
-        let erreur = "Veuillez remplir correctement les champs !"
+    if (newPath == 0 || medecin == 0 || traitement == 0 || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
         pass = "Pas OK"
-        res.redirect("/PharmaScieSauteuse/Formulaire")
     }
 
     if(pass == "OK"){    
@@ -145,8 +142,8 @@ const pharmAjoutOrdonnance = async (req, res) => {
                 dureeX = 'req.body.duree'+i ;
                 if (eval(traitementX) == "" || eval(QteX) < 1 || eval(dureeX) < 1 || eval(QteX) > 20 || eval(dureeX) > 12){
                     // MESSAGE D'ERREUR //
-                    let erreur = "Veuillez remplir correctement les champs !"
-                    res.redirect("/PharmaScieSauteuse/Formulaire")
+                    let url = "/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/"+noSS;
+                    res.render('errChamps', {url : url})
                 }else{
                     await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
                     // Requete Update : Qtés Nécessaires //
@@ -160,9 +157,8 @@ const pharmAjoutOrdonnance = async (req, res) => {
         }
         res.render('confirmPatient')
     }else{
-        let erreur = "Cette Pathologie à déjà été enregistré !"
-        res.render('errChamps')
-
+        let url = "/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/"+noSS;
+        res.render('errChamps', {url : url})
     }
 }
 
@@ -172,7 +168,7 @@ const pharmaDeletePatient = async (req, res) => {
 
     await db.deleteAssurPatient(noSS); // Suppresion du lien Assurance/Patient
     let Ordonnance = await db.getOrdonnancePatient(noSS); // Récupération
-    console.log("ordo t", Ordonnance.length, "ordo", Ordonnance)
+
     for (let i = 0;i<Ordonnance.length;i++){
        await db.deleteTraitementPatient(Ordonnance[i].noOrd); // Suppression des traitement du Patient
     }
@@ -217,10 +213,10 @@ const pharmAjoutDePatient = async (req, res) => {
     let assur = req.body.mutuelle;
     let date_scan = req.body.date_scan;
     if (nomPatient.length < 3 || prenomPatient.length < 3 || dateNaissance == "" || noSS.length < 15 || noSS.length > 15 ||
-        path == "" || medecin == "" || traitement == "" || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
-            // MESSAGE D'ERREUR //
-            let erreur = "Veuillez remplir correctement les champs !"
-            res.redirect("/PharmaScieSauteuse/Formulaire")
+        path == 0 || medecin == 0 || traitement == 0 || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
+        // MESSAGE D'ERREUR //
+        let url = "/PharmaScieSauteuse/Formulaire";
+        res.render('errChamps', {url : url})
     }else{
             // PAS DE MESSAGE D'ERREUR //
 
@@ -254,8 +250,8 @@ const pharmAjoutDePatient = async (req, res) => {
                 dureeX = 'req.body.duree'+i ;
                 if (eval(traitementX) == "" || eval(QteX) < 1 || eval(dureeX) < 1 || eval(QteX) > 20 || eval(dureeX) > 12){
                     // MESSAGE D'ERREUR //
-                    let erreur = "Veuillez remplir correctement les champs !"
-                    res.redirect("/PharmaScieSauteuse/Formulaire")
+                    let url = "/PharmaScieSauteuse/Formulaire";
+                    res.render('errChamps', {url : url})
                 }else{
                 await db.newTraitement(noOrd, eval(traitementX), eval(QteX), eval(dureeX));
                 // Requete Update : Qtés Nécessaires //
