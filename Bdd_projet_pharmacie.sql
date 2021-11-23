@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS `assurance` (
   `Nom_Assur` varchar(30) NOT NULL,
   PRIMARY KEY (`noAssur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+-- Malheureusement je n'ai pas remarqué que le type était MyISAM
+-- Le changer maintenant n'a aucun intéré
 
 --
 -- Déchargement des données de la table `assurance`

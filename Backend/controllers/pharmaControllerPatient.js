@@ -1,12 +1,12 @@
 const db = require('../models/donnees')
 const moment = require ("../config/moment")
 
-
+// Affichage Menu //
 const pharMenu = (req, res) => {
     res.render('menu')
 }
 
-
+// Affichage de tous les Patients
 const pharmAffichagePatients = async (req, res) => {
     let couleur = 0;
     let data = await db.getPatient()
@@ -14,6 +14,7 @@ const pharmAffichagePatients = async (req, res) => {
     res.render('patient', {patients : data, moment : moment, c : couleur})  
 }
 
+// Recherche de Patients en particulier //
 const pharmaRecherchePatient = async (req, res) => {
     let couleur = 0;
     let mot = req.param('searchPat'); // Les autres solution n'étaient pas fonctionnelles
@@ -21,12 +22,9 @@ const pharmaRecherchePatient = async (req, res) => {
     let data = await db.searchPatient(mot,mot,mot)
 
     res.render('patient', {patients : data, moment : moment, c : couleur})
-
 }
 
-
-
-
+// Affichage fiche Patient //
 const pharmInfoPatient = async (req, res) => {
     let noSS = req.params.id;
     let no = 1;
@@ -40,18 +38,7 @@ const pharmInfoPatient = async (req, res) => {
     res.render("fichePatient", {moment : moment, no : no, patient : patient, pathologie : pathologie, mutuelle : mutuelle, medicament : medicament, noSS : noSS})
 }
 
-const pharmulairePatient = async (req, res) => {
-
-    // Conteneur du résultats des Requetes //
-    let lesMedics = await db.getStock();
-    let lesMedecins = await db.getMedecin();
-    let lesAssurances = await db.getMutuelle();
-    let lesPathologies = await db.getPathologie();
-
-    res.render('formPat', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})
-}
-
-
+// Affichage formulaire de modif Patient //
 const pharmulaireModifPatient = async (req, res) => {
     let noSS = req.params.id;
 
@@ -61,6 +48,7 @@ const pharmulaireModifPatient = async (req, res) => {
     res.render('formModifPatient', {moment : moment, patient : patient})
 }
 
+// Lancement de la modif Patient
 const pharModifPatient = async (req, res) => {
     let noSS = req.params.id;
 
@@ -87,7 +75,7 @@ const pharModifPatient = async (req, res) => {
     }
 }
 
-
+// Affichage du formulaire d'ajout Ordonnance //
 const pharmulaireOrdonnance = async (req, res) => {
     let noSS = req.params.id;
 
@@ -99,6 +87,7 @@ const pharmulaireOrdonnance = async (req, res) => {
     res.render('formOrdonnance', {medicaments : lesMedics, medecins : lesMedecins, pathologies : lesPathologies, noSS : noSS})
 }
 
+// Lancement de l'ajout Ordonnance //
 const pharmAjoutOrdonnance = async (req, res) => {
     // Patient //
     let noSS = req.params.id;
@@ -144,7 +133,7 @@ const pharmAjoutOrdonnance = async (req, res) => {
         let QteTotal = Qte*duree;
         await db.updateQteNec(QteTotal, traitement);
     
-        // Requete Insert : Traitements //
+        // Requete Insert : Traitements (Si plusieurs traitement) //
         if (nb_traitement > 1){
             let traitementX = "";
             let QteX = "";
@@ -170,6 +159,30 @@ const pharmAjoutOrdonnance = async (req, res) => {
     }
 }
 
+// Suppresion du Patient
+const pharmaDeletePatient = async (req, res) => {
+    let noSS = req.params.id;
+
+    await db.deleteAssurPatient(noSS); // Suppresion du lien Assurance/Patient
+    await db.deleteOrdPatient(noSS); // Suppression des ordonnances du Patient
+    await db.deletePatient(noSS); // Suppression du Patient
+
+    res.render("confirmPatient")
+}
+
+// Affichage Formulaire d'ajout Patient //
+const pharmulairePatient = async (req, res) => {
+
+    // Conteneur du résultats des Requetes //
+    let lesMedics = await db.getStock();
+    let lesMedecins = await db.getMedecin();
+    let lesAssurances = await db.getMutuelle();
+    let lesPathologies = await db.getPathologie();
+
+    res.render('formPat', {moment : moment, medicaments : lesMedics, medecins : lesMedecins, assurances : lesAssurances, pathologies : lesPathologies})
+}
+
+// Lancement de l'ajout de Patient //
 const pharmAjoutDePatient = async (req, res) => {
 
     // Patient //
@@ -250,16 +263,6 @@ const pharmAjoutDePatient = async (req, res) => {
         }
         res.render('confirmPatient')
     }
-}
-
-const pharmaDeletePatient = async (req, res) => {
-    let noSS = req.params.id;
-
-    await db.deleteAssurPatient(noSS); // Suppresion du lien Assurance/Patient
-    await db.deleteOrdPatient(noSS); // Suppression des ordonnances du Patient
-    await db.deletePatient(noSS); // Suppression du Patient
-
-    res.render("confirmPatient")
 }
 
 
