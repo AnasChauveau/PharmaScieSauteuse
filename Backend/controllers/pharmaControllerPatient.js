@@ -123,7 +123,7 @@ const pharmAjoutOrdonnance = async (req, res) => {
         await db.newOrdonnance(noSS, newPath, medecin);
         console.log("Ajout Ordonnance : Sucess ");
     
-        let Ordonnance = await db.getOrdonnancePatient(newPath, medecin, noSS);
+        let Ordonnance = await db.getOneOrdonnancePatient(newPath, medecin, noSS);
         let noOrd = Ordonnance.noOrd;
 
         // Requete Insert : Traitement //
@@ -161,15 +161,21 @@ const pharmAjoutOrdonnance = async (req, res) => {
         res.render('confirmPatient')
     }else{
         let erreur = "Cette Pathologie à déjà été enregistré !"
+        res.render('errChamps')
 
     }
 }
 
-// Suppresion du Patient
+// Suppresion du Patient //
 const pharmaDeletePatient = async (req, res) => {
     let noSS = req.params.id;
 
     await db.deleteAssurPatient(noSS); // Suppresion du lien Assurance/Patient
+    let Ordonnance = await db.getOrdonnancePatient(noSS); // Récupération
+    console.log("ordo t", Ordonnance.length, "ordo", Ordonnance)
+    for (let i = 0;i<Ordonnance.length;i++){
+       await db.deleteTraitementPatient(Ordonnance[i].noOrd); // Suppression des traitement du Patient
+    }
     await db.deleteOrdPatient(noSS); // Suppression des ordonnances du Patient
     await db.deletePatient(noSS); // Suppression du Patient
 
@@ -225,7 +231,7 @@ const pharmAjoutDePatient = async (req, res) => {
         await db.newOrdonnance(noSS, path, medecin);
         console.log("Ajout Ordonnance : Sucess ");
         
-        let Ordonnance = await db.getOrdonnancePatient(path, medecin, noSS);
+        let Ordonnance = await db.getOneOrdonnancePatient(path, medecin, noSS);
         let noOrd = Ordonnance.noOrd;
 
         // Requete Insert : Traitement //

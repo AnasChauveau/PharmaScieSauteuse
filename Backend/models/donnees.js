@@ -102,12 +102,22 @@ const getPathologie = async () => {
     })
 }
 
-const getOrdonnancePatient = async (IDpath, IDmedecin, noSS) => {
+const getOneOrdonnancePatient = async (IDpath, IDmedecin, noSS) => {
     return new Promise((resolve, reject) => {
         let sql="SELECT noOrd FROM ordonnance WHERE Id_Path = ? AND Id_Mede = ? and no_SS = ?";
         db.query(sql, [IDpath, IDmedecin, noSS],(err, data, fields) => {
             if (err) throw err;
             return resolve(data[0]);
+        })
+    })
+}
+
+const getOrdonnancePatient = async (noSS) => {
+    return new Promise((resolve, reject) => {
+        let sql="SELECT noOrd FROM ordonnance WHERE no_SS = ?";
+        db.query(sql, noSS,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
         })
     })
 }
@@ -272,6 +282,16 @@ const deleteOrdPatient = async (noSS) => {
 }
 
 
+const deleteTraitementPatient = async (idOrd) => {
+    return new Promise((resolve, reject) => {
+        let sql="DELETE FROM traitement WHERE Id_Ord = ?";
+        db.query(sql, idOrd,(err, data, fields) => {
+            if (err) throw err;
+            return resolve(data);
+        })
+    })
+}
+
 const deleteAssurPatient = async (noSS) => {
     return new Promise((resolve, reject) => {
         let sql="DELETE FROM echeance WHERE no_SS = ?";
@@ -326,6 +346,7 @@ module.exports={
     getMutuelle,
     getPathologie,
     getTraitement,
+    getOneOrdonnancePatient,
     getOrdonnancePatient,
     getPathologiePatient,
     searchPatient,
@@ -344,5 +365,6 @@ module.exports={
     deleteOrdPatient,
     deletePatient,
     deleteTraitement,
-    deleteMedic
+    deleteMedic,
+    deleteTraitementPatient
 }
