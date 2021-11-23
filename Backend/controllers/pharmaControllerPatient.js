@@ -57,7 +57,7 @@ const pharModifPatient = async (req, res) => {
     let newNoSS = req.body.newNoSS;
     let newDate_Naissance = req.body.newDate_Naissance;
 
-    if (newNom.length < 3 || newPrenom.length < 3 || newDate_Naissance == "" || newNoSS < 15 || newNoSS > 15){
+    if (newNom.length < 3 || newPrenom.length < 3 || newDate_Naissance == "" || newNoSS.length < 15 || newNoSS.length > 15){
             // MESSAGE D'ERREUR //
             let erreur = "Veuillez remplir correctement les champs !"
             res.redirect("/pharmaScieSauteuse/Gestion-de-Patient/Update/"+noSS)
@@ -210,7 +210,6 @@ const pharmAjoutDePatient = async (req, res) => {
     // Assurance //
     let assur = req.body.mutuelle;
     let date_scan = req.body.date_scan;
-    console.log("Voir :",nomPatient.length,prenomPatient.length, dateNaissance, noSS,path,medecin,traitement,Qte,duree)
     if (nomPatient.length < 3 || prenomPatient.length < 3 || dateNaissance == "" || noSS.length < 15 || noSS.length > 15 ||
         path == "" || medecin == "" || traitement == "" || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
             // MESSAGE D'ERREUR //

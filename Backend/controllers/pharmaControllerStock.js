@@ -35,7 +35,7 @@ const pharModifStock = async (req, res) => {
     let newStock = req.body.newStock;
     let newNecess = req.body.newNecess;
 
-    if (newNom.length < 2 ||  newStock < 1 || newStock > 20 || newNecess < 1 ){
+    if (newNom.length < 2 || newStock < 1 || newNecess < 1 ){
         // MESSAGE D'ERREUR //
         let erreur = "Veuillez remplir correctement les champs !"
         res.redirect("/pharmaScieSauteuse/Gestion-de-Stock/Update/"+idMedic)
