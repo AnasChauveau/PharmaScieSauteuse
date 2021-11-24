@@ -13,7 +13,7 @@
 
 # Quel technologie est utilisée ? 
 	-> Node.JS
-	-> View.JS
+	-> EJS
 	-> Express.JS
 	-> MySQL
 	-> HTML
