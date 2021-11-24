@@ -14,6 +14,7 @@
 # Quel technologie est utilisée ? 
 	-> Node.JS
 	-> EJS
+	-> ChartJS
 	-> Express.JS
 	-> MySQL
 	-> HTML
