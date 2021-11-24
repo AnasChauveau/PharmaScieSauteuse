@@ -30,7 +30,7 @@
 	-> Tapez la commande : "npm i express ejs iniparser mysql".
 
    ###### Installer la base de données MySQL:
-	-> Copiez le contenu du fichier "Base_Pharmacie.sql".
+	-> Copiez le contenu du fichier "Bdd_projet_pharmacie.sql".
 	-> Collez le contenu dans une base MySQL.
 	-> Modifiez les informations dans le fichier DB.ini. 
 
