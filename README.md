@@ -28,7 +28,8 @@
 	-> Ainsi que la commande : "git pull".
 
    ###### Ajouter les dépendances :
-	-> Tapez la commande : "npm i express ejs iniparser mysql".
+   	-> Tapez la commande : "npm install"
+	(Si la dernière commande ne fonctionne pas alors : Tapez la commande qui ce trouve dans le fichier npm use.)
 
    ###### Installer la base de données MySQL:
 	-> Copiez le contenu du fichier "Base_Pharmacie.sql".
