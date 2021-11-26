@@ -14,12 +14,12 @@
 # Quel technologie est utilisée ? 
 	-> Node.JS
 	-> EJS
-	-> ChartJS
 	-> Express.JS
+	-> Moment.JS
 	-> MySQL
 	-> HTML
 	-> CSS
-	-> Fichier ini
+	-> iniparser
 # Comment installer l'outil ? 
 	Installer git 
 
@@ -31,7 +31,7 @@
 	-> Tapez la commande : "npm i express ejs iniparser mysql".
 
    ###### Installer la base de données MySQL:
-	-> Copiez le contenu du fichier "Bdd_projet_pharmacie.sql".
+	-> Copiez le contenu du fichier "Base_Pharmacie.sql".
 	-> Collez le contenu dans une base MySQL.
 	-> Modifiez les informations dans le fichier DB.ini. 
 

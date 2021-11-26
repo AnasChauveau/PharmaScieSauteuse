@@ -1,1 +1,2 @@
-npm i express ejs iniparser mysql moment
+npm i express ejs iniparser mysql moment http https path fs
+ 
