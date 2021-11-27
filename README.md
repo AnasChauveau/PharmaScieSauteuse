@@ -40,7 +40,7 @@
 	-> Tapez la commande : "node index.js".
 
    ###### Pour accéder à l'outil :
-	L'outil se lance par défaut à l'adresse suivante : "127.0.0.1:3000/PharmaScieSauteuse".
+	L'outil se lance par défaut à l'adresse suivante : "https://localhost:3000/PharmaScieSauteuse".
 
 
 
