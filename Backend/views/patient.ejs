@@ -50,24 +50,31 @@ Utilité : Affichage de la liste des patients
             <div class="table100-body">
             <table>
             <tbody>
+                <% if(erreur != false) { %>
 
-                <% patients.forEach(function(patient){ %> 
-                    <tr class='body row10<%=c%>'>
-                        <td class="column1"><%=patient.Nom_Patient%></td>
-                        <td class="column2"><%=patient.noSS%></td>
-                        <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
-                        <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
-                        <td class="column5"><a class="btn btn-primary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Nouvelle ordonnance</a></td>
-                        
-                        <td class="column6">
-                            <a class="btn btn-warning" href="/pharmaScieSauteuse/Gestion-de-Patient/Update/<%=patient.noSS%>">Modifier</a>
-                            <a class="btn btn-danger" href="/pharmaScieSauteuse/Gestion-de-Patient/delete/<%=patient.noSS%>" onclick="return confirm('Etes-vous sûr de vouloir Supprimer ce poste ?')">Supprimer</a>
-                        </td>
-                    </tr>
+                    <h1 style="text-align: center;"><%=erreur%></h1>
 
-                    <% if(c == 0) c = 1; else c = 0 %>
-                
-                <% })%>
+                <%}else{%>
+    
+                    <% patients.forEach(function(patient){ %> 
+                        <tr class='body row10<%=c%>'>
+                            <td class="column1"><%=patient.Nom_Patient%></td>
+                            <td class="column2"><%=patient.noSS%></td>
+                            <td class="column3"><%=moment(patient.Date_naissance).calendar()%></td>
+                            <td class="column4"><a class="btn btn-outline-secondary" href="/pharmaScieSauteuse/Gestion-de-Patient/info/<%=patient.noSS%>">Fiche patient</a></td>
+                            <td class="column5"><a class="btn btn-primary" href="/pharmaScieSauteuse/Gestion-de-Patient/newOrdonnance/<%=patient.noSS%>">Nouvelle ordonnance</a></td>
+                            
+                            <td class="column6">
+                                <a class="btn btn-warning" href="/pharmaScieSauteuse/Gestion-de-Patient/Update/<%=patient.noSS%>">Modifier</a>
+                                <a class="btn btn-danger" href="/pharmaScieSauteuse/Gestion-de-Patient/delete/<%=patient.noSS%>" onclick="return confirm('Etes-vous sûr de vouloir Supprimer ce poste ?')">Supprimer</a>
+                            </td>
+                        </tr>
+
+                        <% if(c == 0) c = 1; else c = 0 %>
+                    
+                    <% })%>
+                    
+                <% } %>
                 
             </tbody>
             </table>

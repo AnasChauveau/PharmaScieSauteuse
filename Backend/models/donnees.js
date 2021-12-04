@@ -4,9 +4,12 @@ const db = require('../models/connexion')
 const getPatient = async () => {
     return new Promise((resolve, reject) => {
         let sql = "SELECT CONCAT(Nom_Patient, ' ', Prenom_Patient) AS Nom_Patient, noSS, Date_naissance FROM patient order by Nom_Patient, Prenom_Patient, noSS";
-        db.query(sql, (err, data, fields) => {
-            if (err) throw err;
-            return resolve(data)
+        db.query(sql, (error, data, fields) => {
+            if(error || data.length == 0){
+                reject("Aucun Patient trouvé !")
+            }else{
+                resolve(data)
+            }
         })
     })
 }

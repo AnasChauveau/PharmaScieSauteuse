@@ -9,9 +9,13 @@ const pharMenu = (req, res) => {
 // Affichage de tous les Patients //
 const pharmAffichagePatients = async (req, res) => {
     let couleur = 0;
-    let data = await db.getPatient()
-
-    res.render('patient', {patients : data, moment : moment, c : couleur})  
+    await db.getPatient()
+    .then((data) => {
+        let err = false;
+        res.render('patient', {patients : data, moment : moment, c : couleur, erreur : err})
+    }).catch((err) => {
+        res.render('patient', {erreur : err})
+    })
 }
 
 // Recherche de Patients en particulier //
