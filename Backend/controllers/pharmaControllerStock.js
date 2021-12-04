@@ -33,15 +33,14 @@ const pharModifStock = async (req, res) => {
     // Récupération des valeurs de la page //
     let newNom = req.body.newNom;
     let newStock = req.body.newStock;
-    let newNecess = req.body.newNecess;
 
-    if (newNom.length < 2 || newStock < 1 || newNecess < 1 ){
+    if (newNom.length < 2){
         // MESSAGE D'ERREUR //
         let url = "/pharmaScieSauteuse/Gestion-de-Stock/Update/"+idMedic;
         res.render('errChamps', {url : url})
     }
 
-    await db.updateMedic(newNom, newStock, newNecess, idMedic); // Modification du medicament
+    await db.updateMedic(newNom, newStock, idMedic); // Modification du medicament
 
     res.render('confirmStock')
 }

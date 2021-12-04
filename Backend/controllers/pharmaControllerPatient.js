@@ -108,12 +108,6 @@ const pharmAjoutOrdonnance = async (req, res) => {
     let nb_traitement = req.body.nb_traitement;
 
     var pass = "OK";
-    patho.forEach(function(path){
-
-        if(path.Id_Path === parseInt(newPath)){
-            pass = "Pas OK"
-        }
-    })
 
     if (newPath == 0 || medecin == 0 || traitement == 0 || Qte < 1 || duree < 1 || Qte > 20 || duree > 12){
         pass = "Pas OK"
@@ -121,6 +115,12 @@ const pharmAjoutOrdonnance = async (req, res) => {
 
     if(pass == "OK"){    
         // Requete Insert : Ordonnance //
+        patho.forEach(function(path){
+
+        if(path.Id_Path === parseInt(newPath)){
+            pass = "Pas OK"
+        }
+    })
         await db.newOrdonnance(noSS, newPath, medecin);
         console.log("Ajout Ordonnance : Sucess ");
     

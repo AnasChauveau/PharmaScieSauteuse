@@ -52,8 +52,8 @@
                <fieldset id="dynamic">
                   <legend class="heading">Formulaire de nouveaux Patient</legend>
                   <legend><span class="number">1</span> Patient :</legend>
-                  <input type="text" class="field2" name="nom" placeholder="Nom *" minlength="3" maxlength="35" required>
-                  <input type="text" class="field2" name="prenom" placeholder="Prénom *" minlength="3" maxlength="20" required>
+                  <input type="text" class="field2" name="nom" placeholder="NOM *" onkeyup="this.value = this.value.toUpperCase();" minlength="3" maxlength="35" required>
+                  <input type="text" class="field2" name="prenom" placeholder="Prénom *" onkeyup="this.value = this.value.charAt(0).toUpperCase()+this.value.slice(1);" minlength="3" maxlength="20" required>
                   <input type="text" class="field2" name="noSS" placeholder="Numéro de carte vitale *" minlength="15" maxlength="15" required>
                   <input type="date" class="field2" name="date_naissance" min="1900-01-01" max="<%=moment().format("YYYY-MM-DD")%>" required>
                   <select  class="field2" name="pathologie" id="patoche">

@@ -219,10 +219,10 @@ const updateQteNec = async (Qte, IDmedic) => {
     })
 }
 
-const updateMedic = async (nom, QteStock, Qte_Necessaire, IDmedic) => {
+const updateMedic = async (nom, QteStock, IDmedic) => {
     return new Promise((resolve, reject) => {
-        let sql="UPDATE medicament SET Nom_Medic = ?, Qte_En_Stock = ?, Qte_Necessaire = ? WHERE idMedic = ?";
-        db.query(sql, [nom, QteStock, Qte_Necessaire, IDmedic],(err, data, fields) => {
+        let sql="UPDATE medicament SET Nom_Medic = ?, Qte_En_Stock = ? WHERE idMedic = ?";
+        db.query(sql, [nom, QteStock, IDmedic],(err, data, fields) => {
             if (err) throw err;
             return resolve(data);
         })
